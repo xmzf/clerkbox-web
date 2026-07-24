@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── MD3 CSS 变量默认值（薰衣草紫种子 · 浅色） ── */
+:root {
+  --md-primary-rgb: 103 80 164;
+  --md-onPrimary-rgb: 255 255 255;
+  --md-primaryContainer-rgb: 234 221 255;
+  --md-onPrimaryContainer-rgb: 33 0 93;
+  --md-secondary-rgb: 98 91 113;
+  --md-onSecondary-rgb: 255 255 255;
+  --md-secondaryContainer-rgb: 232 222 248;
+  --md-onSecondaryContainer-rgb: 29 25 43;
+  --md-tertiary-rgb: 125 82 96;
+  --md-onTertiary-rgb: 255 255 255;
+  --md-tertiaryContainer-rgb: 255 216 228;
+  --md-onTertiaryContainer-rgb: 49 17 29;
+  --md-error-rgb: 179 38 30;
+  --md-onError-rgb: 255 255 255;
+  --md-errorContainer-rgb: 249 222 220;
+  --md-onErrorContainer-rgb: 65 14 11;
+  --md-surface-rgb: 255 251 254;
+  --md-surfaceContainer-rgb: 231 224 236;
+  --md-surfaceContainerHigh-rgb: 202 196 208;
+  --md-onSurface-rgb: 28 27 31;
+  --md-onSurfaceVariant-rgb: 73 69 79;
+  --md-outline-rgb: 121 116 126;
+  --md-outlineVariant-rgb: 202 196 208;
+  --md-inverseSurface-rgb: 50 47 53;
+  --md-onInverseSurface-rgb: 244 239 244;
+}
+
+/* ── 深色模式默认值 ── */
+.dark {
+  --md-primary-rgb: 208 188 255;
+  --md-onPrimary-rgb: 56 30 114;
+  --md-primaryContainer-rgb: 79 55 139;
+  --md-onPrimaryContainer-rgb: 234 221 255;
+  --md-secondary-rgb: 204 194 220;
+  --md-onSecondary-rgb: 51 45 65;
+  --md-secondaryContainer-rgb: 74 68 88;
+  --md-onSecondaryContainer-rgb: 232 222 248;
+  --md-tertiary-rgb: 239 184 200;
+  --md-onTertiary-rgb: 73 37 50;
+  --md-tertiaryContainer-rgb: 99 59 72;
+  --md-onTertiaryContainer-rgb: 255 216 228;
+  --md-error-rgb: 242 184 181;
+  --md-onError-rgb: 96 20 16;
+  --md-errorContainer-rgb: 140 29 24;
+  --md-onErrorContainer-rgb: 249 222 220;
+  --md-surface-rgb: 20 18 24;
+  --md-surfaceContainer-rgb: 36 33 41;
+  --md-surfaceContainerHigh-rgb: 56 52 63;
+  --md-onSurface-rgb: 230 225 229;
+  --md-onSurfaceVariant-rgb: 202 196 208;
+  --md-outline-rgb: 147 143 153;
+  --md-outlineVariant-rgb: 73 69 79;
+  --md-inverseSurface-rgb: 230 225 229;
+  --md-onInverseSurface-rgb: 50 47 53;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  font-family: 'Roboto', 'Noto Sans SC', system-ui, sans-serif;
+  background-color: rgb(var(--md-surface-rgb));
+  color: rgb(var(--md-onSurface-rgb));
+  transition: background-color 400ms cubic-bezier(0.2, 0, 0, 1), color 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@layer components {
+  .state-layer { @apply relative overflow-hidden; }
+  .state-layer::after {
+    content: '';
+    @apply absolute inset-0 bg-current opacity-0 transition-opacity duration-md3-short;
+  }
+  .state-layer:hover::after { opacity: 0.08; }
+  .state-layer:active::after { opacity: 0.12; }
+  .state-layer:focus-visible::after { opacity: 0.12; }
+
+  .btn-filled {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-full bg-md3-primary px-7 text-sm font-medium tracking-wide text-md3-on-primary shadow-md3-1 transition-all duration-md3-short ease-md3-emphasized state-layer;
+  }
+  .btn-filled:hover { @apply shadow-md3-2; filter: brightness(1.06); }
+  .btn-filled:active { @apply shadow-md3-1; transform: scale(0.97); }
+
+  .btn-tonal {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-full bg-md3-secondary-container px-7 text-sm font-medium tracking-wide text-md3-on-secondary-container shadow-md3-1 transition-all duration-md3-short ease-md3-emphasized state-layer;
+  }
+  .btn-tonal:hover { @apply shadow-md3-2; filter: brightness(0.97); }
+  .btn-tonal:active { @apply shadow-md3-1; transform: scale(0.97); }
+
+  .btn-outlined {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-full border border-md3-outline bg-transparent px-7 text-sm font-medium tracking-wide text-md3-primary transition-all duration-md3-short ease-md3-emphasized state-layer;
+  }
+  .btn-outlined:hover { @apply bg-md3-primary-container/40; }
+
+  .btn-text {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-full bg-transparent px-5 text-sm font-medium tracking-wide text-md3-primary transition-colors duration-md3-short ease-md3-emphasized state-layer;
+  }
+
+  .card-elevated {
+    @apply rounded-md3-xl bg-md3-surface shadow-md3-1 transition-all duration-md3-medium ease-md3-emphasized;
+  }
+  .card-elevated:hover { @apply shadow-md3-3 -translate-y-1; }
+
+  .card-filled {
+    @apply rounded-md3-xl bg-md3-surface-variant transition-transform duration-md3-medium ease-md3-emphasized;
+  }
+  .card-filled:hover { @apply -translate-y-1; }
+
+  .card-outlined {
+    @apply rounded-md3-xl border border-md3-outline-variant bg-md3-surface transition-all duration-md3-medium ease-md3-emphasized;
+  }
+  .card-outlined:hover { @apply border-md3-outline shadow-md3-1 -translate-y-1; }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-md3-full border border-md3-outline px-4 py-1.5 text-xs font-medium text-md3-on-surface-variant transition-colors;
+  }
+  .chip:hover { @apply bg-md3-surface-variant; }
+
+  .section-label {
+    @apply font-mono text-xs font-medium uppercase tracking-widest text-md3-primary;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: rgb(var(--md-surface-rgb)); }
+::-webkit-scrollbar-thumb { background: rgb(var(--md-outlineVariant-rgb)); border-radius: 999px; border: 2px solid rgb(var(--md-surface-rgb)); }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--md-outline-rgb)); }
