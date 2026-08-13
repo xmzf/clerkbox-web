@@ -1,4 +1,4 @@
-import { Download, Code2, Check } from 'lucide-react';
+﻿import { Download, Code2, Check } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 export function DownloadSection() {
@@ -37,7 +37,7 @@ export function DownloadSection() {
                 <h3 className="text-2xl font-bold text-md3-on-surface">安装版</h3>
               </div>
             </div>
-            <p className="mb-2 font-mono text-sm text-md3-on-surface-variant">ClerkBox-Setup-1.6.0.exe</p>
+            <p className="mb-2 font-mono text-sm text-md3-on-surface-variant">ClerkBox-Setup-1.7.0.exe</p>
             <ul className="mb-8 flex flex-wrap gap-2">
               {['~90 MB', '可选安装路径', '桌面快捷方式', '开始菜单'].map((t) => (
                 <li key={t} className="flex items-center gap-1.5 rounded-md3-sm bg-md3-surface-container px-3 py-1 text-xs text-md3-on-surface-variant">
@@ -46,7 +46,7 @@ export function DownloadSection() {
               ))}
             </ul>
             <a
-              href="http://download.xmzf.space/d/download/ClerkBox%20Setup%201.6.0.exe?sign=58Ii3_L6-R3INbcB58prOJ_IC-s2Hulcenm9ZM3TAQ0=:0"
+              href="http://download.xmzf.space/d/download/ClerkBox%20Setup%201.7.0.exe?sign=REPLACE_WITH_1.7.0_SIGN"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-filled mt-auto"

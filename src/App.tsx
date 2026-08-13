@@ -3,6 +3,7 @@ import { TopAppBar } from './components/TopAppBar';
 import { Hero } from './components/Hero';
 import { Stats } from './components/Stats';
 import { Features } from './components/Features';
+import { WhatsNew } from './components/WhatsNew';
 import { Vibe } from './components/Vibe';
 import { Tools } from './components/Tools';
 import { DownloadSection } from './components/Download';
@@ -57,6 +58,7 @@ function App() {
           setCustomSeed={setCustomSeed}
         />
         <Stats />
+        <WhatsNew />
         <Features />
         <Vibe />
         <Tools />

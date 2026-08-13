@@ -1,4 +1,4 @@
-import {
+﻿import {
   Layers, RefreshCw, Bot, Sparkles, Database, Music2,
 } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';

@@ -1,4 +1,4 @@
-import { Download, MessageCircle } from 'lucide-react';
+﻿import { Download, MessageCircle } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 function GitHubIcon({ size = 18 }: { size?: number }) {
@@ -26,7 +26,7 @@ export function Footer() {
             已经准备好了。
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg text-md3-on-surface-variant">
-            免费 · 开源 · MIT 协议 —— 现在开始。
+            免费 · 开源 · Apache 2.0 协议 —— 现在开始。
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <a href="#download" className="btn-filled h-12 px-8 text-base">
@@ -70,7 +70,7 @@ export function Footer() {
 
       <div className="border-t border-md3-outline-variant bg-md3-surface-variant/50">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 font-mono text-xs tracking-wide text-md3-on-surface-variant sm:flex-row lg:px-10">
-          <span>© 2026 XMZF Studio · MIT License</span>
+          <span>© 2026 XMZF Studio · Apache License 2.0</span>
           <span className="flex items-center gap-2">
             <MessageCircle size={14} /> Made with care · Electron / React / MD3
           </span>

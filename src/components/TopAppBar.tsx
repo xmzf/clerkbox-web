@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Download, Menu, X } from 'lucide-react';
 
 const links = [
+  { label: '新特性', href: '#whats-new' },
   { label: '能力', href: '#features' },
   { label: 'VIBE', href: '#vibe' },
   { label: '工具', href: '#tools' },

@@ -14,6 +14,14 @@ const done = [
   'Token 用量追踪',
   '危险命令拦截',
   '文件修改自动备份',
+  'Anthropic Prompt Caching（缓存命中率展示）',
+  'AGENTS.md 项目指令（跨工具标准，CLAUDE.md 兼容回退）',
+  'WebUI 远程访问（浏览器操控 + token 认证）',
+  '国际化 i18n（中英运行时切换）',
+  'Token 用量统计面板（含 TokenUsageStats）',
+  '模型选择器按提供商分组可折叠',
+  '中断按钮强制停止（主进程子进程跟踪）',
+  'Apache 2.0 协议迁移（含专利授权）',
 ];
 
 const todo = [
@@ -32,7 +40,6 @@ const todo = [
   '命令面板（Ctrl+K）',
   '多窗口多会话',
   'Token 用量仪表盘',
-  '国际化 i18n',
   'macOS / Linux 支持',
 ];
 
@@ -67,7 +74,7 @@ export function Roadmap() {
               <span className="grid h-8 w-8 place-items-center rounded-md3-md bg-md3-primary-container text-md3-on-primary-container">
                 <Check size={16} strokeWidth={3} />
               </span>
-              v1.6.0 已完成
+              v1.7.0 已完成
             </h3>
             <ul className="grid gap-3 sm:grid-cols-2">
               {done.map((item) => (
@@ -84,7 +91,7 @@ export function Roadmap() {
               <span className="grid h-8 w-8 place-items-center rounded-md3-md bg-md3-tertiary-container text-md3-on-tertiary-container">
                 <Circle size={14} fill="currentColor" />
               </span>
-              v1.7+ 计划中
+              v1.8+ 计划中
             </h3>
             <ul className="grid gap-3 sm:grid-cols-2">
               {todo.map((item) => (
