@@ -1,5 +1,6 @@
 import { ArrowRight, Download, Sparkles } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
+import { AppWindow } from './AppWindow';
 
 function GitHubIcon({ size = 18 }: { size?: number }) {
   return (
@@ -74,14 +75,7 @@ export function Hero() {
             rightIn ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}
         >
-          <div className="mx-auto w-full max-w-[920px]">
-            <img
-              src="/hero-screenshot.png"
-              alt="ClerkBox 主界面截图"
-              className="block w-full select-none"
-              draggable={false}
-            />
-          </div>
+          <AppWindow />
         </div>
       </div>
     </section>
