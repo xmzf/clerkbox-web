@@ -74,54 +74,16 @@ export function Hero() {
             rightIn ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}
         >
-          <div
-            className="group relative mx-auto w-full max-w-[920px]"
-            style={{ perspective: '1800px' }}
-          >
-            <div className="pointer-events-none absolute -inset-8 -z-10 rounded-[40px] bg-gradient-to-br from-md3-primary/20 via-md3-tertiary/15 to-md3-secondary/20 opacity-70 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
-
-            <div className="overflow-hidden rounded-[14px] border border-md3-outline-variant/30 bg-md3-surface shadow-md3-4 transition-transform duration-500 ease-md3-emphasized group-hover:[transform:rotateY(-2deg)_rotateX(1deg)]">
-              <div className="flex h-9 items-center gap-2 border-b border-md3-outline-variant/15 bg-md3-surface-container/60 px-3">
-                <span className="h-2.5 w-2.5 rounded-full bg-md3-error/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-md3-tertiary/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-md3-secondary-container/80" />
-                <span className="ml-auto font-mono text-[10px] uppercase tracking-widest text-md3-on-surface-variant/60">
-                  ClerkBox · v1.7.0
-                </span>
-              </div>
-
-              <img
-                src="/hero-screenshot.png"
-                alt="ClerkBox 主界面截图"
-                className="block w-full select-none"
-                draggable={false}
-              />
-            </div>
-
-            <div
-              className="absolute -left-4 top-1/3 hidden rounded-md3-md border border-md3-outline-variant/40 bg-md3-surface-container/95 px-3 py-2 text-xs font-medium text-md3-on-surface shadow-md3-2 backdrop-blur-sm md:block"
-              style={{ animation: 'float-tag 6s ease-in-out infinite' }}
-            >
-              ✨ Hi there! How can I help you?
-            </div>
-
-            <div
-              className="absolute -right-3 bottom-10 hidden items-center gap-1.5 rounded-md3-full bg-md3-primary-container px-3 py-1.5 text-[11px] font-medium text-md3-on-primary-container shadow-md3-2 md:flex"
-              style={{ animation: 'float-tag 7s ease-in-out infinite reverse' }}
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-md3-primary" />
-              WebUI 远程访问 · 已上线
-            </div>
+          <div className="mx-auto w-full max-w-[920px]">
+            <img
+              src="/hero-screenshot.png"
+              alt="ClerkBox 主界面截图"
+              className="block w-full select-none"
+              draggable={false}
+            />
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes float-tag {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
-        }
-      `}</style>
     </section>
   );
 }
