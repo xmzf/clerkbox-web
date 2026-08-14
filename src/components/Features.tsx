@@ -6,10 +6,10 @@ import { useReveal } from '../hooks/useReveal';
 const features = [
   {
     icon: Layers,
-    title: '多模型即插即用',
-    en: 'Multi-Model',
-    desc: '内置 DeepSeek、GPT-4o、Claude 3.5、通义千问、GLM-4 预设，支持任意 OpenAI 兼容端点，主 Agent 与子 Agent 可独立选择模型。',
-    chips: ['自定义端点', '一键切换', '密钥加密'],
+    title: '多供应商即插即用',
+    en: 'Multi-Provider',
+    desc: '内置 DeepSeek、OpenAI、Anthropic、阿里通义、智谱 GLM 等供应商预设，每个供应商下加载自己的模型，同时接线任意 OpenAI 兼容自定义端点（baseUrl + apiKey + model）。主 Agent 与子 Agent 可独立选择模型。',
+    chips: ['供应商预设', '自定义端点', '主/子独立'],
     span: 'lg:col-span-7',
   },
   {
