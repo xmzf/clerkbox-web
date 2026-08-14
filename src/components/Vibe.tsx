@@ -47,7 +47,7 @@ export function Vibe() {
             mockIn ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
           style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/572897/pexels-photo-572897.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop)',
+            backgroundImage: 'linear-gradient(135deg, rgb(20 22 28 / 0.85) 0%, rgb(40 44 52 / 0.75) 100%)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
