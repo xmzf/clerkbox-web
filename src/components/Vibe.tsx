@@ -1,5 +1,6 @@
+import { useState, useRef, useEffect } from 'react';
 import {
-  Pause, SkipBack, SkipForward, Maximize, Settings2, LogOut, Music,
+  Play, Pause, SkipBack, SkipForward, Maximize, Settings2, LogOut, Music,
   FolderOpen, Hammer, ChevronDown, Brain, Zap, Send, FileText,
 } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
@@ -21,9 +22,60 @@ const glassSubtle = {
   boxShadow: 'inset 0 1px 0 rgb(255 255 255 / 0.24), 0 4px 20px rgb(0 0 0 / 0.24)',
 } as const;
 
+const VIBE_MUSIC_URL = 'https://download.xmzf.space/d/well.mp3?sign=80T1gAdArbx1nhRPlVCxMh6HYUN5ZojtXqRrrfZV8aM=:0';
+
+function formatTime(t: number) {
+  if (!isFinite(t) || isNaN(t)) return '0:00';
+  const m = Math.floor(t / 60);
+  const s = Math.floor(t % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
 export function Vibe() {
   const { ref: headRef, revealed: headIn } = useReveal<HTMLDivElement>(0.1);
   const { ref: mockRef, revealed: mockIn } = useReveal<HTMLDivElement>(0.1);
+
+  // 真实音频播放
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const onTime = () => { setProgress(audio.currentTime); setDuration(audio.duration || 0); };
+    const onEnd = () => { audio.currentTime = 0; setProgress(0); setIsPlaying(false); };
+    audio.addEventListener('timeupdate', onTime);
+    audio.addEventListener('loadedmetadata', onTime);
+    audio.addEventListener('ended', onEnd);
+    return () => {
+      audio.removeEventListener('timeupdate', onTime);
+      audio.removeEventListener('loadedmetadata', onTime);
+      audio.removeEventListener('ended', onEnd);
+    };
+  }, []);
+
+  const togglePlay = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+      } catch { /* 浏览器自动播放策略阻止 */ }
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.currentTime = Number(e.target.value);
+    setProgress(audio.currentTime);
+  };
 
   return (
     <section id="vibe" className="px-6 py-24 lg:px-10 lg:py-32">
@@ -52,6 +104,9 @@ export function Vibe() {
             backgroundPosition: 'center',
           }}
         >
+          {/* 真实音频元素，默认不自动播放 */}
+          <audio ref={audioRef} src={VIBE_MUSIC_URL} preload="metadata" />
+
           <div className="absolute inset-0 bg-black/30" />
 
           <div className="relative z-10 flex h-[520px] flex-col text-white">
@@ -61,21 +116,36 @@ export function Vibe() {
               <span className="text-xs font-medium">全屏</span>
             </button>
 
-            {/* 右上：悬浮音乐播放器 —— VibeMusicPlayer */}
+            {/* 右上：悬浮音乐播放器 —— VibeMusicPlayer（可交互） */}
             <div className="absolute right-4 top-4 z-50 flex items-center gap-3 rounded-full px-4 py-2 text-white/90" style={glass}>
               <Music size={16} className="text-white/70" />
               <div className="flex min-w-[140px] flex-col">
                 <span className="max-w-[160px] truncate text-xs font-medium">well.mp3</span>
                 <div className="mt-1 flex items-center gap-2">
-                  <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/20">
-                    <div className="h-full w-2/5 rounded-full bg-white" />
-                  </div>
-                  <span className="text-[10px] tabular-nums text-white/60">1:24/3:36</span>
+                  <input
+                    type="range"
+                    min={0}
+                    max={duration || 1}
+                    value={progress}
+                    onChange={handleSeek}
+                    className="flex-1 h-1 bg-white/20 rounded-full appearance-none cursor-pointer accent-white"
+                    aria-label="seek"
+                  />
+                  <span className="text-[10px] tabular-nums text-white/60">
+                    {formatTime(progress)}/{formatTime(duration)}
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-1">
                 <span className="grid h-7 w-7 place-items-center rounded-full hover:bg-white/15"><SkipBack size={14} /></span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20 hover:bg-white/30"><Pause size={14} /></span>
+                <button
+                  type="button"
+                  onClick={togglePlay}
+                  className="grid h-8 w-8 place-items-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                  aria-label={isPlaying ? 'pause' : 'play'}
+                >
+                  {isPlaying ? <Pause size={14} /> : <Play size={14} className="ml-0.5" />}
+                </button>
                 <span className="grid h-7 w-7 place-items-center rounded-full hover:bg-white/15"><SkipForward size={14} /></span>
               </div>
             </div>
