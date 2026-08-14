@@ -41,7 +41,7 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-md3-on-surface-variant">
-            单一 AI Agent 桌面工作台。多模型对话、ReAct 工具循环、子 Agent 编排、Skills 技能市场、长期记忆与 VIBE 沉浸模式 —— 全部本地运行，数据不出本机。
+            单一 AI Agent 桌面工作台。多供应商对话、ReAct 工具循环、子 Agent 编排、Skills 技能市场、长期记忆与 VIBE 沉浸模式 —— 全部本地运行，数据不出本机。
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">

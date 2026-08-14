@@ -65,7 +65,7 @@ export function Vibe() {
             <div className="absolute right-4 top-4 z-50 flex items-center gap-3 rounded-full px-4 py-2 text-white/90" style={glass}>
               <Music size={16} className="text-white/70" />
               <div className="flex min-w-[140px] flex-col">
-                <span className="max-w-[160px] truncate text-xs font-medium">night-drive.mp3</span>
+                <span className="max-w-[160px] truncate text-xs font-medium">well.mp3</span>
                 <div className="mt-1 flex items-center gap-2">
                   <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/20">
                     <div className="h-full w-2/5 rounded-full bg-white" />
@@ -140,9 +140,9 @@ export function Vibe() {
 
         <div className="mt-10 grid gap-5 sm:grid-cols-3">
           {[
-            { title: '全屏背景', desc: 'Pexels 高质量图片，支持自定义网络图或本地图片。' },
+            { title: '全屏背景', desc: '默认全屏背景图，可自定义网络图或本地图片。' },
             { title: '液态玻璃 UI', desc: 'blur 40px + saturate 180%，三档毛玻璃视觉语言。' },
-            { title: '悬浮播放器', desc: '右上角音乐控制，支持单曲或文件夹循环播放。' },
+            { title: '悬浮播放器', desc: '右上角音乐控制，支持单曲 / 音乐文件夹播放。' },
           ].map((item, i) => (
             <div key={item.title} className="card-filled p-6" style={{ transitionDelay: `${120 + i * 80}ms` }}>
               <h4 className="text-lg font-bold text-md3-on-surface">{item.title}</h4>

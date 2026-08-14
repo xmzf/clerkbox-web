@@ -24,8 +24,8 @@ const highlights = [
     icon: Globe2,
     title: 'WebUI 远程访问',
     en: 'Remote Access',
-    desc: '一键启动内置 Web 服务，把完整界面暴露给浏览器。token 认证、双模式数据同步、服务器部署自动启动，适合把应用部署在服务器上从任何设备访问。',
-    chips: ['浏览器操控', 'Token 认证', '服务器部署'],
+    desc: '一键启动内置 Web 服务，把完整界面暴露给同一局域网内的任意浏览器。每次启动生成随机 token，服务器部署可设环境变量 CLERKBOX_WEBUI_AUTO=1 自动开启，与桌面端完全双向同步。',
+    chips: ['随机 token', 'SSE 流式', '服务器部署'],
     accent: 'md3-secondary',
   },
   {
