@@ -147,10 +147,10 @@ export function AppWindow() {
                     <Hammer size={13} /> Craft <ChevronDown size={11} />
                   </span>
                   <span className="grid h-8 w-8 place-items-center rounded-md3-sm text-md3-on-surface-variant"><Brain size={15} /></span>
-                  <span className="flex h-8 items-center gap-1 rounded-md3-sm px-2 text-[12px] text-md3-on-surface-variant">
+                  <span className="flex h-8 items-center gap-1 flex-none whitespace-nowrap rounded-md3-sm px-2 text-[12px] text-md3-on-surface-variant">
                     <Zap size={13} /> 技能 <ChevronDown size={11} />
                   </span>
-                  <span className="flex h-8 items-center gap-1 rounded-md3-sm px-2 text-[12px] text-md3-on-surface-variant">
+                  <span className="flex h-8 items-center gap-1 flex-none whitespace-nowrap rounded-md3-sm px-2 text-[12px] text-md3-on-surface-variant">
                     MiniMax-M3 <ChevronDown size={11} />
                   </span>
                   <span className="flex-1" />
