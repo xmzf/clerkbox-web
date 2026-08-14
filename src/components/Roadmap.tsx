@@ -17,10 +17,14 @@ const done = [
   'Anthropic Prompt Caching（缓存命中率展示）',
   'AGENTS.md 项目指令（跨工具标准，CLAUDE.md 兼容回退）',
   'WebUI 远程访问（浏览器操控 + token 认证）',
-  '国际化 i18n（中英运行时切换）',
   'Token 用量统计面板（含 TokenUsageStats）',
   '模型选择器按提供商分组可折叠',
   '中断按钮强制停止（主进程子进程跟踪）',
+  '模型级高级设置（Temperature / 输入输出 token / 思考能力）',
+  '思考档位体系（effort / budget / enable / glm / auto 五种协议）',
+  '技能商店迁至 CocoLoop Hub（国内加速 / BSS 等级 / 下载量）',
+  'Electron 42 网络工具修复（Node 22+ webSearch / webFetch）',
+  '发布包含卸载器',
   'Apache 2.0 协议迁移（含专利授权）',
 ];
 

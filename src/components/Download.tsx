@@ -46,7 +46,7 @@ export function DownloadSection() {
               ))}
             </ul>
             <a
-              href="http://download.xmzf.space/d/download/ClerkBox%20Setup%201.7.0.exe?sign=REPLACE_WITH_1.7.0_SIGN"
+              href="https://github.com/XMZF-vAI/clerkbox/releases/download/v1.7.0/ClerkBox.Setup.1.7.0.exe"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-filled mt-auto"
@@ -60,6 +60,7 @@ export function DownloadSection() {
           <div className="mb-4 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-white/50">
             <Code2 size={14} /> 从源码构建
           </div>
+          <div className="mb-3 text-sm text-md3-inverse-on-surface/80">需要便携版？可在 <a href="https://github.com/XMZF-vAI/clerkbox/releases/tag/v1.7.0" target="_blank" rel="noopener noreferrer" className="underline decoration-dotted underline-offset-4 hover:text-md3-tertiary-container">Releases</a> 下载。不需要下载源码。</div>
           <code className="block font-mono text-sm leading-7 text-white/90">
             <span className="text-md3-tertiary-container">$</span> git clone https://github.com/XMZF-vAI/clerkbox.git<br />
             <span className="text-md3-tertiary-container">$</span> cd ClerkBox && npm install<br />

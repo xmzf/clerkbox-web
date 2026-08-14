@@ -1,5 +1,5 @@
 import {
-  Globe, FileCode2, Cpu, Globe2, Languages, BarChart3, ShieldAlert, Scale, Sparkles,
+  Globe, FileCode2, Cpu, Globe2, Languages, BarChart3, ShieldAlert, Scale, Sparkles, Sliders, Plug,
 } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
@@ -61,6 +61,22 @@ const highlights = [
     accent: 'md3-secondary',
   },
   {
+    icon: Sliders,
+    title: '模型级高级设置',
+    en: 'Per-Model Config',
+    desc: '每个模型可单独配置 Temperature、输入 / 输出 token 上限、思考能力；支持 effort / budget / enable / glm / auto 五种思考协议风格，按厂商预设自动推断。',
+    chips: ['Temperature', 'Token 上限', '思考档位'],
+    accent: 'md3-primary',
+  },
+  {
+    icon: Plug,
+    title: '技能商店 CocoLoop Hub',
+    en: 'Skill Hub',
+    desc: '技能商店迁移至 CocoLoop Hub（国内加速），含 BSS 等级、下载量、来源徽章。Windows zip 解压失败修复，安装一次到位。',
+    chips: ['CocoLoop Hub', 'BSS 等级', '下载量'],
+    accent: 'md3-tertiary',
+  },
+  {
     icon: Globe,
     title: '模型选择器按提供商分组',
     en: 'Model Picker',
@@ -117,16 +133,16 @@ export function WhatsNew() {
               这一版带来了什么
             </h2>
             <p className="mt-3 max-w-xl text-base text-md3-on-surface-variant">
-              v1.6 → v1.7 是一次厚实的工程升级 —— 8 项关键改进，覆盖从成本到协作、从协议到远程访问。
+              v1.6 → v1.7 是一次厚实的工程升级 —— 10 项关键改进，覆盖从成本到协作、从协议到远程访问。
             </p>
           </div>
           <div className="inline-flex items-center gap-2 self-start rounded-md3-full bg-md3-primary-container px-4 py-1.5 text-xs font-medium text-md3-on-primary-container sm:self-end">
             <Sparkles size={14} />
-            8 项升级 · Apache 2.0
+            10 项升级 · Apache 2.0
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {highlights.map((h, i) => (
             <HighlightCard key={h.title} item={h} index={i} />
           ))}

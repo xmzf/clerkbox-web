@@ -1,20 +1,24 @@
-import { Play, SkipForward, Maximize2, Settings2, LogOut, Music } from 'lucide-react';
+import {
+  Pause, SkipBack, SkipForward, Maximize, Settings2, LogOut, Music,
+  FolderOpen, Hammer, ChevronDown, Brain, Zap, Send, FileText,
+} from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
-const glassStrong = {
-  background: 'linear-gradient(135deg, rgba(20,22,28,0.52), rgba(20,22,28,0.38))',
+// 与 ClerkBox src/index.css 中 .liquid-glass 系列完全一致
+const glass = {
+  background: 'linear-gradient(135deg, rgb(20 22 28 / 0.52) 0%, rgb(20 22 28 / 0.38) 100%)',
   backdropFilter: 'blur(40px) saturate(180%)',
   WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-  border: '1px solid rgba(255,255,255,0.22)',
-  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.32), 0 8px 32px rgba(0,0,0,0.32)',
+  border: '1px solid rgb(255 255 255 / 0.22)',
+  boxShadow: 'inset 0 1px 0 rgb(255 255 255 / 0.32), inset 0 -1px 0 rgb(255 255 255 / 0.08), 0 8px 32px rgb(0 0 0 / 0.32)',
 } as const;
 
 const glassSubtle = {
-  background: 'linear-gradient(135deg, rgba(20,22,28,0.42), rgba(20,22,28,0.30))',
+  background: 'linear-gradient(135deg, rgb(20 22 28 / 0.42) 0%, rgb(20 22 28 / 0.30) 100%)',
   backdropFilter: 'blur(28px) saturate(160%)',
   WebkitBackdropFilter: 'blur(28px) saturate(160%)',
-  border: '1px solid rgba(255,255,255,0.18)',
-  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.24), 0 4px 20px rgba(0,0,0,0.24)',
+  border: '1px solid rgb(255 255 255 / 0.18)',
+  boxShadow: 'inset 0 1px 0 rgb(255 255 255 / 0.24), 0 4px 20px rgb(0 0 0 / 0.24)',
 } as const;
 
 export function Vibe() {
@@ -50,49 +54,85 @@ export function Vibe() {
         >
           <div className="absolute inset-0 bg-black/30" />
 
-          <div className="relative z-10 flex min-h-[460px] flex-col text-white">
-            <div className="absolute right-4 top-4 z-50 flex items-center gap-3 rounded-full px-4 py-2 text-white/90" style={glassStrong}>
+          <div className="relative z-10 flex h-[520px] flex-col text-white">
+            {/* 左上：全屏按钮 —— VibeControls */}
+            <button className="absolute left-4 top-4 z-50 flex items-center gap-2 rounded-full px-3 py-2 text-white/90" style={glass}>
+              <Maximize size={14} />
+              <span className="text-xs font-medium">全屏</span>
+            </button>
+
+            {/* 右上：悬浮音乐播放器 —— VibeMusicPlayer */}
+            <div className="absolute right-4 top-4 z-50 flex items-center gap-3 rounded-full px-4 py-2 text-white/90" style={glass}>
               <Music size={16} className="text-white/70" />
-              <span className="max-w-[120px] truncate text-xs font-medium">夜间氛围</span>
-              <div className="h-1 w-16 overflow-hidden rounded-full bg-white/20">
-                <div className="h-full w-2/5 rounded-full bg-white/60" />
+              <div className="flex min-w-[140px] flex-col">
+                <span className="max-w-[160px] truncate text-xs font-medium">night-drive.mp3</span>
+                <div className="mt-1 flex items-center gap-2">
+                  <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/20">
+                    <div className="h-full w-2/5 rounded-full bg-white" />
+                  </div>
+                  <span className="text-[10px] tabular-nums text-white/60">1:24/3:36</span>
+                </div>
               </div>
-              <span className="text-[10px] text-white/60 tabular-nums">01:24</span>
-              <button className="grid h-7 w-7 place-items-center rounded-full hover:bg-white/15">
-                <SkipForward size={12} />
-              </button>
-              <button className="grid h-8 w-8 place-items-center rounded-full bg-white/20 hover:bg-white/30">
-                <Play size={14} fill="currentColor" />
-              </button>
-            </div>
-
-            <div className="absolute left-4 top-4 z-50 flex items-center gap-1.5 rounded-full px-3 py-2 text-xs text-white/90" style={glassStrong}>
-              <Maximize2 size={14} /> 全屏
-            </div>
-
-            <div className="absolute bottom-4 left-4 z-50 flex items-center gap-1.5 rounded-full px-4 py-2 text-xs text-white/90" style={glassStrong}>
-              <Settings2 size={16} /> 定制
-            </div>
-
-            <div className="absolute bottom-4 right-4 z-50 flex items-center gap-1.5 rounded-full px-4 py-2 text-xs text-white/90" style={glassStrong}>
-              <LogOut size={16} /> 退出
-            </div>
-
-            <div className="flex flex-1 flex-col justify-center gap-4 px-12 py-16">
-              <div className="self-end max-w-[80%] rounded-[20px] px-5 py-3 text-sm" style={glassStrong}>
-                今晚只想安静地写完这份设计稿。
-              </div>
-              <div className="max-w-[80%] rounded-[20px] px-5 py-3 text-sm text-white/90" style={glassSubtle}>
-                好。我整理了大纲与参考资料，随时可以开始。
+              <div className="flex items-center gap-1">
+                <span className="grid h-7 w-7 place-items-center rounded-full hover:bg-white/15"><SkipBack size={14} /></span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20 hover:bg-white/30"><Pause size={14} /></span>
+                <span className="grid h-7 w-7 place-items-center rounded-full hover:bg-white/15"><SkipForward size={14} /></span>
               </div>
             </div>
 
-            <div className="relative z-10 px-12 pb-8">
-              <div className="flex max-w-3xl items-center gap-2 rounded-[28px] px-5 py-3.5" style={glassStrong}>
-                <span className="flex-1 text-sm text-white/50">输入消息…</span>
-                <button className="grid h-9 w-9 place-items-center rounded-full bg-white/25 text-white hover:bg-white/35">
-                  <Play size={16} fill="currentColor" />
-                </button>
+            {/* 左下 / 右下：定制 / 退出 —— VibeControls */}
+            <button className="absolute bottom-4 left-4 z-50 flex items-center gap-2 rounded-full px-4 py-2 text-white/90" style={glass}>
+              <Settings2 size={16} />
+              <span className="text-xs font-medium">定制</span>
+            </button>
+            <button className="absolute bottom-4 right-4 z-50 flex items-center gap-2 rounded-full px-4 py-2 text-white/90" style={glass}>
+              <LogOut size={16} />
+              <span className="text-xs font-medium">退出</span>
+            </button>
+
+            {/* 消息区 —— MessageItem vibe 分支：rounded-md3-md(12px) */}
+            <div className="flex flex-1 flex-col justify-center gap-3 px-12 py-14">
+              <div className="flex justify-end">
+                <div className="max-w-[85%] rounded-md3-md px-4 py-2.5 text-sm leading-relaxed text-white" style={glass}>
+                  今晚只想安静地写完这份设计稿。
+                </div>
+              </div>
+              <div className="flex justify-start">
+                <div className="max-w-[90%] rounded-md3-md px-4 py-2.5 text-sm leading-relaxed text-white/90" style={glassSubtle}>
+                  好。我整理了大纲与参考资料，随时可以开始。
+                </div>
+              </div>
+              <div className="flex justify-start">
+                <div className="flex max-w-md items-center gap-2 rounded-md3-xs border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] text-white/60">
+                  <FileText size={11} />
+                  <span className="font-medium text-white/80">read_file</span>
+                  <span className="truncate text-white/40">outline.md</span>
+                  <span className="ml-auto rounded-md3-xs bg-emerald-500/15 px-1 py-0.5 text-[10px] text-emerald-400">完成</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 输入区 —— ChatInput vibe 分支：liquid-glass rounded-[28px] + 工具栏 */}
+            <div className="relative z-10 px-12 pb-10">
+              <div className="mx-auto flex max-w-3xl flex-col gap-2 rounded-[28px] px-5 py-3.5" style={glass}>
+                <span className="min-h-[20px] py-1 text-sm text-white/50">说点什么…</span>
+                <div className="flex items-center gap-1">
+                  <span className="grid h-8 w-8 place-items-center rounded-md3-sm text-white/70 hover:bg-white/15"><FolderOpen size={16} /></span>
+                  <span className="flex h-8 items-center gap-1 rounded-md3-sm bg-white/10 px-2 text-xs font-medium text-white/80">
+                    <Hammer size={14} /> Craft <ChevronDown size={12} />
+                  </span>
+                  <span className="grid h-8 w-8 place-items-center rounded-md3-sm text-white/70 hover:bg-white/15"><Brain size={16} /></span>
+                  <span className="flex h-8 items-center gap-1 rounded-md3-sm px-2 text-xs text-white/70">
+                    <Zap size={14} /> 技能 <ChevronDown size={12} />
+                  </span>
+                  <span className="flex h-8 items-center gap-1 rounded-md3-sm px-2 text-xs text-white/70">
+                    MiniMax-M3 <ChevronDown size={12} />
+                  </span>
+                  <span className="flex-1" />
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-white/25 text-white hover:bg-white/35">
+                    <Send size={16} />
+                  </span>
+                </div>
               </div>
             </div>
           </div>
