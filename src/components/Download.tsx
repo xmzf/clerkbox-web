@@ -45,14 +45,24 @@ export function DownloadSection() {
                 </li>
               ))}
             </ul>
-            <a
-              href="https://github.com/XMZF-vAI/clerkbox/releases/download/v1.7.0/ClerkBox.Setup.1.7.0.exe"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-filled mt-auto"
-            >
-              <Download size={18} /> 直接下载安装包
-            </a>
+            <div className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a
+                href="https://gh.jasonzeng.dev/https://github.com/XMZF-vAI/clerkbox/releases/download/v1.7.0/ClerkBox.Setup.1.7.0.exe"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-filled flex-1 sm:flex-none"
+              >
+                <Download size={18} /> 国内加速下载
+              </a>
+              <a
+                href="https://github.com/XMZF-vAI/clerkbox/releases/download/v1.7.0/ClerkBox.Setup.1.7.0.exe"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outlined flex-1 sm:flex-none"
+              >
+                <Download size={18} /> GitHub 原链
+              </a>
+            </div>
           </div>
         </div>
 
