@@ -47,7 +47,7 @@ export function Vibe() {
             mockIn ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
           style={{
-            backgroundImage: 'linear-gradient(135deg, rgb(20 22 28 / 0.85) 0%, rgb(40 44 52 / 0.75) 100%)',
+            backgroundImage: 'url(https://download.xmzf.space/d/all.jpg?sign=76nF_pS2izwdX4O9NtrMo16a1LzhIaN8K1NX9Vuhdus=:0)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
