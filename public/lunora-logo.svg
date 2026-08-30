@@ -1,0 +1,32 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="plate" x1="86" y1="54" x2="420" y2="456" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF9F0"/>
+      <stop offset="1" stop-color="#EDE0D1"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="105" y1="78" x2="382" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D8B779"/>
+      <stop offset="0.58" stop-color="#CC785C"/>
+      <stop offset="1" stop-color="#7A3F30"/>
+    </linearGradient>
+    <linearGradient id="path" x1="178" y1="335" x2="346" y2="185" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D8B779"/>
+      <stop offset="1" stop-color="#CC785C"/>
+    </linearGradient>
+    <filter id="depth" x="52" y="46" width="408" height="418" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#4D2B22" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="116" fill="url(#plate)"/>
+  <rect x="1.5" y="1.5" width="509" height="509" rx="114.5" stroke="#4D2B22" stroke-opacity="0.08" stroke-width="3"/>
+
+  <g filter="url(#depth)">
+    <path d="M377 111C350 96 319 88 285 88C190 88 113 165 113 260C113 355 190 432 285 432C319 432 350 424 377 409C349 421 318 424 289 418C211 405 151 338 151 257C151 176 211 109 289 96C318 91 349 99 377 111Z" fill="url(#rim)"/>
+    <path d="M188 334H308" stroke="url(#path)" stroke-width="42" stroke-linecap="round"/>
+    <path d="M188 334L331 191" stroke="url(#path)" stroke-width="42" stroke-linecap="round"/>
+    <path d="M331 191H380" stroke="#CC785C" stroke-width="42" stroke-linecap="round"/>
+    <circle cx="380" cy="191" r="14" fill="#7FC8B4"/>
+    <circle cx="331" cy="191" r="7" fill="#FFF9F0" fill-opacity="0.9"/>
+  </g>
+</svg>

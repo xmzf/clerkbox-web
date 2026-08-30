@@ -1,0 +1,1260 @@
+/* ============================================================
+   ClerkBox 应用界面复刻（Hero mockup）
+   所有颜色/尺寸对照真实应用代码：
+   - 主题：SchemeTonalSpot('#5F6368', dark) 运行时输出（经典灰种子）
+   - 布局：TitleBar h-11 / Sidebar w-64 / 输入盒 rounded-[28px] px-5 py-3.5
+   - 气泡：用户 bg-primaryContainer 右对齐；助手 bg-surfaceContainerHigh 左对齐
+   ============================================================ */
+
+.mock-outer {
+  position: relative;
+  max-width: 1200px;
+  margin: 78px auto 0;
+  padding: 0 24px;
+}
+
+.mock-glow {
+  position: absolute;
+  inset: 40px 60px -30px;
+  background: radial-gradient(520px 260px at 50% 100%, rgba(152, 204, 249, 0.13), transparent 74%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.mock {
+  /* —— 真实运行时主题 token（经典灰种子 · dark）—— */
+  --app-surface: #101418;
+  --app-surface-dim: #101418;
+  --app-surface-bright: #363a3e;
+  --app-container: #1c2024;
+  --app-high: #272a2e;
+  --app-highest: #313539;
+  --app-on-surface: #e0e2e8;
+  --app-on-var: #c2c7ce;
+  --app-outline: #8c9198;
+  --app-ov: #42474e;
+  --app-primary: #98ccf9;
+  --app-on-primary: #003350;
+  --app-pc: #044b71;
+  --app-on-pc: #cce5ff;
+  --app-sc: #394856;
+  --app-on-sc: #d4e4f6;
+  --app-tertiary: #d1bfe7;
+  --app-on-tc: #ecdcff;
+  --app-error: #ffb4ab;
+  --app-ok: #81c784;
+  --app-warn: #f2c078;
+  --app-info: #7cd3ff;
+
+  position: relative;
+  display: flex;
+  height: 620px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--app-ov) 70%, transparent);
+  background: var(--app-surface);
+  overflow: hidden;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--app-on-surface);
+  box-shadow:
+    0 60px 140px -46px rgba(0, 0, 0, 0.85),
+    0 0 90px -50px rgba(152, 204, 249, 0.35);
+}
+
+.mock * {
+  box-sizing: border-box;
+}
+
+/* ---------- 工具行 / 通用 ---------- */
+.m-row-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: var(--app-on-var);
+  flex-shrink: 0;
+}
+
+.m-spin {
+  flex-shrink: 0;
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid color-mix(in srgb, var(--app-primary) 28%, transparent);
+  border-top-color: var(--app-primary);
+  border-radius: 999px;
+  animation: mspin 0.9s linear infinite;
+}
+
+@keyframes mspin {
+  to { transform: rotate(360deg); }
+}
+
+.m-caret {
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  margin-left: 2px;
+  vertical-align: -2px;
+  background: var(--app-primary);
+  animation: mcaret 0.9s steps(1) infinite;
+}
+
+@keyframes mcaret {
+  50% { opacity: 0; }
+}
+
+/* ---------- TitleBar（只在侧边栏右侧：h-11 px-4，对照 App.tsx 布局） ---------- */
+.m-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-titlebar {
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 12px;
+  background: color-mix(in srgb, var(--app-surface) 82%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--app-on-var) 10%, transparent);
+  user-select: none;
+}
+
+.m-mainrow {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.m-tb-left,
+.m-tb-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.m-tb-left .m-row-btn {
+  margin-right: 6px;
+}
+
+.m-ver {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--app-high);
+  color: var(--app-on-var);
+}
+
+.m-vibe {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 8px;
+  margin-right: 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--app-tertiary);
+  background: color-mix(in srgb, var(--app-tertiary) 15%, transparent);
+}
+
+.m-ctx {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  margin-right: 2px;
+}
+
+.m-row-btn.active {
+  background: color-mix(in srgb, var(--app-primary) 15%, transparent);
+  color: var(--app-primary);
+}
+
+.m-row-btn.close:hover {
+  background: color-mix(in srgb, var(--app-error) 20%, transparent);
+  color: var(--app-error);
+}
+
+/* ---------- Sidebar（w-64 全高贴顶 bg-surfaceDim，对照 Sidebar.tsx） ---------- */
+.m-side {
+  width: 256px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--app-surface-dim);
+  border-right: 1px solid color-mix(in srgb, var(--app-on-var) 10%, transparent);
+  min-height: 0;
+}
+
+.m-side-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+}
+
+.m-side-head img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.m-side-head .nm {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--app-on-var);
+}
+
+.m-side-btns {
+  padding: 0 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.m-side-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 7px 12px;
+  border-radius: 12px;
+  background: var(--app-high);
+  font-size: 12.5px;
+  color: var(--app-on-surface);
+}
+
+.m-side-btn.on {
+  background: color-mix(in srgb, var(--app-primary) 15%, transparent);
+  color: var(--app-primary);
+}
+
+.m-tasklabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 14px 6px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--app-on-var) 50%, transparent);
+}
+
+.m-groups {
+  flex: 1;
+  overflow: hidden;
+  padding: 0 8px;
+  min-height: 0;
+}
+
+.m-grp {
+  margin-bottom: 4px;
+}
+
+.m-grp-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--app-on-var) 70%, transparent);
+}
+
+.m-grp-head .cnt {
+  margin-left: auto;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--app-on-var) 40%, transparent);
+}
+
+.m-task {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  margin: 0 0 2px 8px;
+  border-radius: 4px;
+  font-size: 12.5px;
+  color: color-mix(in srgb, var(--app-on-var) 85%, transparent);
+}
+
+.m-task .ic {
+  opacity: 0.7;
+  display: flex;
+}
+
+.m-task .tt {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-task.active {
+  background: var(--app-sc);
+  color: var(--app-on-sc);
+  font-weight: 500;
+}
+
+.m-task.active .tt {
+  color: var(--app-on-sc);
+}
+
+.m-side-foot {
+  border-top: 1px solid color-mix(in srgb, var(--app-on-var) 10%, transparent);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.m-foot-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--app-on-var);
+}
+
+.m-foot-row .avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #6d7a8c, #394856);
+  flex-shrink: 0;
+}
+
+/* ---------- Chat（bg-surface，对照 ChatPage/MessageItem） ---------- */
+.m-chat {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--app-surface);
+}
+
+.m-msgs {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--app-on-var) 22%, transparent) transparent;
+}
+
+.m-msgs::-webkit-scrollbar {
+  width: 8px;
+}
+
+.m-msgs::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--app-on-var) 22%, transparent);
+  border-radius: 999px;
+}
+
+.m-msgs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 用户消息：右对齐 primaryContainer 气泡 */
+.m-user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.m-user-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 85%;
+}
+
+.m-user-bubble {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 12px;
+  background: var(--app-pc);
+  color: var(--app-on-pc);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.m-chip-goal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--app-tertiary) 15%, transparent);
+  color: var(--app-tertiary);
+  flex-shrink: 0;
+}
+
+.m-time {
+  font-size: 10px;
+  padding: 0 4px;
+  margin-top: 2px;
+  color: color-mix(in srgb, var(--app-on-var) 32%, transparent);
+}
+
+/* 思考折叠头（可点击展开） */
+.m-thought {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 3px 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--app-on-var) 60%, transparent);
+  text-align: left;
+}
+
+.m-thought:hover {
+  color: color-mix(in srgb, var(--app-on-var) 80%, transparent);
+}
+
+.m-thought .chev {
+  color: color-mix(in srgb, var(--app-on-var) 32%, transparent);
+  display: flex;
+}
+
+/* 思考内容块（对照 ThinkingHeader 展开态：bg-secondary/5 border） */
+.m-think-detail {
+  margin: 2px 0 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--app-secondary, #b8c8d9) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--app-secondary, #b8c8d9) 10%, transparent);
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--app-on-var) 60%, transparent);
+}
+
+/* 助手气泡：surfaceContainerHigh + markdown */
+.m-ai-bubble {
+  width: fit-content;
+  max-width: 90%;
+  padding: 9px 16px;
+  border-radius: 12px;
+  background: var(--app-high);
+  color: var(--app-on-surface);
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+
+/* 紧凑工具行：h-7 [工具图标 名称 路径chip +N/−M]，可点击展开参数明细 */
+.m-tool-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.m-tool {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 4px;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.m-tool:hover {
+  background: color-mix(in srgb, var(--app-high) 40%, transparent);
+}
+
+.m-tool-wrap > .m-tool-detail {
+  margin: 2px 0 4px 8px;
+  padding: 2px 0 2px 14px;
+  border-left: 1px solid color-mix(in srgb, var(--app-on-var) 10%, transparent);
+}
+
+.m-tool-detail .lb {
+  font-size: 10px;
+  color: color-mix(in srgb, var(--app-on-var) 55%, transparent);
+}
+
+.m-tool-detail pre {
+  margin: 3px 0 0;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background: var(--app-high);
+  font-family: var(--mono);
+  font-size: 10.3px;
+  line-height: 1.6;
+  color: var(--app-on-surface);
+  overflow: hidden;
+  white-space: pre;
+}
+
+.m-tool .st {
+  display: flex;
+  width: 16px;
+  justify-content: center;
+  color: color-mix(in srgb, var(--app-on-var) 50%, transparent);
+  flex-shrink: 0;
+}
+
+.m-tool .nm {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--app-on-surface) 85%, transparent);
+  flex-shrink: 0;
+}
+
+.m-tool .path {
+  display: inline-flex;
+  align-items: center;
+  height: 19px;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--app-container) 62%, transparent);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: color-mix(in srgb, var(--app-on-var) 70%, transparent);
+  white-space: nowrap;
+}
+
+.m-tool .cnt-add {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--app-ok);
+}
+
+.m-tool .cnt-del {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--app-error);
+}
+
+.diff-add { color: var(--app-ok); }
+.diff-del { color: var(--app-error); }
+
+/* ---------- AgentStatusIndicator：3×3 像素网格 + 阶段文案 + 计时 ---------- */
+.m-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+}
+
+.m-status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 5px);
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.m-status-grid .cell {
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--app-on-surface);
+}
+
+@keyframes pixel-on {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+.m-status-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--app-on-surface);
+}
+
+.m-status-time {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--app-on-var) 60%, transparent);
+}
+
+/* ---------- GoalBanner（mx-4 mb-3 tertiary/10，对照 GoalBanner.tsx） ---------- */
+.m-goal {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 16px 10px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--app-tertiary) 25%, transparent);
+  background: color-mix(in srgb, var(--app-tertiary) 10%, transparent);
+}
+
+.m-goal .gt-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.m-goal .gt-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.m-goal .pill {
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--app-tertiary) 15%, transparent);
+  color: var(--app-tertiary);
+}
+
+.m-goal .cond {
+  margin-top: 3px;
+  font-size: 12.5px;
+  opacity: 0.9;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-goal .meta {
+  margin-top: 3px;
+  font-size: 10.5px;
+  opacity: 0.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-goal .hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  padding-left: 26px;
+  font-size: 10.5px;
+  opacity: 0.5;
+}
+
+.m-goal .hint .m-spin {
+  width: 11px;
+  height: 11px;
+  border-top-color: var(--app-tertiary);
+  border-color: color-mix(in srgb, var(--app-tertiary) 28%, transparent);
+}
+
+/* ---------- 输入区（rounded-[28px] px-5 py-3.5，对照 ChatInput.tsx） ---------- */
+.m-inputwrap {
+  padding: 0 22px 10px;
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.m-workdir {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 7px;
+  padding: 0 4px;
+  font-size: 10.5px;
+  color: color-mix(in srgb, var(--app-on-var) 50%, transparent);
+  font-family: var(--mono);
+}
+
+.m-input {
+  border-radius: 28px;
+  background: var(--app-high);
+  border: 1px solid color-mix(in srgb, var(--app-on-var) 8%, transparent);
+  padding: 12px 18px 10px;
+  transition: border-color 0.2s;
+}
+
+.m-input:focus-within {
+  border-color: color-mix(in srgb, var(--app-primary) 30%, transparent);
+}
+
+/* 真实可输入的单行输入框（替换假占位光标） */
+.m-realinput {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--app-on-surface);
+  font-family: inherit;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.m-realinput::placeholder {
+  color: color-mix(in srgb, var(--app-on-var) 55%, transparent);
+}
+
+.m-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 8px;
+}
+
+.m-toolbar .sep {
+  width: 1px;
+  height: 16px;
+  margin: 0 5px;
+  background: color-mix(in srgb, var(--app-on-var) 14%, transparent);
+}
+
+.m-tbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--app-on-var);
+  flex-shrink: 0;
+}
+
+.m-tbtn.wide {
+  width: auto;
+  gap: 5px;
+  padding: 0 10px;
+  font-size: 11.5px;
+  font-weight: 500;
+  background: color-mix(in srgb, var(--app-highest) 70%, transparent);
+  color: var(--app-on-surface);
+}
+
+.m-think {
+  display: flex;
+  align-items: center;
+}
+
+.m-think .m-tbtn {
+  border-radius: 8px 0 0 8px;
+  background: color-mix(in srgb, var(--app-tertiary) 20%, transparent);
+  color: var(--app-tertiary);
+}
+
+.m-think .lvl {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 0 8px 8px 0;
+  background: color-mix(in srgb, var(--app-tertiary) 20%, transparent);
+  color: var(--app-tertiary);
+  font-size: 10px;
+  text-transform: capitalize;
+}
+
+.m-model {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  color: var(--app-on-var);
+  max-width: 130px;
+}
+
+.m-model .lb {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.m-chev {
+  font-size: 8px;
+  opacity: 0.7;
+}
+
+.m-send {
+  margin-left: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--app-primary);
+  color: var(--app-on-primary);
+  flex-shrink: 0;
+}
+
+.m-disclaimer {
+  text-align: center;
+  margin-top: 6px;
+  font-size: 10px;
+  color: color-mix(in srgb, var(--app-on-var) 30%, transparent);
+}
+
+/* ---------- Workbench（bg-surfaceContainer，对照 WorkbenchPanel.tsx） ---------- */
+.m-wb {
+  width: 308px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--app-container);
+  border-left: 1px solid color-mix(in srgb, var(--app-on-var) 10%, transparent);
+  min-height: 0;
+}
+
+.m-wb-tabs {
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 8px;
+}
+
+.m-wb-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  color: var(--app-on-var);
+  white-space: nowrap;
+}
+
+.m-wb-tab.on {
+  background: color-mix(in srgb, var(--app-primary) 15%, transparent);
+  color: var(--app-primary);
+}
+
+.m-wb-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 26px;
+  border-radius: 12px;
+  color: var(--app-on-var);
+  font-size: 13px;
+  margin-left: 2px;
+}
+
+.m-wb-body {
+  flex: 1;
+  min-height: 0;
+  padding: 10px;
+  overflow: hidden;
+  border-top: 1px solid color-mix(in srgb, var(--app-on-var) 7%, transparent);
+}
+
+/* ============ 文件面板（对照 FilesPanel.tsx + FileTree.tsx：左树 45% + 右预览） ============ */
+.m-files {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+.m-tree-pane {
+  width: 45%;
+  min-width: 130px;
+  height: 100%;
+  overflow: hidden;
+  padding: 4px 0;
+  border-right: 1px solid color-mix(in srgb, var(--app-on-var) 10%, transparent);
+}
+
+/* FileTree 行：py-1 px-2 rounded-md3-sm text-sm gap-2 */
+.m-ft-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  color: var(--app-on-var);
+}
+
+.m-ft-row.folder {
+  color: var(--app-on-surface);
+  font-weight: 500;
+}
+
+.m-ft-row.folder .fic {
+  color: var(--app-info);
+  display: flex;
+}
+
+.m-ft-row.file {
+  cursor: default;
+}
+
+.m-ft-row.sel {
+  background: var(--app-high);
+  color: var(--app-on-surface);
+}
+
+.m-ft-row .fic {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.m-ft-row .nm {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 10.8px;
+}
+
+.m-ft-row .tw {
+  font-size: 7px;
+  width: 9px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* 右侧预览区 */
+.m-preview {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-pv-toolbar {
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--app-on-var) 10%, transparent);
+  font-size: 11px;
+  color: var(--app-on-var);
+}
+
+.m-pv-toolbar .fn {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-pv-toolbar .x {
+  margin-left: auto;
+  display: flex;
+}
+
+.m-pv-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 8px 10px;
+  font-family: var(--mono);
+  font-size: 10.3px;
+  line-height: 1.75;
+  color: var(--app-on-surface);
+  white-space: pre;
+}
+
+.m-pv-body .no {
+  display: inline-block;
+  width: 16px;
+  color: color-mix(in srgb, var(--app-on-var) 40%, transparent);
+  user-select: none;
+}
+
+.m-pv-body .kw { color: var(--app-primary); }
+.m-pv-body .str { color: var(--app-ok); }
+.m-pv-body .cm { color: color-mix(in srgb, var(--app-on-var) 55%, transparent); }
+.m-pv-body .fn2 { color: var(--app-tertiary); }
+
+/* ============ 终端（对照 TerminalPanel.tsx：裸 xterm，无卡片外壳） ============ */
+.m-term {
+  height: 100%;
+  padding: 4px;
+  font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
+  font-size: 10.8px;
+  line-height: 1.3;
+  color: #e6e6e6;
+  overflow: hidden;
+}
+
+.m-term .ln {
+  white-space: nowrap;
+  animation: mline 0.3s ease-out both;
+}
+
+@keyframes mline {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: none; }
+}
+
+.m-term .out { color: color-mix(in srgb, #e6e6e6 62%, transparent); }
+.m-term .ok { color: var(--app-ok); }
+
+.m-term .cur {
+  display: inline-block;
+  width: 6px;
+  height: 11px;
+  vertical-align: -2px;
+  background: #4d8ef7;
+  animation: mcaret 1s steps(1) infinite;
+}
+
+/* ============ 浏览器（对照 BrowserPanel.tsx：导航工具栏 + 地址栏 + 网页区） ============ */
+.m-brw {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-brw-h {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--app-on-var) 10%, transparent);
+}
+
+.m-brw-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  color: var(--app-on-var);
+  flex-shrink: 0;
+}
+
+.m-brw-url {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 12px;
+  background: var(--app-high);
+  padding: 4px 11px;
+  font-size: 10.5px;
+  font-family: var(--mono);
+  color: var(--app-on-surface);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.m-brw-url .gl {
+  color: color-mix(in srgb, var(--app-on-var) 50%, transparent);
+  display: flex;
+  flex-shrink: 0;
+}
+
+/* 网页内容（webview 渲染的页面） */
+.m-brw-b {
+  flex: 1;
+  min-height: 0;
+  padding: 12px;
+  background:
+    radial-gradient(200px 110px at 50% 0%, rgba(152, 204, 249, 0.16), transparent 75%),
+    var(--app-surface-dim);
+  overflow: hidden;
+}
+
+.m-brw-hero {
+  height: 42px;
+  border-radius: 8px;
+  background: linear-gradient(94deg, color-mix(in srgb, var(--app-primary) 52%, transparent), color-mix(in srgb, var(--app-tertiary) 44%, transparent));
+  margin-bottom: 9px;
+}
+
+.m-bar {
+  height: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--app-on-surface) 11%, transparent);
+  margin-bottom: 6px;
+}
+
+.m-bar.w60 { width: 60%; }
+.m-bar.w85 { width: 85%; }
+.m-bar.w40 { width: 40%; }
+
+/* ============ 子 Agent（对照 SubAgentDetailPanel.tsx：思考块 + 工具卡 + 回复） ============ */
+.m-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.m-sub-think {
+  border-radius: 4px;
+  padding: 6px 8px;
+  background: color-mix(in srgb, var(--app-tertiary) 5%, transparent);
+}
+
+.m-sub-think .h {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  color: var(--app-tertiary);
+}
+
+.m-sub-think .b {
+  margin-top: 3px;
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--app-tertiary) 80%, transparent);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.m-sub-card {
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--app-on-var) 8%, transparent);
+  background: color-mix(in srgb, var(--app-container) 40%, transparent);
+  overflow: hidden;
+}
+
+.m-sub-card .h {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+}
+
+.m-sub-card .h .wic {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.m-sub-card .h .wic.done { color: var(--app-ok); }
+.m-sub-card .h .wic.run { color: var(--app-primary); animation: mpulse 2s ease-in-out infinite; }
+
+.m-sub-card .h .nm {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--app-on-surface);
+  flex-shrink: 0;
+}
+
+.m-sub-card .h .arg {
+  font-size: 11.5px;
+  color: var(--app-on-var);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-sub-card .h .st {
+  margin-left: auto;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.m-sub-card .h .st.done { color: var(--app-ok); }
+.m-sub-card .h .st.run { color: var(--app-primary); }
+
+.m-sub-card .detail {
+  border-top: 1px solid color-mix(in srgb, var(--app-on-var) 8%, transparent);
+  padding: 6px 8px;
+}
+
+.m-sub-card .detail .lb {
+  font-size: 10px;
+  color: var(--app-on-var);
+}
+
+.m-sub-card .detail pre {
+  margin: 3px 0 0;
+  padding: 6px;
+  border-radius: 4px;
+  background: var(--app-high);
+  font-family: var(--mono);
+  font-size: 10.3px;
+  line-height: 1.6;
+  color: var(--app-on-surface);
+  overflow: hidden;
+  white-space: pre;
+}
+
+.m-sub-running {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  color: var(--app-on-var);
+}
+
+.m-sub-reply {
+  font-size: 11px;
+  line-height: 1.65;
+  color: var(--app-on-surface);
+}
+
+/* ---------- mockup 响应式 ---------- */
+@media (max-width: 1080px) {
+  .m-side {
+    width: 232px;
+  }
+  .m-wb {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .mock {
+    height: 540px;
+  }
+  .m-side {
+    display: none;
+  }
+  .mock-outer {
+    padding: 0 12px;
+  }
+}

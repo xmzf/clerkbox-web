@@ -1,0 +1,23 @@
+{
+  "name": "clerkbox-website",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "ClerkBox 官网演示页 — MD3 深色 / 中英双语",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.16",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "^6.0.3",
+    "vite": "^5.4.21"
+  }
+}
