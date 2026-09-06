@@ -112,6 +112,43 @@ export default function Features() {
         </div>
       ),
     },
+    {
+      key: 'f7',
+      visual: (
+        <div className="harness-mini">
+          <div className="hm-row on">
+            <span>{t('mock.harnessName')}</span>
+            <i>✓</i>
+          </div>
+          <div className="hm-row">
+            <span>Codex</span>
+            <em>compat</em>
+          </div>
+          <div className="hm-row">
+            <span>Grok Build</span>
+            <em>compat</em>
+          </div>
+          <div className="hm-row">
+            <span>dsh</span>
+            <em>compat</em>
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: 'f8',
+      visual: (
+        <div className="goal-mini">
+          <div className="gm-head">
+            <span className="dot" />
+            <span>{t('mock.goalTitle')}</span>
+            <span className="pill">{t('mock.goalPill')}</span>
+          </div>
+          <div className="gm-cond">{t('mock.goalCond')}</div>
+          <div className="gm-meta">{t('features.f8meta')}</div>
+        </div>
+      ),
+    },
   ]
 
   return (

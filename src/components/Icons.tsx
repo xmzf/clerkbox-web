@@ -210,6 +210,19 @@ const PATHS: Record<string, JSX.Element> = {
       <path d="m9 12 2 2 4-4" />
     </>
   ),
+  layers: (
+    <>
+      <path d="M12 2 2 7l10 5 10-5-10-5Z" />
+      <path d="m2 17 10 5 10-5" />
+      <path d="m2 12 10 5 10-5" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </>
+  ),
 }
 
 export function Icon({ name, size = 14 }: { name: keyof typeof PATHS | string; size?: number }) {

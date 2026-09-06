@@ -209,7 +209,7 @@ export default function AppMockup() {
               <span className="m-row-btn">
                 <Icon name="panel-left" size={16} />
               </span>
-              <span className="m-ver">v2.1.0</span>
+              <span className="m-ver">v2.5.0</span>
             </div>
             <div className="m-tb-right">
               <span className="m-vibe">
@@ -324,8 +324,15 @@ export default function AppMockup() {
                 </span>
               </div>
 
-              {/* 输入区：工作目录行 + 28px 圆角输入盒 + 工具栏 + 免责声明（对照 ChatInput.tsx） */}
+              {/* 输入区：harness 锁定行 + 工作目录行 + 28px 圆角输入盒 + 工具栏 + 免责声明（对照 ChatInput.tsx） */}
               <div className="m-inputwrap">
+                {/* Harness 模式行：会话产出消息后锁定为「模式名 + 小字」（对照 ChatInput.tsx 锁定态） */}
+                <div className="m-harness">
+                  <Icon name="layers" size={12} />
+                  <span className="nm">{t('mock.harnessName')}</span>
+                  <Icon name="lock" size={10} />
+                  <span className="ds">· {t('mock.harnessDesc')}</span>
+                </div>
                 <div className="m-workdir">
                   <Icon name="folder-open" size={12} />
                   {t('mock.workdir')}

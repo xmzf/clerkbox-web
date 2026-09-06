@@ -724,6 +724,106 @@ button {
   height: 34px;
 }
 
+/* harness 兼容模式卡：迷你模式菜单 */
+.harness-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: min(240px, 100%);
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--md-surface-high) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-outline-variant) 55%, transparent);
+  font-size: 12px;
+}
+
+.harness-mini .hm-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--md-on-surface-variant);
+}
+
+.harness-mini .hm-row span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.harness-mini .hm-row em {
+  font-style: normal;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  color: var(--md-tertiary);
+  background: color-mix(in srgb, var(--md-tertiary) 14%, transparent);
+}
+
+.harness-mini .hm-row.on {
+  background: color-mix(in srgb, var(--md-primary) 10%, transparent);
+  color: var(--md-on-surface);
+}
+
+.harness-mini .hm-row.on i {
+  font-style: normal;
+  color: var(--md-primary);
+}
+
+/* 目标模式卡：迷你目标横幅 */
+.goal-mini {
+  width: min(250px, 100%);
+  margin: 0 auto;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--md-tertiary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-tertiary) 24%, transparent);
+  text-align: left;
+}
+
+.goal-mini .gm-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--md-on-surface);
+}
+
+.goal-mini .gm-head .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--md-tertiary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-tertiary) 22%, transparent);
+}
+
+.goal-mini .gm-head .pill {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 1px 8px;
+  border-radius: 999px;
+  color: var(--md-tertiary);
+  background: color-mix(in srgb, var(--md-tertiary) 14%, transparent);
+}
+
+.goal-mini .gm-cond {
+  margin-top: 7px;
+  font-size: 12px;
+  color: var(--md-on-surface-variant);
+}
+
+.goal-mini .gm-meta {
+  margin-top: 6px;
+  font-size: 10.5px;
+  color: color-mix(in srgb, var(--md-on-surface-var) 60%, transparent);
+}
+
 /* ---------- Lunora 区 ---------- */
 .lunora-cards {
   margin-top: 44px;
