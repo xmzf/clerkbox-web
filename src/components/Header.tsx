@@ -3,9 +3,16 @@ import { GithubIcon, Icon } from './Icons'
 
 export const REPO = 'https://github.com/XMZF-vAI/clerkbox'
 export const RELEASES = `${REPO}/releases/latest`
-/** v3.0.0 安装包直链（gitproxy 加速） */
-export const SETUP_URL =
-  'https://api.gitproxy.dev/github.com/XMZF-vAI/clerkbox/releases/download/v3.0.0/ClerkBox-Setup-3.0.0.exe'
+/**
+ * v3.0.0 安装包直链（gitproxy 加速）。
+ * 资产名与 release.yml 的 electron-builder 配置一致：Windows NSIS 出 ClerkBox-Setup-<v>.exe，
+ * macOS 出 x64 / arm64 两个 dmg，Linux 出 AppImage。
+ */
+const DL = 'https://api.gitproxy.dev/github.com/XMZF-vAI/clerkbox/releases/download/v3.0.0'
+export const SETUP_URL = `${DL}/ClerkBox-Setup-3.0.0.exe`
+export const MACOS_INTEL_URL = `${DL}/ClerkBox-3.0.0.dmg`
+export const MACOS_ARM_URL = `${DL}/ClerkBox-3.0.0-arm64.dmg`
+export const LINUX_URL = `${DL}/ClerkBox-3.0.0.AppImage`
 /** Lunora 注册链接（带邀请码） */
 export const LUNORA = 'https://www.uselunora.com/register?aff=CGNEDZYS9KB7'
 

@@ -774,6 +774,49 @@ button {
   color: var(--md-primary);
 }
 
+/* 通用清单卡：开源 / 数据安全 / 定时任务三张共用行样式，容器不同以区分色调 */
+.mini-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: min(250px, 100%);
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--md-surface-high) 70%, transparent);
+}
+
+.mini-list .ml-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--md-on-surface-variant);
+}
+
+.mini-list .ml-row .val {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--md-on-surface);
+}
+
+.mini-list .ml-row .val.ok { color: var(--ok); }
+.mini-list .ml-row .val.warn { color: var(--md-on-surface-variant); }
+
+.mini-list .ml-foot {
+  margin-top: 2px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--md-on-surface);
+  background: color-mix(in srgb, var(--md-primary) 12%, transparent);
+}
+
 /* 任务不随窗口一起死卡：动作 → 任务仍在跑 */
 .persist-mini {
   display: flex;
@@ -1100,6 +1143,12 @@ button {
   gap: 26px;
 }
 
+/* 第二行：源码构建 + WebUI（两列） */
+.dl-grid-2 {
+  margin-top: 26px;
+  grid-template-columns: 1fr 1fr;
+}
+
 .dl-col h3 {
   display: flex;
   align-items: center;
@@ -1217,7 +1266,8 @@ a.dl-row:hover {
   .feat-grid,
   .lunora-cards,
   .steps-row,
-  .dl-grid {
+  .dl-grid,
+  .dl-grid-2 {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -1229,7 +1279,8 @@ a.dl-row:hover {
   .feat-grid,
   .lunora-cards,
   .steps-row,
-  .dl-grid {
+  .dl-grid,
+  .dl-grid-2 {
     grid-template-columns: 1fr;
   }
   .section {

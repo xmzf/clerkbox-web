@@ -130,6 +130,13 @@ export default function AppMockup() {
               <Icon name="store" size={15} />
               {t('mock.skills')}
             </span>
+            {/* 定时任务：真实 Sidebar.tsx 在插件市场正下方，用 CalendarClock 图标，
+                有待确认提案时右上角挂数字角标 */}
+            <span className="m-side-btn">
+              <Icon name="calendar-clock" size={15} />
+              {t('mock.scheduled')}
+              <span className="m-side-badge">2</span>
+            </span>
           </div>
           <div className="m-tasklabel">
             <span>{t('mock.taskList')}</span>

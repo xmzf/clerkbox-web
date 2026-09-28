@@ -236,6 +236,21 @@
   color: var(--app-on-surface);
 }
 
+/* 定时任务入口的待确认提案角标（真实 Sidebar.tsx 同语义） */
+.m-side-badge {
+  margin-left: auto;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--app-primary, #7c5cfc);
+  color: #fff;
+  font-size: 9.5px;
+  line-height: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
 .m-side-btn.on {
   background: color-mix(in srgb, var(--app-primary) 15%, transparent);
   color: var(--app-primary);

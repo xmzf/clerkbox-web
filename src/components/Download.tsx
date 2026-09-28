@@ -1,9 +1,10 @@
 import { useI18n } from '../i18n'
-import { REPO, SETUP_URL } from './Header'
+import { REPO, SETUP_URL, MACOS_ARM_URL, MACOS_INTEL_URL, LINUX_URL } from './Header'
 import { Icon } from './Icons'
 
 export default function Download() {
   const { t } = useI18n()
+  const ver = t('download.getVersion')
   return (
     <section className="section" id="download">
       <div className="container">
@@ -19,7 +20,7 @@ export default function Download() {
             <a className="dl-row" href={SETUP_URL} download>
               <span className="nm">{t('download.winRow1')}</span>
               <span className="ext">.exe</span>
-              <span className="ver">{t('download.getVersion')}</span>
+              <span className="ver">{ver}</span>
               <span className="arr">→</span>
             </a>
             <a className="dl-row" href={`${REPO}/releases`} target="_blank" rel="noreferrer">
@@ -28,6 +29,44 @@ export default function Download() {
             </a>
           </div>
 
+          <div className="dl-col">
+            <h3>
+              <Icon name="harddrive" size={15} />
+              {t('download.macTitle')}
+            </h3>
+            <a className="dl-row" href={MACOS_ARM_URL} download>
+              <span className="nm">{t('download.macRow1')}</span>
+              <span className="ext">.dmg</span>
+              <span className="ver">{ver}</span>
+              <span className="arr">→</span>
+            </a>
+            <a className="dl-row" href={MACOS_INTEL_URL} download>
+              <span className="nm">{t('download.macRow2')}</span>
+              <span className="ext">.dmg</span>
+              <span className="ver">{ver}</span>
+              <span className="arr">→</span>
+            </a>
+          </div>
+
+          <div className="dl-col">
+            <h3>
+              <Icon name="terminal" size={15} />
+              {t('download.linuxTitle')}
+            </h3>
+            <a className="dl-row" href={LINUX_URL} download>
+              <span className="nm">{t('download.linuxRow1')}</span>
+              <span className="ext">.AppImage</span>
+              <span className="ver">{ver}</span>
+              <span className="arr">→</span>
+            </a>
+            <a className="dl-row" href={`${REPO}/releases`} target="_blank" rel="noreferrer">
+              <span className="nm">{t('download.winRow2')}</span>
+              <span className="arr">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="dl-grid dl-grid-2">
           <div className="dl-col">
             <h3>
               <Icon name="code" size={15} />

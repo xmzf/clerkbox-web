@@ -6,7 +6,8 @@
   "description": "ClerkBox 官网演示页 — MD3 深色 / 中英双语",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && npm run check:i18n && vite build",
+    "check:i18n": "node scripts/check-i18n.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
