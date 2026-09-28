@@ -209,7 +209,7 @@ export default function AppMockup() {
               <span className="m-row-btn">
                 <Icon name="panel-left" size={16} />
               </span>
-              <span className="m-ver">v2.5.0</span>
+              <span className="m-ver">v3.0.0</span>
             </div>
             <div className="m-tb-right">
               <span className="m-vibe">

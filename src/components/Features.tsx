@@ -1,6 +1,7 @@
 import { useI18n } from '../i18n'
+import { Icon } from './Icons'
 
-/** 六张能力卡，每张的视觉区用纯 CSS 绘制（无图片依赖） */
+/** 九张能力卡，每张的视觉区用纯 CSS 绘制（无图片依赖） */
 export default function Features() {
   const { t } = useI18n()
   const cards: Array<{ key: string; visual: React.ReactNode }> = [
@@ -132,6 +133,10 @@ export default function Features() {
             <span>dsh</span>
             <em>compat</em>
           </div>
+          <div className="hm-row">
+            <span>ZCode</span>
+            <em>compat</em>
+          </div>
         </div>
       ),
     },
@@ -146,6 +151,29 @@ export default function Features() {
           </div>
           <div className="gm-cond">{t('mock.goalCond')}</div>
           <div className="gm-meta">{t('features.f8meta')}</div>
+        </div>
+      ),
+    },
+    {
+      key: 'f9',
+      visual: (
+        <div className="persist-mini">
+          <div className="pm-row">
+            <span>{t('features.f9act1')}</span>
+            <i>
+              <Icon name="check" size={11} />
+            </i>
+          </div>
+          <div className="pm-row">
+            <span>{t('features.f9act2')}</span>
+            <i>
+              <Icon name="check" size={11} />
+            </i>
+          </div>
+          <div className="pm-run">
+            <span className="dot run" />
+            <span>{t('mock.working')}</span>
+          </div>
         </div>
       ),
     },

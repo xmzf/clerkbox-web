@@ -774,6 +774,47 @@ button {
   color: var(--md-primary);
 }
 
+/* 任务不随窗口一起死卡：动作 → 任务仍在跑 */
+.persist-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: min(240px, 100%);
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--md-surface-high) 70%, transparent);
+}
+
+.persist-mini .pm-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--md-on-surface-variant);
+  font-size: 12.5px;
+}
+
+.persist-mini .pm-row i {
+  display: flex;
+  margin-left: auto;
+  color: var(--ok);
+  font-style: normal;
+}
+
+.persist-mini .pm-run {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: var(--md-on-surface);
+  font-size: 12.5px;
+  background: color-mix(in srgb, var(--md-primary) 12%, transparent);
+}
+
 /* 目标模式卡：迷你目标横幅 */
 .goal-mini {
   width: min(250px, 100%);

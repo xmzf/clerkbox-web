@@ -3,9 +3,9 @@ import { GithubIcon, Icon } from './Icons'
 
 export const REPO = 'https://github.com/XMZF-vAI/clerkbox'
 export const RELEASES = `${REPO}/releases/latest`
-/** v2.5.0 安装包直链（gitproxy 加速） */
+/** v3.0.0 安装包直链（gitproxy 加速） */
 export const SETUP_URL =
-  'https://api.gitproxy.dev/github.com/XMZF-vAI/clerkbox/releases/download/v2.5.0/ClerkBox-Setup-2.5.0.exe'
+  'https://api.gitproxy.dev/github.com/XMZF-vAI/clerkbox/releases/download/v3.0.0/ClerkBox-Setup-3.0.0.exe'
 /** Lunora 注册链接（带邀请码） */
 export const LUNORA = 'https://www.uselunora.com/register?aff=CGNEDZYS9KB7'
 
