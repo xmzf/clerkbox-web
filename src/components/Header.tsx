@@ -8,11 +8,11 @@ export const RELEASES = `${REPO}/releases/latest`
  * 资产名与 release.yml 的 electron-builder 配置一致：Windows NSIS 出 ClerkBox-Setup-<v>.exe，
  * macOS 出 x64 / arm64 两个 dmg，Linux 出 AppImage。改版本时四处一起改，别只改前三行。
  */
-const DL = 'https://api.gitproxy.dev/github.com/XMZF-vAI/clerkbox/releases/download/v3.1.0'
-export const SETUP_URL = `${DL}/ClerkBox-Setup-3.1.0.exe`
-export const MACOS_INTEL_URL = `${DL}/ClerkBox-3.1.0.dmg`
-export const MACOS_ARM_URL = `${DL}/ClerkBox-3.1.0-arm64.dmg`
-export const LINUX_URL = `${DL}/ClerkBox-3.1.0.AppImage`
+const DL = 'https://api.gitproxy.dev/github.com/XMZF-vAI/clerkbox/releases/download/v3.2.0'
+export const SETUP_URL = `${DL}/ClerkBox-Setup-3.2.0.exe`
+export const MACOS_INTEL_URL = `${DL}/ClerkBox-3.2.0.dmg`
+export const MACOS_ARM_URL = `${DL}/ClerkBox-3.2.0-arm64.dmg`
+export const LINUX_URL = `${DL}/ClerkBox-3.2.0.AppImage`
 /** Lunora 注册链接（带邀请码） */
 export const LUNORA = 'https://www.uselunora.com/register?aff=CGNEDZYS9KB7'
 
