@@ -2,8 +2,8 @@ import { useI18n } from '../i18n'
 import { Icon } from './Icons'
 
 /**
- * 十二张能力卡，顺序即卖点优先级：开源与数据安全打头，兼容模式与 VIBE 紧随，
- * 其余是通用 Agent 能力。每张的视觉区用纯 CSS 绘制（无图片依赖）。
+ * 十五张能力卡，顺序即卖点优先级：开源与数据安全打头，v3.2 的界面模式 / Git / 桌面操控 /
+ * Agent 浏览器 / 撤回回滚紧随，其余是通用 Agent 能力。每张的视觉区用纯 CSS 绘制（无图片依赖）。
  */
 export default function Features() {
   const { t } = useI18n()
@@ -59,6 +59,129 @@ export default function Features() {
             <Icon name="globe" size={13} />
             <span>{t('features.f2row4')}</span>
             <span className="val ok">{t('features.f2local')}</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: 'f13',
+      visual: (
+        <div className="harness-mini">
+          <div className="hm-row on">
+            <Icon name="terminal" size={12} />
+            <span>{t('features.f13row1')}</span>
+            <i>✓</i>
+          </div>
+          <div className="hm-row">
+            <Icon name="grid" size={12} />
+            <span>{t('features.f13row2')}</span>
+            <em>Ctrl+Shift+U</em>
+          </div>
+          <div className="hm-row" style={{ justifyContent: 'flex-start', opacity: 0.6, fontSize: 10.5 }}>
+            <span>{t('features.f13foot')}</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: 'f14',
+      visual: (
+        <div className="mini-list">
+          <div className="ml-row">
+            <Icon name="code" size={13} />
+            <span>{t('features.f14row1')}</span>
+            <span className="val ok">↑2</span>
+          </div>
+          <div className="ml-row">
+            <Icon name="file" size={13} />
+            <span>{t('features.f14row2')}</span>
+            <span className="val ok">+186</span>
+          </div>
+          <div className="ml-row">
+            <Icon name="folder" size={13} />
+            <span>{t('features.f14row3')}</span>
+            <span className="val ok">+214</span>
+          </div>
+          <div className="ml-foot">{t('features.f14foot')}</div>
+        </div>
+      ),
+    },
+    {
+      key: 'f15',
+      visual: (
+        <div className="mini-list">
+          <div className="ml-row">
+            <Icon name="hand" size={13} />
+            <span>{t('features.f15row1')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
+          </div>
+          <div className="ml-row">
+            <Icon name="hand" size={13} />
+            <span>{t('features.f15row2')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
+          </div>
+          <div className="ml-row">
+            <Icon name="shield" size={13} />
+            <span>{t('features.f15row3')}</span>
+            <span className="val warn">{t('features.f15wait')}</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: 'f16',
+      visual: (
+        <div className="mini-list">
+          <div className="ml-row">
+            <Icon name="globe" size={13} />
+            <span>{t('features.f16row1')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
+          </div>
+          <div className="ml-row">
+            <Icon name="hand" size={13} />
+            <span>{t('features.f16row2')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
+          </div>
+          <div className="ml-row">
+            <Icon name="file" size={13} />
+            <span>{t('features.f16row3')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: 'f17',
+      visual: (
+        <div className="mini-list">
+          <div className="ml-row">
+            <Icon name="undo" size={13} />
+            <span>{t('features.f17row1')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
+          </div>
+          <div className="ml-row">
+            <Icon name="file" size={13} />
+            <span>{t('features.f17row2')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
+          </div>
+          <div className="ml-row">
+            <Icon name="shield" size={13} />
+            <span>{t('features.f17row3')}</span>
+            <span className="val warn">{t('features.f17wait')}</span>
           </div>
         </div>
       ),

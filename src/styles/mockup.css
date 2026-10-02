@@ -236,19 +236,88 @@
   color: var(--app-on-surface);
 }
 
+/* 图标容器：角标挂在图标右上角（对照真实 Sidebar 的 -top-1 -right-1），
+   不参与 flex 排布，避免把居中的图标+文字挤歪 */
+.m-side-ic {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 /* 定时任务入口的待确认提案角标（真实 Sidebar.tsx 同语义） */
 .m-side-badge {
-  margin-left: auto;
-  min-width: 15px;
-  height: 15px;
-  padding: 0 4px;
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
   border-radius: 999px;
   background: var(--app-primary, #7c5cfc);
   color: #fff;
-  font-size: 9.5px;
-  line-height: 15px;
+  font-size: 9px;
+  line-height: 14px;
   text-align: center;
   font-weight: 600;
+}
+
+/* 界面模式切换（对照真实 ModeToggle.tsx）：胶囊容器 + 选中段「图标+文字」高亮描边 */
+.m-mode {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--app-high) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--app-on-var) 12%, transparent);
+}
+
+.m-mode-seg {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: color-mix(in srgb, var(--app-on-var) 65%, transparent);
+  font-size: 10.5px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.m-mode-seg.on {
+  padding: 0 9px;
+  background: color-mix(in srgb, var(--app-primary) 12%, transparent);
+  border-color: color-mix(in srgb, var(--app-primary) 55%, transparent);
+  color: var(--app-primary);
+  font-weight: 500;
+}
+
+/* 分支芯片（对照 BranchSwitcher：分支名 + 变更数，挂在目录行右端） */
+.m-branch {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  color: color-mix(in srgb, var(--app-on-var) 80%, transparent);
+}
+
+.m-branch .cnt {
+  min-width: 14px;
+  height: 14px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--app-high);
+  font-size: 9px;
+  line-height: 14px;
+  text-align: center;
 }
 
 .m-side-btn.on {
@@ -1302,4 +1371,72 @@
   .mock-outer {
     padding: 0 12px;
   }
+}
+
+/* ── Git 审查 tab（对照 GitPanel.tsx：变更列表 + +/- 行数，编程模式专属） ── */
+.m-git {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  font-size: 10.5px;
+}
+
+.m-git-head {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 4px 6px;
+  color: color-mix(in srgb, var(--app-on-var) 60%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--app-on-var) 10%, transparent);
+  margin-bottom: 2px;
+}
+
+.m-git-head .br {
+  color: var(--app-primary);
+  font-weight: 500;
+}
+
+.m-git-head .acts {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+}
+
+.m-git-head .act {
+  padding: 1px 7px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--app-primary) 15%, transparent);
+  color: var(--app-primary);
+  font-size: 9.5px;
+  line-height: 15px;
+}
+
+.m-git-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 4px;
+  border-radius: 6px;
+  color: var(--app-on-surface);
+  font-family: var(--mono);
+  font-size: 9.5px;
+}
+
+.m-git-row .nm {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-git-row .add {
+  margin-left: auto;
+  color: #3fb975;
+  font-weight: 500;
+}
+
+.m-git-row .del {
+  color: #e5534b;
+  font-weight: 500;
 }

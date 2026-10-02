@@ -2,14 +2,18 @@ import { useEffect, useRef, useState } from 'react'
 import { useI18n } from '../i18n'
 import { Icon } from './Icons'
 
-type TabKind = 'files' | 'terminal' | 'browser' | 'subagent'
-const TAB_ORDER: TabKind[] = ['files', 'terminal', 'browser', 'subagent']
+type TabKind = 'files' | 'terminal' | 'browser' | 'subagent' | 'git'
+/** 基础 tab 顺序；编程模式下在尾部追加 Git 审查 tab（对照真实 workbench 的模式门控） */
+const BASE_TABS: TabKind[] = ['files', 'terminal', 'browser', 'subagent']
 const TAB_ICON: Record<TabKind, string> = {
   files: 'folder',
   terminal: 'terminal',
   browser: 'globe',
   subagent: 'bot',
+  git: 'code',
 }
+/** 界面模式（对照真实 settings-store 的 InterfaceMode）：纯展示层偏好，不改变 Agent 能力 */
+type InterfaceMode = 'coding' | 'general'
 
 const REDUCED_MOTION =
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -25,6 +29,11 @@ const STATUS_DELAYS: Array<number | null> = [0, 60, 120, 180, 240, 300, 240, 180
 export default function AppMockup() {
   const { t, lang } = useI18n()
 
+  // 界面模式：可点击切换（对照 ModeToggle.tsx），编程模式额外亮起分支芯片与 Git 工作台 tab
+  const [mode, setMode] = useState<InterfaceMode>('coding')
+  const isCoding = mode === 'coding'
+  const TAB_ORDER: TabKind[] = isCoding ? [...BASE_TABS, 'git'] : BASE_TABS
+
   // 工作台 tab：自动轮播，点击后固定 9 秒
   const [tab, setTab] = useState<TabKind>('files')
   const pinUntil = useRef(0)
@@ -35,7 +44,11 @@ export default function AppMockup() {
       setTab((cur) => TAB_ORDER[(TAB_ORDER.indexOf(cur) + 1) % TAB_ORDER.length])
     }, 3400)
     return () => clearInterval(id)
-  }, [])
+  }, [TAB_ORDER.length])
+  // 切回通用模式时当前 tab 可能已不存在，回落到 files
+  useEffect(() => {
+    if (!TAB_ORDER.includes(tab)) setTab('files')
+  }, [TAB_ORDER, tab])
   const pickTab = (k: TabKind) => {
     setTab(k)
     pinUntil.current = Date.now() + 9000
@@ -120,6 +133,27 @@ export default function AppMockup() {
           <div className="m-side-head">
             <img src="/clerkbox.png" alt="" />
             <span className="nm">ClerkBox</span>
+            {/* 界面模式开关（对照 ModeToggle.tsx）：选中段展开「图标+文字」，未选中段仅图标 */}
+            <span className="m-mode" role="radiogroup" aria-label={lang === 'zh' ? '界面模式' : 'Interface mode'}>
+              <span
+                role="radio"
+                aria-checked={isCoding}
+                className={`m-mode-seg${isCoding ? ' on' : ''}`}
+                onClick={() => setMode('coding')}
+              >
+                <Icon name="terminal" size={11} />
+                {isCoding && t('mock.modeCoding')}
+              </span>
+              <span
+                role="radio"
+                aria-checked={!isCoding}
+                className={`m-mode-seg${!isCoding ? ' on' : ''}`}
+                onClick={() => setMode('general')}
+              >
+                <Icon name="grid" size={11} />
+                {!isCoding && t('mock.modeGeneral')}
+              </span>
+            </span>
           </div>
           <div className="m-side-btns">
             <span className="m-side-btn">
@@ -131,11 +165,13 @@ export default function AppMockup() {
               {t('mock.skills')}
             </span>
             {/* 定时任务：真实 Sidebar.tsx 在插件市场正下方，用 CalendarClock 图标，
-                有待确认提案时右上角挂数字角标 */}
+                有待确认提案时图标右上角挂数字角标（绝对定位，不挤歪居中内容） */}
             <span className="m-side-btn">
-              <Icon name="calendar-clock" size={15} />
+              <span className="m-side-ic">
+                <Icon name="calendar-clock" size={15} />
+                <span className="m-side-badge">2</span>
+              </span>
               {t('mock.scheduled')}
-              <span className="m-side-badge">2</span>
             </span>
           </div>
           <div className="m-tasklabel">
@@ -343,6 +379,14 @@ export default function AppMockup() {
                 <div className="m-workdir">
                   <Icon name="folder-open" size={12} />
                   {t('mock.workdir')}
+                  {/* 分支芯片（对照 BranchSwitcher）：仅编程模式渲染，通用模式隐藏 */}
+                  {isCoding && (
+                    <span className="m-branch" title={t('mock.branch')}>
+                      <Icon name="code" size={11} />
+                      {t('mock.branch')}
+                      <span className="cnt">{t('mock.branchDirty')}</span>
+                    </span>
+                  )}
                 </div>
                 <div className="m-input">
                   <input
@@ -416,6 +460,7 @@ export default function AppMockup() {
                 {tab === 'terminal' && <TerminalTab shown={termN} />}
                 {tab === 'browser' && <BrowserTab />}
                 {tab === 'subagent' && <SubAgentTab />}
+                {tab === 'git' && <GitReviewTab />}
               </div>
             </aside>
           </div>
@@ -425,8 +470,40 @@ export default function AppMockup() {
   )
 }
 
-function ToolRow({ icon, name, path, add, del, params }: { icon: string; name: string; path: string; add?: number; del?: number; params: string }) {
+/** Git 审查 tab（对照 GitPanel.tsx：分支头 + 变更列表 +/- 行数 + 提交/推送） */
+function GitReviewTab() {
   const { t } = useI18n()
+  const rows = [
+    { nm: t('mock.gitFile1'), add: 186, del: 0 },
+    { nm: t('mock.gitFile2'), add: 214, del: 0 },
+    { nm: t('mock.gitFile3'), add: 79, del: 1 },
+  ]
+  return (
+    <div className="m-git">
+      <div className="m-git-head">
+        <Icon name="code" size={11} />
+        <span className="br">{t('mock.branch')}</span>
+        <span className="acts">
+          <span className="act">{t('mock.gitCommit')}</span>
+          <span className="act">{t('mock.gitPush')}</span>
+        </span>
+      </div>
+      {rows.map((r) => (
+        <div className="m-git-row" key={r.nm}>
+          <span className="nm">{r.nm}</span>
+          {r.add > 0 && <span className="add">+{r.add}</span>}
+          {r.del > 0 && <span className="del">-{r.del}</span>}
+        </div>
+      ))}
+      <div className="m-git-head" style={{ borderBottom: 'none', marginTop: 2 }}>
+        <Icon name="check" size={11} />
+        <span>{t('mock.gitMain')}</span>
+      </div>
+    </div>
+  )
+}
+
+function ToolRow({ icon, name, path, add, del, params }: { icon: string; name: string; path: string; add?: number; del?: number; params: string }) {  const { t } = useI18n()
   const [open, setOpen] = useState(false)
   return (
     <div className="m-tool-wrap">
