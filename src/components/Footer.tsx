@@ -1,5 +1,5 @@
 import { useI18n } from '../i18n'
-import { LUNORA, REPO } from './Header'
+import { JOULE, REPO } from './Header'
 
 export default function Footer() {
   const { t } = useI18n()
@@ -11,8 +11,8 @@ export default function Footer() {
           <a href={REPO} target="_blank" rel="noreferrer">
             {t('footer.repo')}
           </a>
-          <a href={LUNORA} target="_blank" rel="noreferrer">
-            {t('footer.lunora')}
+          <a href={JOULE} target="_blank" rel="noreferrer">
+            {t('footer.joule')}
           </a>
           <a href="https://github.com/XMZF-vAI" target="_blank" rel="noreferrer">
             {t('footer.studio')}

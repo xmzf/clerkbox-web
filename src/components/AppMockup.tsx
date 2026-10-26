@@ -123,6 +123,9 @@ export default function AppMockup() {
     document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  // 5 小时额度弹层（对照 JouleQuotaButton 的 open 状态）
+  const [quotaOpen, setQuotaOpen] = useState(false)
+
   return (
     <div className="mock-outer">
       <div className="mock-glow" />
@@ -252,7 +255,7 @@ export default function AppMockup() {
               <span className="m-row-btn">
                 <Icon name="panel-left" size={16} />
               </span>
-              <span className="m-ver">v3.2.0</span>
+              <span className="m-ver">v3.5.1</span>
             </div>
             <div className="m-tb-right">
               <span className="m-vibe">
@@ -274,6 +277,69 @@ export default function AppMockup() {
                     strokeDasharray={`${2 * Math.PI * 7.25 * 0.22} ${2 * Math.PI * 7.25}`}
                   />
                 </svg>
+              </span>
+              {/* Joule 5 小时额度（对照 JouleQuotaButton）：Gauge 图标 + 已用百分比，点开长条弹层 */}
+              <span className="m-quota-wrap">
+                <button
+                  type="button"
+                  className="m-quota"
+                  onClick={() => setQuotaOpen((v) => !v)}
+                  aria-expanded={quotaOpen}
+                  aria-label={t('mock.quotaAria')}
+                  title={t('mock.quotaTitle')}
+                >
+                  <Icon name="gauge" size={16} />
+                  <span className="pct">5h 72%</span>
+                </button>
+                {quotaOpen && (
+                  <div className="m-quota-pop" role="dialog" aria-label={t('mock.quotaTitleLabel')}>
+                    <div className="qp-head">
+                      <span className="t">{t('mock.quotaTitleLabel')}</span>
+                      <button
+                        type="button"
+                        className="qp-x"
+                        onClick={() => setQuotaOpen(false)}
+                        aria-label={t('mock.quotaClose')}
+                      >
+                        <Icon name="x" size={13} />
+                      </button>
+                    </div>
+                    <div className="qp-top">
+                      <span className="qp-num">
+                        {t('mock.quotaRemaining')}
+                        <span className="cap"> / $10.00</span>
+                      </span>
+                      <span className="qp-badge">{t('mock.quotaUsedPercent')}</span>
+                    </div>
+                    <div className="qp-bar">
+                      <i style={{ width: '72%' }} />
+                    </div>
+                    <div className="qp-meta">
+                      <span>{t('mock.quotaUsed')}</span>
+                      <span>{t('mock.quotaResets')}</span>
+                    </div>
+                    <div className="qp-sub">
+                      <div className="qp-row">
+                        <span>{t('mock.quotaWeek')}</span>
+                        <span className="num">$9.50 / $25.00</span>
+                      </div>
+                      <div className="qp-bar sm">
+                        <i style={{ width: '38%' }} />
+                      </div>
+                      <div className="qp-row">
+                        <span>{t('mock.quotaMonth')}</span>
+                        <span className="num">$12.40 / $50.00</span>
+                      </div>
+                      <div className="qp-bar sm">
+                        <i style={{ width: '25%' }} />
+                      </div>
+                    </div>
+                    <div className="qp-foot">
+                      <span className="sync">{t('mock.quotaSync')}</span>
+                      <span className="qp-details">{t('mock.quotaDetails')}</span>
+                    </div>
+                  </div>
+                )}
               </span>
               <span className="m-row-btn active">
                 <Icon name="panel-right" size={16} />

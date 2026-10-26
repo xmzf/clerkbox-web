@@ -2,7 +2,7 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Features from './components/Features'
-import LunoraPlan from './components/LunoraPlan'
+import JoulePlan from './components/JoulePlan'
 import Download from './components/Download'
 import Footer from './components/Footer'
 
@@ -43,7 +43,7 @@ export default function App() {
           <Features />
         </Reveal>
         <Reveal>
-          <LunoraPlan />
+          <JoulePlan />
         </Reveal>
         <Reveal>
           <Download />

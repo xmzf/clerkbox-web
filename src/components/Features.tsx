@@ -2,8 +2,9 @@ import { useI18n } from '../i18n'
 import { Icon } from './Icons'
 
 /**
- * 十五张能力卡，顺序即卖点优先级：开源与数据安全打头，v3.2 的界面模式 / Git / 桌面操控 /
- * Agent 浏览器 / 撤回回滚紧随，其余是通用 Agent 能力。每张的视觉区用纯 CSS 绘制（无图片依赖）。
+ * 十九张能力卡，顺序即卖点优先级：开源与数据安全打头，v3.5 的 Joule 账号与额度、
+ * IM 机器人紧随，v3.2 的界面模式 / Git / 桌面操控 / Agent 浏览器 / 撤回回滚随后，
+ * 其余是通用 Agent 能力。每张的视觉区用纯 CSS 绘制（无图片依赖）。
  */
 export default function Features() {
   const { t } = useI18n()
@@ -59,6 +60,56 @@ export default function Features() {
             <Icon name="globe" size={13} />
             <span>{t('features.f2row4')}</span>
             <span className="val ok">{t('features.f2local')}</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: 'f18',
+      visual: (
+        <div className="mini-list">
+          <div className="ml-row">
+            <Icon name="user" size={13} />
+            <span>{t('features.f18row1')}</span>
+            <span className="val ok">{t('features.f18val1')}</span>
+          </div>
+          <div className="ml-row">
+            <Icon name="lock" size={13} />
+            <span>{t('features.f18row2')}</span>
+            <span className="val ok">{t('features.f18val2')}</span>
+          </div>
+          <div className="ml-row">
+            <Icon name="calendar-clock" size={13} />
+            <span>{t('features.f18row3')}</span>
+            <span className="val ok">{t('features.f18val3')}</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: 'f19',
+      visual: (
+        <div className="mini-list">
+          <div className="ml-row">
+            <Icon name="message" size={13} />
+            <span>{t('features.f19row1')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
+          </div>
+          <div className="ml-row">
+            <Icon name="shield-check" size={13} />
+            <span>{t('features.f19row2')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
+          </div>
+          <div className="ml-row">
+            <Icon name="file" size={13} />
+            <span>{t('features.f19row3')}</span>
+            <span className="val ok">
+              <Icon name="check" size={11} />
+            </span>
           </div>
         </div>
       ),
@@ -255,7 +306,7 @@ export default function Features() {
       key: 'f6',
       visual: (
         <div className="chip-row">
-          <span className="mini-chip hl">Lunora</span>
+          <span className="mini-chip hl">Joule</span>
           <span className="mini-chip">OpenAI</span>
           <span className="mini-chip">Anthropic</span>
           <span className="mini-chip">Gemini</span>

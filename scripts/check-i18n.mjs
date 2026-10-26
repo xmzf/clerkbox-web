@@ -17,7 +17,7 @@ const src = fs.readFileSync(FILE, 'utf8')
 /** 取某个命名空间的键：ns: { ... } 块内的顶层 `key:` */
 const keysOf = (body) => [...body.matchAll(/^\s{6}(\w+):/gm)].map((m) => m[1])
 
-const namespaces = ['header', 'hero', 'mock', 'features', 'lunora', 'download', 'footer']
+const namespaces = ['header', 'hero', 'mock', 'features', 'joule', 'download', 'footer']
 
 const pickBlock = (ns) => {
   // 两个语言各一份，按出现顺序取前两个
