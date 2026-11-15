@@ -1,13 +1,14 @@
 {
   "name": "clerkbox-website",
   "private": true,
-  "version": "2.0.0",
+  "version": "4.0.0",
   "type": "module",
-  "description": "ClerkBox 官网演示页 — MD3 深色 / 中英双语",
+  "description": "ClerkBox 4.0 官网 — 本地优先的 AI 桌面工作台 / 中英双语",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && npm run check:i18n && vite build",
+    "build": "tsc --noEmit && npm run check:i18n && npm run check:releases && vite build",
     "check:i18n": "node scripts/check-i18n.mjs",
+    "check:releases": "node scripts/check-releases.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

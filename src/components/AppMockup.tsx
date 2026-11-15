@@ -1,800 +1,195 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
+import { createPortal } from 'react-dom'
 import { useI18n } from '../i18n'
 import { Icon } from './Icons'
 
-type TabKind = 'files' | 'terminal' | 'browser' | 'subagent' | 'git'
-/** 基础 tab 顺序；编程模式下在尾部追加 Git 审查 tab（对照真实 workbench 的模式门控） */
-const BASE_TABS: TabKind[] = ['files', 'terminal', 'browser', 'subagent']
-const TAB_ICON: Record<TabKind, string> = {
-  files: 'folder',
-  terminal: 'terminal',
-  browser: 'globe',
-  subagent: 'bot',
-  git: 'code',
+export type DemoScenario = 'work' | 'vibe' | 'recall'
+const SCENARIOS: DemoScenario[] = ['work', 'vibe', 'recall']
+const PANELS = ['files', 'terminal', 'git'] as const
+type Panel = typeof PANELS[number]
+type DemoSession = 'homepage' | 'research'
+interface SessionState {
+  recalled: boolean
+  filesRestored: boolean
+  draft: string
+  draftRestored: boolean
+  localMessages: string[]
+  notice: string
 }
-/** 界面模式（对照真实 settings-store 的 InterfaceMode）：纯展示层偏好，不改变 Agent 能力 */
-type InterfaceMode = 'coding' | 'general'
+const emptySession = (): SessionState => ({ recalled: false, filesRestored: false, draft: '', draftRestored: false, localMessages: [], notice: '' })
 
-const REDUCED_MOTION =
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-/** AgentStatusIndicator 的 3×3 像素网格节拍（chevron 波形；null = 常暗格） */
-const STATUS_DELAYS: Array<number | null> = [0, 60, 120, 180, 240, 300, 240, 180, null]
-
-/**
- * ClerkBox 主工作台复刻。
- * 结构 / 配色 / 文案逐项对照真实组件：
- * TitleBar.tsx · Sidebar.tsx · MessageItem.tsx · GoalBanner.tsx · ChatInput.tsx · WorkbenchPanel.tsx
- */
-export default function AppMockup() {
-  const { t, lang } = useI18n()
-
-  // 界面模式：可点击切换（对照 ModeToggle.tsx），编程模式额外亮起分支芯片与 Git 工作台 tab
-  const [mode, setMode] = useState<InterfaceMode>('coding')
-  const isCoding = mode === 'coding'
-  const TAB_ORDER: TabKind[] = isCoding ? [...BASE_TABS, 'git'] : BASE_TABS
-
-  // 工作台 tab：自动轮播，点击后固定 9 秒
-  const [tab, setTab] = useState<TabKind>('files')
-  const pinUntil = useRef(0)
-  useEffect(() => {
-    if (REDUCED_MOTION) return
-    const id = setInterval(() => {
-      if (Date.now() < pinUntil.current) return
-      setTab((cur) => TAB_ORDER[(TAB_ORDER.indexOf(cur) + 1) % TAB_ORDER.length])
-    }, 3400)
-    return () => clearInterval(id)
-  }, [TAB_ORDER.length])
-  // 切回通用模式时当前 tab 可能已不存在，回落到 files
-  useEffect(() => {
-    if (!TAB_ORDER.includes(tab)) setTab('files')
-  }, [TAB_ORDER, tab])
-  const pickTab = (k: TabKind) => {
-    setTab(k)
-    pinUntil.current = Date.now() + 9000
-  }
-
-  // 流式消息打字机
-  const streamText = t('mock.stream')
-  const [streamLen, setStreamLen] = useState(REDUCED_MOTION ? streamText.length : 0)
-  useEffect(() => {
-    if (REDUCED_MOTION) {
-      setStreamLen(streamText.length)
-      return
-    }
-    setStreamLen(0)
-    let i = 0
-    let resetTimer: ReturnType<typeof setTimeout> | undefined
-    const id = setInterval(() => {
-      i += 1
-      setStreamLen(i)
-      if (i >= streamText.length) {
-        clearInterval(id)
-        resetTimer = setTimeout(() => setStreamLen(0), 4200)
-      }
-    }, 58)
-    return () => {
-      clearInterval(id)
-      if (resetTimer) clearTimeout(resetTimer)
-    }
-  }, [streamText])
-
-  // 终端逐行输出，循环播放
-  const TERM_LINES = 7
-  const [termN, setTermN] = useState(REDUCED_MOTION ? TERM_LINES : 2)
-  useEffect(() => {
-    if (REDUCED_MOTION) return
-    let n = 2
-    const id = setInterval(() => {
-      n = n >= TERM_LINES ? 2 : n + 1
-      setTermN(n)
-    }, 760)
-    return () => clearInterval(id)
-  }, [])
-
-  // AgentStatusIndicator 计时（真实组件 100ms 粒度）
-  const [ds, setDs] = useState(REDUCED_MOTION ? 324 : 0)
-  useEffect(() => {
-    if (REDUCED_MOTION) return
-    const id = setInterval(() => setDs((d) => d + 1), 100)
-    return () => clearInterval(id)
-  }, [])
-  const totalSec = ds / 10
-  const elapsed = totalSec < 60 ? `${totalSec.toFixed(1)}s` : `${Math.floor(totalSec / 60)}m ${(totalSec % 60).toFixed(1)}s`
-
-  const streamShown = streamText.slice(0, streamLen)
-
-  // write_file 行标签：真实组件是「写入 N 行」（按写入内容行数计数）
-  const writeLabel = (n: number) => (lang === 'zh' ? `写入 ${n} 行` : `Wrote ${n} lines`)
-
-  // 消息列表：真实应用流式时自动滚到底（用户上翻则不打扰）
-  const msgsRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const el = msgsRef.current
-    if (!el) return
-    const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 120
-    if (nearBottom) el.scrollTop = el.scrollHeight
-  }, [streamLen])
-
-  // 输入框：可真实输入，发送后平滑滚动到下载区（官网演示的引导行为）
+/** A local demonstration: no model calls, uploads, or changes to real files. */
+export default function AppMockup({ scenario, requestRevision }: { scenario?: DemoScenario; requestRevision?: number }) {
+  const { t } = useI18n()
+  const [mode, setMode] = useState<DemoScenario>(scenario ?? 'work')
+  const [panel, setPanel] = useState<Panel>('files')
+  const [drawer, setDrawer] = useState(false)
+  const [customize, setCustomize] = useState(false)
+  const [opacity, setOpacity] = useState(80)
+  const [background, setBackground] = useState<'dusk' | 'forest'>('dusk')
+  const [recalled, setRecalled] = useState(false)
+  const [recallOpen, setRecallOpen] = useState(false)
+  const [withFiles, setWithFiles] = useState(false)
+  const [filesRestored, setFilesRestored] = useState(false)
   const [draft, setDraft] = useState('')
-  const sendDraft = () => {
-    setDraft('')
-    document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' })
+  const [draftRestored, setDraftRestored] = useState(false)
+  const [localMessages, setLocalMessages] = useState<string[]>([])
+  const [notice, setNotice] = useState('')
+  const [session, setSession] = useState<DemoSession>('homepage')
+  const sessionStates = useRef<Partial<Record<DemoSession, SessionState>>>({})
+  const id = useId()
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const tabs = useRef<Array<HTMLButtonElement | null>>([])
+  const panelTabs = useRef<Array<HTMLButtonElement | null>>([])
+  const customizeRef = useRef<HTMLButtonElement>(null)
+  const customizePanelRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => { if (scenario) setMode(scenario) }, [scenario, requestRevision])
+  useEffect(() => { setCustomize(false); setDrawer(false); setRecallOpen(false) }, [mode])
+  useEffect(() => {
+    if (!recallOpen) return
+    const dialog = dialogRef.current
+    if (!dialog) return
+    dialog.showModal()
+    return () => { dialog.close(); triggerRef.current?.focus({ preventScroll: true }) }
+  }, [recallOpen])
+  useEffect(() => {
+    if (recalled && !recallOpen) textareaRef.current?.focus({ preventScroll: true })
+  }, [recalled, recallOpen])
+  useEffect(() => {
+    if (!customize) return
+    const outside = (event: PointerEvent) => {
+      if (!customizePanelRef.current?.contains(event.target as Node) && !customizeRef.current?.contains(event.target as Node)) setCustomize(false)
+    }
+    const escape = (event: globalThis.KeyboardEvent) => {
+      if (event.key !== 'Escape' || event.isComposing) return
+      setCustomize(false); customizeRef.current?.focus({ preventScroll: true })
+    }
+    document.addEventListener('pointerdown', outside)
+    document.addEventListener('keydown', escape)
+    return () => { document.removeEventListener('pointerdown', outside); document.removeEventListener('keydown', escape) }
+  }, [customize])
+
+  function reset() {
+    setRecalled(false); setWithFiles(false); setFilesRestored(false)
+    setDraft(''); setDraftRestored(false); setNotice(''); setLocalMessages([])
+  }
+  function switchSession(next: DemoSession) {
+    if (next !== session) {
+      sessionStates.current[session] = { recalled, filesRestored, draft, draftRestored, localMessages, notice }
+      const saved = sessionStates.current[next] ?? emptySession()
+      setRecalled(saved.recalled); setFilesRestored(saved.filesRestored)
+      setDraft(saved.draft); setDraftRestored(saved.draftRestored)
+      setLocalMessages(saved.localMessages); setNotice(saved.notice)
+      setWithFiles(false); setSession(next)
+    }
+    setDrawer(false)
+  }
+  function resetAll() {
+    sessionStates.current = {}
+    reset(); setSession('homepage'); setDrawer(false)
+  }
+  function tabKey(event: KeyboardEvent<HTMLButtonElement>, index: number, kind: 'scenario' | 'panel') {
+    const values = kind === 'scenario' ? SCENARIOS : PANELS
+    const next = event.key === 'ArrowRight' ? (index + 1) % values.length : event.key === 'ArrowLeft' ? (index - 1 + values.length) % values.length : event.key === 'Home' ? 0 : event.key === 'End' ? values.length - 1 : -1
+    if (next < 0 || event.nativeEvent.isComposing) return
+    event.preventDefault()
+    if (kind === 'scenario') { setMode(SCENARIOS[next]); tabs.current[next]?.focus() }
+    else { setPanel(PANELS[next]); panelTabs.current[next]?.focus() }
+  }
+  function confirmRecall() {
+    // The real desktop app protects an existing draft; the example must do the same.
+    if (draft.trim() || draftRestored) return
+    setRecalled(true); setFilesRestored(withFiles); setDraft(prompt); setDraftRestored(true); setLocalMessages([])
+    setNotice(withFiles ? t('demo.recalledFilesNotice') : t('demo.recalledNotice')); setRecallOpen(false)
+  }
+  function sendLocalDraft() {
+    if (!draft.trim()) return
+    setLocalMessages((messages) => [...messages, draft.trim()]); setDraft(''); setDraftRestored(false); setNotice(t('demo.localSent'))
   }
 
-  // 5 小时额度弹层（对照 JouleQuotaButton 的 open 状态）
-  const [quotaOpen, setQuotaOpen] = useState(false)
+  const isVibe = mode === 'vibe'
+  const prompt = session === 'homepage' ? t('demo.prompt') : t('demo.researchPrompt')
+  const title = session === 'homepage' ? t('demo.sessionTitle') : t('demo.researchTitle')
+  const draftConflict = !!draft.trim() || draftRestored
+  const fileContent = filesRestored ? 'export default function Home() {\n  return <main>Hello, world.</main>\n}' : 'export default function Home() {\n  return (\n    <main className="workspace">\n      <h1>Make room for your ideas.</h1>\n      <ProjectGallery />\n    </main>\n  )\n}'
 
   return (
-    <div className="mock-outer">
-      <div className="mock-glow" />
-      {/* 结构对照 App.tsx：Sidebar 全高贴顶；TitleBar 只盖右侧列，其下才是 对话+工作台 */}
-      <div className="mock">
-        {/* ── Sidebar：对照 Sidebar.tsx（新会话 / 插件市场 / 按工作目录分组的任务列表 / 底部入口） ── */}
-        <aside className="m-side">
-          <div className="m-side-head">
-            <img src="/clerkbox.png" alt="" />
-            <span className="nm">ClerkBox</span>
-            {/* 界面模式开关（对照 ModeToggle.tsx）：选中段展开「图标+文字」，未选中段仅图标 */}
-            <span className="m-mode" role="radiogroup" aria-label={lang === 'zh' ? '界面模式' : 'Interface mode'}>
-              <span
-                role="radio"
-                aria-checked={isCoding}
-                className={`m-mode-seg${isCoding ? ' on' : ''}`}
-                onClick={() => setMode('coding')}
-              >
-                <Icon name="terminal" size={11} />
-                {isCoding && t('mock.modeCoding')}
-              </span>
-              <span
-                role="radio"
-                aria-checked={!isCoding}
-                className={`m-mode-seg${!isCoding ? ' on' : ''}`}
-                onClick={() => setMode('general')}
-              >
-                <Icon name="grid" size={11} />
-                {!isCoding && t('mock.modeGeneral')}
-              </span>
-            </span>
-          </div>
-          <div className="m-side-btns">
-            <span className="m-side-btn">
-              <Icon name="plus" size={15} />
-              {t('mock.newChat')}
-            </span>
-            <span className="m-side-btn">
-              <Icon name="store" size={15} />
-              {t('mock.skills')}
-            </span>
-            {/* 定时任务：真实 Sidebar.tsx 在插件市场正下方，用 CalendarClock 图标，
-                有待确认提案时图标右上角挂数字角标（绝对定位，不挤歪居中内容） */}
-            <span className="m-side-btn">
-              <span className="m-side-ic">
-                <Icon name="calendar-clock" size={15} />
-                <span className="m-side-badge">2</span>
-              </span>
-              {t('mock.scheduled')}
-            </span>
-          </div>
-          <div className="m-tasklabel">
-            <span>{t('mock.taskList')}</span>
-            <Icon name="chevron-down" size={12} />
-          </div>
-          <div className="m-groups">
-            <div className="m-grp">
-              <div className="m-grp-head">
-                <Icon name="folder-open" size={13} />
-                <span>{t('mock.groupA')}</span>
-                <span className="cnt">2</span>
-                <Icon name="chevron-down" size={11} />
-              </div>
-              <div className="m-task active" title={t('mock.working')}>
-                <span className="ic">
-                  <Icon name="message" size={13} />
-                </span>
-                <span className="tt">{t('mock.t1')}</span>
-                <span className="m-spin" />
-              </div>
-              <div className="m-task">
-                <span className="ic">
-                  <Icon name="message" size={13} />
-                </span>
-                <span className="tt">{t('mock.t2')}</span>
-              </div>
+    <div className="product-demo" data-scenario={mode}>
+      <div className="product-demo-controls">
+        <span className="product-demo-label"><span aria-hidden="true" />{t('demo.interactive')}</span>
+        <div role="tablist" aria-label={t('demo.scenarios')} className="product-demo-scenarios">
+          {SCENARIOS.map((value, index) => <button key={value} type="button" role="tab" id={`${id}-tab-${value}`} aria-controls={`${id}-preview`} aria-selected={mode === value} tabIndex={mode === value ? 0 : -1} ref={(element) => { tabs.current[index] = element }} onClick={() => setMode(value)} onKeyDown={(event) => tabKey(event, index, 'scenario')}><Icon name={value === 'work' ? 'grid' : value === 'vibe' ? 'sparkles' : 'rotate-cw'} size={15} />{t(`demo.${value}`)}</button>)}
+        </div>
+      </div>
+      <div className={`product-demo-window ${isVibe ? `is-vibe atmosphere-${background}` : ''}`} id={`${id}-preview`} role="tabpanel" aria-labelledby={`${id}-tab-${mode}`} style={{ '--reading-opacity': opacity / 100 } as CSSProperties}>
+        <div className="product-demo-titlebar">
+          <div className="product-demo-brand"><img src="/clerkbox.png" alt="" width="21" height="21" /><span>ClerkBox</span><span className="product-demo-version">4.0</span></div>
+          <span className="product-demo-title">{title}</span><span className="product-demo-window-dots" aria-hidden="true"><i /><i /><i /></span>
+        </div>
+        {isVibe && <div className="product-demo-vibe-toolbar">
+          <button type="button" aria-label={t('demo.toggleSessions')} aria-expanded={drawer} aria-controls={`${id}-sessions`} onClick={() => setDrawer((value) => !value)}><Icon name="panel-left" size={16} /><span>{t('demo.sessions')}</span></button>
+          <span className="product-demo-vibe-word"><Icon name="sparkles" size={13} /> VIBE</span>
+          <button type="button" ref={customizeRef} aria-expanded={customize} aria-controls={`${id}-customize`} onClick={() => setCustomize((value) => !value)}><Icon name="settings" size={16} />{t('demo.atmosphere')}</button>
+          {customize && <div ref={customizePanelRef} className="product-demo-customize" id={`${id}-customize`}>
+            <div className="product-demo-customize-title">{t('demo.atmosphere')}<button type="button" aria-label={t('demo.close')} onClick={() => { setCustomize(false); customizeRef.current?.focus() }}><Icon name="x" /></button></div>
+            <label htmlFor={`${id}-opacity`}>{t('demo.readingOpacity')}<output htmlFor={`${id}-opacity`}>{opacity}%</output></label>
+            <input id={`${id}-opacity`} type="range" min="45" max="95" value={opacity} onChange={(event) => setOpacity(Number(event.target.value))} />
+            <div className="product-demo-backdrops" role="group" aria-label={t('demo.background')}>{(['dusk', 'forest'] as const).map(value => <button key={value} type="button" className={`product-demo-swatch swatch-${value}`} aria-pressed={background === value} onClick={() => setBackground(value)}>{t(`demo.${value}`)}</button>)}</div>
+            <p>{t('demo.atmosphereHint')}</p>
+          </div>}
+        </div>}
+        <div className={`product-demo-body ${isVibe ? 'is-vibe' : ''}`}>
+          <aside className={`product-demo-sidebar ${isVibe && !drawer ? 'is-hidden' : ''}`} id={`${id}-sessions`} aria-label={t('demo.sessions')}>
+            <button type="button" className="product-demo-new" onClick={resetAll}><Icon name="plus" size={15} />{t('demo.newSession')}</button>
+            <span className="product-demo-side-label">{t('demo.workspace')}</span><div className="product-demo-project"><Icon name="folder" size={14} />clerkbox-project</div>
+            <button type="button" className={`product-demo-session ${session === 'homepage' ? 'active' : ''}`} aria-pressed={session === 'homepage'} onClick={() => switchSession('homepage')}><Icon name="message" size={14} />{t('demo.sessionTitle')}</button>
+            <button type="button" className={`product-demo-session ${session === 'research' ? 'active' : ''}`} aria-pressed={session === 'research'} onClick={() => switchSession('research')}><Icon name="message" size={14} />{t('demo.researchTitle')}</button>
+            <div className="product-demo-sidebar-bottom"><Icon name="lock" size={13} /><span>{t('demo.localExample')}</span></div>
+          </aside>
+          <div className="product-demo-conversation">
+            <div className="product-demo-conversation-heading"><span>{title}</span><span className="product-demo-ready"><i />{t('demo.ready')}</span></div>
+            <div className="product-demo-messages">
+              {mode === 'recall' && <div className="product-demo-context"><Icon name="check" size={13} />{t('demo.earlierMessage')}</div>}
+              {!recalled && <>
+                <div className="product-demo-user"><div className="product-demo-message-tags"><span><Icon name="paperclip" size={12} />brief.md</span><span>Plan</span></div><p>{prompt}</p></div>
+                {mode === 'recall' && <button ref={triggerRef} type="button" className="product-demo-recall-button" onClick={() => { setWithFiles(false); setRecallOpen(true) }}><Icon name="rotate-cw" size={13} />{t('demo.recallAction')}</button>}
+                <div className="product-demo-assistant">
+                  <div className="product-demo-agent"><img src="/clerkbox.png" alt="" width="22" height="22" /><strong>ClerkBox</strong></div>
+                  <details className="product-demo-thought"><summary><Icon name="sparkles" size={13} />{t('demo.thought')}<Icon name="chevron-right" size={12} /></summary><p>{t('demo.thoughtBody')}</p></details>
+                  <p>{session === 'homepage' ? t('demo.response') : t('demo.researchResponse')}</p>
+                  <details className="product-demo-tool"><summary><Icon name="folder" size={14} /><span>{t('demo.toolRead')}</span><span className="product-demo-tool-count">3 {t('demo.filesUnit')}</span><Icon name="chevron-right" size={12} /></summary><ul><li>src/pages/Home.tsx</li><li>src/styles/global.css</li><li>package.json</li></ul></details>
+                  <div className="product-demo-write"><Icon name="check" size={13} /><span>{t('demo.updatedFile')}</span><code>Home.tsx</code><em>+24 −8</em></div><p className="product-demo-result">{t('demo.result')}</p>
+                </div>
+                {mode === 'recall' && <div className="product-demo-followup"><span>{t('demo.followup')}</span><p>{t('demo.followupResponse')}</p></div>}
+              </>}
+              {recalled && <div className="product-demo-restored-state"><span className="product-demo-restored-icon"><Icon name="rotate-cw" size={22} /></span><h4>{t('demo.restoredTitle')}</h4><p>{t('demo.restoredBody')}</p><button type="button" onClick={reset}>{t('demo.reset')}<Icon name="rotate-cw" size={13} /></button></div>}
+              {localMessages.map((message, index) => <div key={index} className="product-demo-user product-demo-local-message"><p>{message}</p><small>{t('demo.localMessage')}</small></div>)}
             </div>
-            <div className="m-grp">
-              <div className="m-grp-head">
-                <Icon name="folder-open" size={13} />
-                <span>{t('mock.groupB')}</span>
-                <span className="cnt">1</span>
-                <Icon name="chevron-down" size={11} />
-              </div>
-              <div className="m-task">
-                <span className="ic">
-                  <Icon name="message" size={13} />
-                </span>
-                <span className="tt">{t('mock.t3')}</span>
-              </div>
-            </div>
-            <div className="m-grp">
-              <div className="m-grp-head">
-                <Icon name="folder-open" size={13} />
-                <span>{t('mock.groupC')}</span>
-                <span className="cnt">1</span>
-                <Icon name="chevron-down" size={11} />
-              </div>
-              <div className="m-task">
-                <span className="ic">
-                  <Icon name="message" size={13} />
-                </span>
-                <span className="tt">{t('mock.t4')}</span>
-              </div>
-            </div>
+            <div className="product-demo-composer-area"><div className="product-demo-notice" role="status">{notice}</div><div className="product-demo-composer">
+              {draftRestored && <div className="product-demo-draft-tags"><span><Icon name="paperclip" size={12} />brief.md</span><span>Plan</span></div>}
+              <textarea ref={textareaRef} aria-label={t('demo.inputLabel')} placeholder={t('demo.inputPlaceholder')} value={draft} rows={2} onChange={(event) => setDraft(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && event.nativeEvent.keyCode !== 229) { event.preventDefault(); sendLocalDraft() } }} />
+              <div className="product-demo-composer-footer"><span><Icon name="folder" size={12} />clerkbox-project</span><span className="product-demo-model">Joule · {t('demo.model')}</span><button type="button" aria-label={t('demo.sendLocal')} disabled={!draft.trim()} onClick={sendLocalDraft}><Icon name="arrow-up" size={16} /></button></div>
+            </div></div>
           </div>
-          <div className="m-side-foot">
-            <span className="m-foot-row">
-              <Icon name="globe" size={15} />
-              {t('mock.webui')}
-            </span>
-            <span className="m-foot-row">
-              <Icon name="settings" size={15} />
-              {t('mock.settings')}
-            </span>
-            <span className="m-foot-row">
-              <span className="avatar">X</span>
-              {t('mock.signedOut')}
-            </span>
-          </div>
-        </aside>
-
-        {/* ── 右列：TitleBar + （对话 + 工作台），对照 App.tsx 的 flex-col ── */}
-        <div className="m-right">
-          <div className="m-titlebar">
-            <div className="m-tb-left">
-              <span className="m-row-btn">
-                <Icon name="panel-left" size={16} />
-              </span>
-              <span className="m-ver">v3.5.1</span>
+          <aside className="product-demo-workbench" aria-label={t('demo.workbench')}>
+            <div className="product-demo-workbench-tabs" role="tablist" aria-label={t('demo.workbench')}>{PANELS.map((value, index) => <button key={value} type="button" role="tab" id={`${id}-panel-tab-${value}`} aria-controls={`${id}-workbench-panel`} aria-selected={panel === value} tabIndex={panel === value ? 0 : -1} ref={(element) => { panelTabs.current[index] = element }} onClick={() => setPanel(value)} onKeyDown={(event) => tabKey(event, index, 'panel')}>{t(`demo.${value}`)}</button>)}</div>
+            <div className="product-demo-panel" role="tabpanel" id={`${id}-workbench-panel`} aria-labelledby={`${id}-panel-tab-${panel}`} tabIndex={0}>
+              {panel === 'files' && <><div className="product-demo-filetree"><span><Icon name="folder" size={13} />src / pages</span><span className="active"><Icon name="file" size={13} />Home.tsx {!filesRestored && <em>M</em>}</span><span><Icon name="file" size={13} />global.css</span></div><div className="product-demo-file-title"><Icon name="code" size={13} />Home.tsx<span>TSX</span></div><pre className="product-demo-code"><code>{fileContent.split('\n').map((line, index) => <span key={index}><i>{index + 1}</i>{line}</span>)}</code></pre><div className="product-demo-file-status"><Icon name="check" size={12} />{filesRestored ? t('demo.fileRestored') : t('demo.fileKept')}</div></>}
+              {panel === 'terminal' && <div className="product-demo-terminal"><p><span>~/clerkbox-project</span> main</p><p>❯ npm run build</p><p className="muted">vite · building for production…</p><p className="success">✓ 48 modules transformed.</p><p>dist/index.html <span>0.56 kB</span></p><p>dist/assets/index.css <span>8.24 kB</span></p><p className="success">✓ built in 1.2s</p><p className="product-demo-terminal-note">{t('demo.terminalNote')}</p></div>}
+              {panel === 'git' && <div className="product-demo-git"><div><Icon name="code" size={14} /><strong>main</strong><span>{t('demo.gitReview')}</span></div><p>{filesRestored ? t('demo.gitClean') : t('demo.gitChanged')}</p>{filesRestored ? <div className="product-demo-git-clean"><Icon name="circle-check" size={22} /><p>{t('demo.gitRestored')}</p></div> : <><div className="product-demo-diff-file">src/pages/Home.tsx <em>+24 −8</em></div><pre><del>− &lt;main&gt;Hello, world.&lt;/main&gt;</del><ins>+ &lt;main className="workspace"&gt;</ins><ins>+   &lt;ProjectGallery /&gt;</ins><ins>+ &lt;/main&gt;</ins></pre></>}<small>{t('demo.gitNote')}</small></div>}
             </div>
-            <div className="m-tb-right">
-              <span className="m-vibe">
-                <Icon name="sparkles" size={13} />
-                {lang === 'zh' ? '氛围' : 'VIBE'}
-              </span>
-              {/* ContextUsageIndicator：18px 裸环（白色 18% 轨道 + 弧线），无数字 */}
-              <span className="m-ctx" title="22%">
-                <svg width="18" height="18" viewBox="0 0 18 18" style={{ transform: 'rotate(-90deg)' }}>
-                  <circle cx="9" cy="9" r="7.25" fill="none" strokeWidth="2" stroke="#ffffff" strokeOpacity={0.18} />
-                  <circle
-                    cx="9"
-                    cy="9"
-                    r="7.25"
-                    fill="none"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    stroke="#89b4fa"
-                    strokeDasharray={`${2 * Math.PI * 7.25 * 0.22} ${2 * Math.PI * 7.25}`}
-                  />
-                </svg>
-              </span>
-              {/* Joule 5 小时额度（对照 JouleQuotaButton）：Gauge 图标 + 已用百分比，点开长条弹层 */}
-              <span className="m-quota-wrap">
-                <button
-                  type="button"
-                  className="m-quota"
-                  onClick={() => setQuotaOpen((v) => !v)}
-                  aria-expanded={quotaOpen}
-                  aria-label={t('mock.quotaAria')}
-                  title={t('mock.quotaTitle')}
-                >
-                  <Icon name="gauge" size={16} />
-                  <span className="pct">5h 72%</span>
-                </button>
-                {quotaOpen && (
-                  <div className="m-quota-pop" role="dialog" aria-label={t('mock.quotaTitleLabel')}>
-                    <div className="qp-head">
-                      <span className="t">{t('mock.quotaTitleLabel')}</span>
-                      <button
-                        type="button"
-                        className="qp-x"
-                        onClick={() => setQuotaOpen(false)}
-                        aria-label={t('mock.quotaClose')}
-                      >
-                        <Icon name="x" size={13} />
-                      </button>
-                    </div>
-                    <div className="qp-top">
-                      <span className="qp-num">
-                        {t('mock.quotaRemaining')}
-                        <span className="cap"> / $10.00</span>
-                      </span>
-                      <span className="qp-badge">{t('mock.quotaUsedPercent')}</span>
-                    </div>
-                    <div className="qp-bar">
-                      <i style={{ width: '72%' }} />
-                    </div>
-                    <div className="qp-meta">
-                      <span>{t('mock.quotaUsed')}</span>
-                      <span>{t('mock.quotaResets')}</span>
-                    </div>
-                    <div className="qp-sub">
-                      <div className="qp-row">
-                        <span>{t('mock.quotaWeek')}</span>
-                        <span className="num">$9.50 / $25.00</span>
-                      </div>
-                      <div className="qp-bar sm">
-                        <i style={{ width: '38%' }} />
-                      </div>
-                      <div className="qp-row">
-                        <span>{t('mock.quotaMonth')}</span>
-                        <span className="num">$12.40 / $50.00</span>
-                      </div>
-                      <div className="qp-bar sm">
-                        <i style={{ width: '25%' }} />
-                      </div>
-                    </div>
-                    <div className="qp-foot">
-                      <span className="sync">{t('mock.quotaSync')}</span>
-                      <span className="qp-details">{t('mock.quotaDetails')}</span>
-                    </div>
-                  </div>
-                )}
-              </span>
-              <span className="m-row-btn active">
-                <Icon name="panel-right" size={16} />
-              </span>
-              <span className="m-row-btn">
-                <Icon name="minus" size={15} />
-              </span>
-              <span className="m-row-btn">
-                <Icon name="square" size={13} />
-              </span>
-              <span className="m-row-btn close">
-                <Icon name="x" size={15} />
-              </span>
-            </div>
-          </div>
-
-          <div className="m-mainrow">
-            {/* ── Chat：对照 ChatPage/MessageItem/GoalBanner/ChatInput ── */}
-            <main className="m-chat">
-              <div className="m-msgs" ref={msgsRef}>
-                {/* 用户消息：右对齐 primaryContainer 气泡 + Goal 芯片 + 时间戳 */}
-                <div className="m-user">
-                  <div className="m-user-col">
-                    <div className="m-user-bubble">
-                      <span className="m-chip-goal">
-                        <Icon name="target" size={10} />
-                        Goal
-                      </span>
-                      {t('mock.user1')}
-                    </div>
-                    <span className="m-time">{t('mock.timeAt')}</span>
-                  </div>
-                </div>
-
-                {/* 助手过程消息：思考折叠头 + 气泡 + 平铺工具行（可展开） */}
-                <div>
-                  <ThoughtRow text={t('mock.thought')} body={t('mock.thinkBody')} />
-                  <div className="m-ai-bubble">{t('mock.msgA')}</div>
-                  <div style={{ marginTop: 4, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <ToolRow icon="terminal" name={t('mock.toolS')} path="亮点速览" params={'{\n  "pattern": "亮点速览",\n  "path": "README.md"\n}'} />
-                    <ToolRow icon="file" name={writeLabel(96)} path="index.html" add={96} params={'{\n  "path": "index.html",\n  "content": "<!doctype html>…"\n}'} />
-                    <ToolRow icon="file" name={writeLabel(208)} path="src/styles/home.css" add={208} params={'{\n  "path": "src/styles/home.css",\n  "content": ":root { --md-primary: … }"\n}'} />
-                    <ToolRow icon="file" name={writeLabel(143)} path="src/pages/Home.tsx" add={143} params={'{\n  "path": "src/pages/Home.tsx",\n  "content": "export default function Home() …"\n}'} />
-                    <ToolRow icon="terminal" name={t('mock.toolC')} path="npm run build" params={'{\n  "command": "npm run build"\n}'} />
-                  </div>
-                </div>
-
-                {/* 助手最终回复：打字机流式 */}
-                <div>
-                  <div className="m-ai-bubble">
-                    {streamShown}
-                    <span className="m-caret" />
-                  </div>
-                </div>
-
-                {/* AgentStatusIndicator：3×3 像素网格 + 阶段文案 + 计时 */}
-                <div className="m-status">
-                  <span className="m-status-grid" aria-hidden>
-                    {STATUS_DELAYS.map((d, i) => (
-                      <span
-                        key={i}
-                        className="cell"
-                        style={d === null ? { opacity: 0.12 } : { opacity: 0.2, animation: `pixel-on 650ms ease-in-out ${d}ms infinite` }}
-                      />
-                    ))}
-                  </span>
-                  <span className="m-status-label">{t('mock.agentPhase')}</span>
-                  <span className="m-status-time">{elapsed}</span>
-                </div>
-              </div>
-
-              {/* GoalBanner：钉在输入框上方（真实行为） */}
-              <div className="m-goal">
-                <span style={{ color: 'var(--app-tertiary)', marginTop: 1, display: 'flex' }}>
-                  <Icon name="target" size={15} />
-                </span>
-                <div className="gt-body">
-                  <div className="gt-head">
-                    {t('mock.goalTitle')}
-                    <span className="pill">{t('mock.goalPill')}</span>
-                  </div>
-                  <div className="cond">{t('mock.goalCond')}</div>
-                  <div className="meta">{t('mock.goalMeta')}</div>
-                  <div className="hint">
-                    <span className="m-spin" />
-                    {t('mock.goalHint')}
-                  </div>
-                </div>
-                <span className="m-row-btn" style={{ width: 24, height: 24 }}>
-                  <Icon name="x" size={13} />
-                </span>
-              </div>
-
-              {/* 输入区：harness 锁定行 + 工作目录行 + 28px 圆角输入盒 + 工具栏 + 免责声明（对照 ChatInput.tsx） */}
-              <div className="m-inputwrap">
-                {/* Harness 模式行：会话产出消息后锁定为「模式名 + 小字」（对照 ChatInput.tsx 锁定态） */}
-                <div className="m-harness">
-                  <Icon name="layers" size={12} />
-                  <span className="nm">{t('mock.harnessName')}</span>
-                  <Icon name="lock" size={10} />
-                  <span className="ds">· {t('mock.harnessDesc')}</span>
-                </div>
-                <div className="m-workdir">
-                  <Icon name="folder-open" size={12} />
-                  {t('mock.workdir')}
-                  {/* 分支芯片（对照 BranchSwitcher）：仅编程模式渲染，通用模式隐藏 */}
-                  {isCoding && (
-                    <span className="m-branch" title={t('mock.branch')}>
-                      <Icon name="code" size={11} />
-                      {t('mock.branch')}
-                      <span className="cnt">{t('mock.branchDirty')}</span>
-                    </span>
-                  )}
-                </div>
-                <div className="m-input">
-                  <input
-                    className="m-realinput"
-                    value={draft}
-                    onChange={(e) => setDraft(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') sendDraft()
-                    }}
-                    placeholder={t('mock.inputPh')}
-                    aria-label={t('mock.inputPh')}
-                  />
-                  <div className="m-toolbar">
-                    <span className="m-tbtn" title={t('mock.attachAria')}>
-                      <Icon name="paperclip" size={15} />
-                    </span>
-                    <span className="m-tbtn" title={t('mock.cmdMenuAria')}>
-                      <Icon name="slash" size={14} />
-                    </span>
-                    <span className="m-tbtn" title={t('mock.workdir')}>
-                      <Icon name="folder-open" size={15} />
-                    </span>
-                    <span className="sep" />
-                    {/* 审批模式：默认 auto（ShieldCheck + 自动） */}
-                    <span className="m-tbtn wide">
-                      <Icon name="shield-check" size={13} />
-                      {t('mock.approval')}
-                      <span className="m-chev">▼</span>
-                    </span>
-                    <span className="m-think">
-                      <span className="m-tbtn">
-                        <Icon name="brain" size={14} />
-                      </span>
-                      <span className="lvl">
-                        {t('mock.tier')}
-                        <span className="m-chev">▼</span>
-                      </span>
-                    </span>
-                    <span className="m-model">
-                      <span className="lb">{t('mock.model')}</span>
-                      <span className="m-chev">▼</span>
-                    </span>
-                    <button type="button" className="m-send" onClick={sendDraft} aria-label={t('mock.sendAria')}>
-                      <Icon name="send" size={14} />
-                    </button>
-                  </div>
-                </div>
-                <div className="m-disclaimer">{t('mock.disclaimer')}</div>
-              </div>
-            </main>
-
-            {/* ── Workbench：对照 WorkbenchPanel.tsx（标签栏 + 内容区） ── */}
-            <aside className="m-wb">
-              <div className="m-wb-tabs">
-                {TAB_ORDER.map((k) => (
-                  <span
-                    key={k}
-                    className={`m-wb-tab${tab === k ? ' on' : ''}`}
-                    onClick={() => pickTab(k)}
-                  >
-                    <Icon name={TAB_ICON[k]} size={12} />
-                    {t(`mock.tab${k.charAt(0).toUpperCase()}${k.slice(1)}`)}
-                  </span>
-                ))}
-                <span className="m-wb-add">
-                  <Icon name="plus" size={13} />
-                </span>
-              </div>
-              <div className="m-wb-body">
-                {tab === 'files' && <FilesTab />}
-                {tab === 'terminal' && <TerminalTab shown={termN} />}
-                {tab === 'browser' && <BrowserTab />}
-                {tab === 'subagent' && <SubAgentTab />}
-                {tab === 'git' && <GitReviewTab />}
-              </div>
-            </aside>
-          </div>
+          </aside>
         </div>
       </div>
-    </div>
-  )
-}
-
-/** Git 审查 tab（对照 GitPanel.tsx：分支头 + 变更列表 +/- 行数 + 提交/推送） */
-function GitReviewTab() {
-  const { t } = useI18n()
-  const rows = [
-    { nm: t('mock.gitFile1'), add: 186, del: 0 },
-    { nm: t('mock.gitFile2'), add: 214, del: 0 },
-    { nm: t('mock.gitFile3'), add: 79, del: 1 },
-  ]
-  return (
-    <div className="m-git">
-      <div className="m-git-head">
-        <Icon name="code" size={11} />
-        <span className="br">{t('mock.branch')}</span>
-        <span className="acts">
-          <span className="act">{t('mock.gitCommit')}</span>
-          <span className="act">{t('mock.gitPush')}</span>
-        </span>
-      </div>
-      {rows.map((r) => (
-        <div className="m-git-row" key={r.nm}>
-          <span className="nm">{r.nm}</span>
-          {r.add > 0 && <span className="add">+{r.add}</span>}
-          {r.del > 0 && <span className="del">-{r.del}</span>}
-        </div>
-      ))}
-      <div className="m-git-head" style={{ borderBottom: 'none', marginTop: 2 }}>
-        <Icon name="check" size={11} />
-        <span>{t('mock.gitMain')}</span>
-      </div>
-    </div>
-  )
-}
-
-function ToolRow({ icon, name, path, add, del, params }: { icon: string; name: string; path: string; add?: number; del?: number; params: string }) {  const { t } = useI18n()
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="m-tool-wrap">
-      <button type="button" className="m-tool" onClick={() => setOpen(!open)} aria-expanded={open}>
-        <span className="st">
-          <Icon name={icon} size={13} />
-        </span>
-        <span className="nm">{name}</span>
-        <span className="path">{path}</span>
-        {add !== undefined && add > 0 && <span className="cnt-add">+{add}</span>}
-        {del !== undefined && del > 0 && <span className="cnt-del">−{del}</span>}
-      </button>
-      {open && (
-        <div className="m-tool-detail">
-          <div className="lb">{t('mock.paramsLabel')}</div>
-          <pre>{params}</pre>
-        </div>
-      )}
-    </div>
-  )
-}
-
-/** 思考折叠头（对照 ThinkingHeader：点击展开思考内容块） */
-function ThoughtRow({ text, body }: { text: string; body: string }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div>
-      <button type="button" className="m-thought" onClick={() => setOpen(!open)} aria-expanded={open}>
-        {text}
-        <span className="chev" style={{ transform: open ? 'rotate(180deg)' : undefined, transition: 'transform 0.2s' }}>
-          <Icon name="chevron-down" size={11} />
-        </span>
-      </button>
-      {open && <div className="m-think-detail">{body}</div>}
-    </div>
-  )
-}
-
-function FilesTab() {
-  return (
-    <div className="m-files">
-      {/* 左：FileTree（文件夹蓝色 info 图标 + 文件行）——与对话中写入的文件一致 */}
-      <div className="m-tree-pane">
-        <div className="m-ft-row folder">
-          <span className="tw">▼</span>
-          <span className="fic">
-            <Icon name="folder-open" size={13} />
-          </span>
-          <span className="nm">clerkbox-website</span>
-        </div>
-        <div className="m-ft-row folder" style={{ paddingLeft: 20 }}>
-          <span className="tw">▼</span>
-          <span className="fic">
-            <Icon name="folder-open" size={13} />
-          </span>
-          <span className="nm">src</span>
-        </div>
-        <div className="m-ft-row folder" style={{ paddingLeft: 34 }}>
-          <span className="tw">▼</span>
-          <span className="fic">
-            <Icon name="folder-open" size={13} />
-          </span>
-          <span className="nm">pages</span>
-        </div>
-        <div className="m-ft-row file sel" style={{ paddingLeft: 48 }}>
-          <span className="fic">
-            <Icon name="file" size={12} />
-          </span>
-          <span className="nm">Home.tsx</span>
-        </div>
-        <div className="m-ft-row folder" style={{ paddingLeft: 34 }}>
-          <span className="tw">▼</span>
-          <span className="fic">
-            <Icon name="folder-open" size={13} />
-          </span>
-          <span className="nm">styles</span>
-        </div>
-        <div className="m-ft-row file" style={{ paddingLeft: 48 }}>
-          <span className="fic">
-            <Icon name="file" size={12} />
-          </span>
-          <span className="nm">home.css</span>
-        </div>
-        <div className="m-ft-row file" style={{ paddingLeft: 20 }}>
-          <span className="fic">
-            <Icon name="file" size={12} />
-          </span>
-          <span className="nm">index.html</span>
-        </div>
-        <div className="m-ft-row file" style={{ paddingLeft: 20 }}>
-          <span className="fic">
-            <Icon name="file" size={12} />
-          </span>
-          <span className="nm">package.json</span>
-        </div>
-      </div>
-      {/* 右：预览（工具栏 + 文本预览） */}
-      <div className="m-preview">
-        <div className="m-pv-toolbar">
-          <span style={{ display: 'flex' }}>
-            <Icon name="panel-left-close" size={13} />
-          </span>
-          <span className="fn">Home.tsx</span>
-          <span className="x">
-            <Icon name="x" size={11} />
-          </span>
-        </div>
-        <div className="m-pv-body">
-          <div><span className="no">1</span><span className="kw">export default function</span> <span className="fn2">Home</span>() {'{'}</div>
-          <div><span className="no">2</span>  <span className="kw">return</span> (</div>
-          <div><span className="no">3</span>    &lt;<span className="kw">section</span> className=<span className="str">"hero"</span>&gt;</div>
-          <div><span className="no">4</span>      &lt;<span className="kw">h1</span>&gt;{'{'}t('hero.title'){'}'}&lt;/<span className="kw">h1</span>&gt;</div>
-          <div><span className="no">5</span>      &lt;<span className="kw">DownloadCta</span> /&gt;</div>
-          <div><span className="no">6</span>    &lt;/<span className="kw">section</span>&gt;</div>
-          <div><span className="no">7</span>  )</div>
-          <div><span className="no">8</span>{'}'}</div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function TerminalTab({ shown }: { shown: number }) {
-  // 对照 TerminalPanel：裸 xterm（Consolas 12px，前景 #e6e6e6，光标 #4d8ef7），无卡片外壳
-  const lines: Array<{ cls?: string; node: React.ReactNode }> = [
-    { node: (<><span>PS D:\www\clerkbox-website&gt;</span> <span>npm run build</span></>) },
-    { cls: 'out', node: <span>&gt; tsc --noEmit &amp;&amp; vite build</span> },
-    { cls: 'out', node: <span>vite v5.4.21 building for production...</span> },
-    { cls: 'ok', node: <span>✓ 42 modules transformed in 1.42s</span> },
-    { cls: 'out', node: <span>dist/index.html 3.84 kB │ gzip: 1.62 kB</span> },
-    { cls: 'ok', node: <span>✓ built in 1.98s</span> },
-    { node: (<><span>PS D:\www\clerkbox-website&gt;</span> <span className="cur" /></>) },
-  ]
-  return (
-    <div className="m-term">
-      {lines.slice(0, shown).map((l, i) => (
-        <div className={`ln ${l.cls ?? ''}`} key={i}>
-          {l.node}
-        </div>
-      ))}
-    </div>
-  )
-}
-
-function BrowserTab() {
-  return (
-    <div className="m-brw">
-      {/* 导航工具栏：后退 / 前进 / 刷新 + 地址栏（对照 BrowserPanel.tsx） */}
-      <div className="m-brw-h">
-        <span className="m-brw-btn">
-          <Icon name="arrow-left" size={14} />
-        </span>
-        <span className="m-brw-btn">
-          <Icon name="arrow-right" size={14} />
-        </span>
-        <span className="m-brw-btn">
-          <Icon name="rotate-cw" size={13} />
-        </span>
-        <span className="m-brw-url">
-          <span className="gl">
-            <Icon name="globe" size={12} />
-          </span>
-          localhost:5180
-        </span>
-      </div>
-      {/* webview 渲染中的页面 */}
-      <div className="m-brw-b">
-        <div className="m-brw-hero" />
-        <div className="m-bar w60" />
-        <div className="m-bar w85" />
-        <div className="m-bar w40" />
-      </div>
-    </div>
-  )
-}
-
-function SubAgentTab() {
-  const { t } = useI18n()
-  return (
-    <div className="m-sub">
-      {/* 思考过程折叠块（bg tertiary/5） */}
-      <div className="m-sub-think">
-        <div className="h">
-          <Icon name="brain" size={11} />
-          {t('mock.thinkingProcess')}
-        </div>
-        <div className="b">{t('mock.exploreDesc')}…</div>
-      </div>
-      {/* 工具调用卡片（Wrench + 名称 + 参数预览 + 状态） */}
-      <div className="m-sub-card">
-        <div className="h">
-          <span className="wic done">
-            <Icon name="wrench" size={11} />
-          </span>
-          <span className="nm">search_content</span>
-          <span className="arg">className*=token</span>
-          <span className="st done">
-            <Icon name="circle-check" size={12} />
-          </span>
-        </div>
-        <div className="detail">
-          <div className="lb">{t('mock.paramsLabel')}</div>
-          <pre>{`{
-  "pattern": "surfaceContainer",
-  "glob": "*.css"
-}`}</pre>
-        </div>
-      </div>
-      <div className="m-sub-card">
-        <div className="h">
-          <span className="wic run">
-            <Icon name="wrench" size={11} />
-          </span>
-          <span className="nm">read_file</span>
-          <span className="arg">src/index.css</span>
-          <span className="st run">
-            <span className="m-spin" />
-          </span>
-        </div>
-      </div>
-      <div className="m-sub-running">
-        <span className="m-spin" />
-        {t('mock.subWorking')}…
-      </div>
-      <div className="m-sub-reply">· {t('mock.generalDesc')}</div>
+      <div className="product-demo-caption"><span>{t(`demo.${mode}Caption`)}</span><small>{t('demo.disclaimer')}</small></div>
+      {recallOpen && typeof document !== 'undefined' && createPortal(<dialog ref={dialogRef} className="product-demo-dialog" aria-labelledby={`${id}-recall-title`} aria-describedby={`${id}-recall-description`} onKeyDown={(event) => { if (event.key === 'Escape' && (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229)) { event.preventDefault(); event.stopPropagation() } }} onCancel={(event) => { event.preventDefault(); setRecallOpen(false) }} onClick={(event) => { if (event.target === event.currentTarget) { const bounds = event.currentTarget.getBoundingClientRect(); if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) setRecallOpen(false) } }}>
+        <div className="product-demo-dialog-header"><span><Icon name="rotate-cw" size={18} />{t('demo.recallTitle')}</span><button type="button" aria-label={t('demo.close')} onClick={() => setRecallOpen(false)}><Icon name="x" size={18} /></button></div>
+        <div className="product-demo-dialog-body"><h3 id={`${id}-recall-title`}>{t('demo.recallHeading')}</h3><p id={`${id}-recall-description`}>{t('demo.recallDescription').replace('{count}', String(4 + localMessages.length))}</p><blockquote><span>brief.md · Plan</span>{prompt}</blockquote><label className="product-demo-file-toggle"><input type="checkbox" checked={withFiles} onChange={(event) => setWithFiles(event.target.checked)} /><span>{t('demo.withFiles')}<small>{t('demo.withFilesHint')}</small></span></label>{draftConflict && <p role="alert" className="product-demo-draft-conflict">{t('demo.draftConflict')}</p>}<p className="product-demo-dialog-note">{t('demo.recallWarning')}</p></div>
+        <div className="product-demo-dialog-footer"><button type="button" autoFocus onClick={() => setRecallOpen(false)}>{t('demo.cancel')}</button><button type="button" className="confirm" disabled={draftConflict} onClick={confirmRecall}>{t('demo.confirm')}</button></div>
+      </dialog>, document.body)}
     </div>
   )
 }

@@ -1,53 +1,37 @@
+import { useEffect, useRef, useState } from 'react'
 import { useI18n } from '../i18n'
 import { GithubIcon, Icon } from './Icons'
-
 export const REPO = 'https://github.com/XMZF-vAI/clerkbox'
-export const RELEASES = `${REPO}/releases/latest`
-/**
- * 安装包直链（gitproxy 加速）。
- * 资产名与 release.yml 的 electron-builder 配置一致：Windows NSIS 出 ClerkBox-Setup-<v>.exe，
- * macOS 出 x64 / arm64 两个 dmg，Linux 出 AppImage。改版本时四处一起改，别只改前三行。
- */
-const DL = 'https://api.gitproxy.dev/github.com/XMZF-vAI/clerkbox/releases/download/v3.5.1'
-export const SETUP_URL = `${DL}/ClerkBox-Setup-3.5.1.exe`
-export const MACOS_INTEL_URL = `${DL}/ClerkBox-3.5.1.dmg`
-export const MACOS_ARM_URL = `${DL}/ClerkBox-3.5.1-arm64.dmg`
-export const LINUX_URL = `${DL}/ClerkBox-3.5.1.AppImage`
-/** Joule 订阅站：ClerkBox 唯一内置供应商，设备码登录与额度都在这里 */
+export const RELEASES = `${REPO}/releases`
 export const JOULE = 'https://joule.xmzf.space'
-
 export default function Header() {
   const { t, lang, setLang } = useI18n()
-  return (
-    <header className="hdr">
-      <div className="container hdr-in">
-        <a className="hdr-logo" href="#top">
-          <img src="/clerkbox.png" alt="ClerkBox" />
-          <span>ClerkBox</span>
-        </a>
-        <nav className="hdr-nav">
-          <a href="#features">{t('header.navFeatures')}</a>
-          <a href="#joule">{t('header.navJoule')}</a>
-          <a href="#download">{t('header.navDownload')}</a>
-        </nav>
-        <div className="hdr-actions">
-          <div className="lang-switch" role="group" aria-label="Language">
-            <button className={lang === 'zh' ? 'on' : ''} onClick={() => setLang('zh')}>
-              中
-            </button>
-            <button className={lang === 'en' ? 'on' : ''} onClick={() => setLang('en')}>
-              EN
-            </button>
-          </div>
-          <a className="hdr-gh" href={REPO} target="_blank" rel="noreferrer" title={t('header.github')} aria-label={t('header.github')}>
-            <GithubIcon />
-          </a>
-          <a className="hdr-cta" href={SETUP_URL} download>
-            <Icon name="download" size={13} />
-            {t('header.cta')}
-          </a>
-        </div>
-      </div>
+  const [open, setOpen] = useState(false)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (!open) return
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape' && !event.isComposing) { setOpen(false); toggleRef.current?.focus() } }
+    const outside = (event: PointerEvent) => { if (!headerRef.current?.contains(event.target as Node)) setOpen(false) }
+    const media = window.matchMedia('(min-width: 901px)')
+    const resize = () => { if (media.matches) setOpen(false) }
+    media.addEventListener('change', resize)
+    document.addEventListener('keydown', escape)
+    document.addEventListener('pointerdown', outside)
+    return () => { media.removeEventListener('change', resize); document.removeEventListener('keydown', escape); document.removeEventListener('pointerdown', outside) }
+  }, [open])
+  const links = [['#workspace', 'product'], ['#features', 'features'], ['#vibe', 'vibe'], ['#start', 'start']]
+  return <>
+    <a className="skip-link" href="#main">{t('header.skip')}</a>
+    <header className="site-header" ref={headerRef}><div className="container header-inner">
+      <a className="brand" href="#top" aria-label="ClerkBox" onClick={() => setOpen(false)}><img src="/clerkbox.png" width="34" height="34" alt="" /><span>ClerkBox<span className="brand-period">.</span></span><span className="version-tag">4.0</span></a>
+      <nav className="desktop-nav" aria-label={t('header.nav')}>{links.map(([href, key]) => <a href={href} key={key}>{t(`header.${key}`)}</a>)}</nav>
+      <div className="header-actions"><div className="language-switch" role="group" aria-label={t('header.language')}><button type="button" aria-pressed={lang === 'zh'} onClick={() => setLang('zh')} lang="zh-CN">中</button><button type="button" aria-pressed={lang === 'en'} onClick={() => setLang('en')} lang="en">EN</button></div>
+        <a className="icon-button github-button" href={REPO} target="_blank" rel="noreferrer" aria-label={t('header.github')}><GithubIcon size={20} /></a>
+        <a className="button button-small header-download" href="#download">{t('header.download')}<Icon name="arrow-right" size={16} /></a>
+        <button className="icon-button menu-toggle" ref={toggleRef} type="button" aria-expanded={open} aria-controls="mobile-navigation" aria-label={t(open ? 'header.close' : 'header.open')} onClick={() => setOpen(!open)}>{open ? <Icon name="x" size={22} /> : <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 8h16M4 16h16" /></svg>}</button>
+      </div></div>
+      {open && <nav className="mobile-nav container" id="mobile-navigation" aria-label={t('header.nav')}>{links.map(([href, key]) => <a href={href} key={key} onClick={() => setOpen(false)}>{t(`header.${key}`)}<Icon name="arrow-right" size={18} /></a>)}<a href="#download" onClick={() => setOpen(false)}>{t('header.download')}<Icon name="download" size={18} /></a></nav>}
     </header>
-  )
+  </>
 }

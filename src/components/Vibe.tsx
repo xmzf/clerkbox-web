@@ -1,0 +1,6 @@
+import { useI18n } from '../i18n'
+import { Icon } from './Icons'
+export default function Vibe({ onExplore }: { onExplore: () => void }) {
+  const { t } = useI18n()
+  return <section className="vibe-section" id="vibe" aria-labelledby="vibe-title"><div className="container vibe-layout"><div className="vibe-copy"><p className="eyebrow">{t('vibe.eyebrow')}</p><h2 className="section-title" id="vibe-title">{t('vibe.title')}</h2><p>{t('vibe.desc')}</p><ul className="check-list">{[1, 2, 3].map(n => <li key={n}><Icon name="check" size={16} />{t(`vibe.item${n}`)}</li>)}</ul><button type="button" className="button button-light" onClick={onExplore}>{t('vibe.cta')}<Icon name="arrow-right" size={18} /></button></div><div className="vibe-art"><img className="vibe-landscape" src="/vibe-landscape.svg" alt="" width="780" height="660" loading="lazy" /><span className="vibe-art-word" aria-hidden="true">VIBE.</span><div className="vibe-art-panel"><span className="mono">{t('vibe.panelLabel')}</span><h3>{t('vibe.panelTitle')}</h3><div className="vibe-art-track" aria-hidden="true"><i /></div><p>{t('vibe.panelSub')}</p></div><span className="vibe-illustration-label">{t('vibe.illustration')}</span></div><p className="vibe-footnote">{t('vibe.note')}</p></div></section>
+}

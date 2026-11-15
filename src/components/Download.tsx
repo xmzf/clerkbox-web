@@ -1,97 +1,71 @@
+import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n'
-import { REPO, SETUP_URL, MACOS_ARM_URL, MACOS_INTEL_URL, LINUX_URL } from './Header'
-import { Icon } from './Icons'
+import { fetchLatestRelease, formatAssetSize, PRODUCT_VERSION, RELEASES_URL, REPO_URL, type DownloadPlatform, type PublicRelease } from '../lib/releases'
+import { GithubIcon, Icon } from './Icons'
+import '../styles/download.css'
+
+type ReleaseState = { status: 'loading' | 'error'; release?: undefined } | { status: 'ready'; release: PublicRelease }
+
+function PlatformMark({ name }: { name: 'windows' | 'mac' | 'linux' }) {
+  if (name === 'windows') return <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 4.5 10 3.4v8H2zm9.5-1.3L22 1.7v9.7H11.5zM2 12.8h8v8L2 19.7zm9.5 0H22v9.7l-10.5-1.4z" /></svg>
+  return <Icon name={name === 'mac' ? 'harddrive' : 'terminal'} size={29} />
+}
 
 export default function Download() {
-  const { t } = useI18n()
-  const ver = t('download.getVersion')
-  return (
-    <section className="section" id="download">
-      <div className="container">
-        <h2 className="sec-title">{t('download.title')}</h2>
-        <p className="sec-sub">{t('download.sub')}</p>
-
-        <div className="dl-grid">
-          <div className="dl-col">
-            <h3>
-              <Icon name="square" size={15} />
-              {t('download.winTitle')}
-            </h3>
-            <a className="dl-row" href={SETUP_URL} download>
-              <span className="nm">{t('download.winRow1')}</span>
-              <span className="ext">.exe</span>
-              <span className="ver">{ver}</span>
-              <span className="arr">→</span>
-            </a>
-            <a className="dl-row" href={`${REPO}/releases`} target="_blank" rel="noreferrer">
-              <span className="nm">{t('download.winRow2')}</span>
-              <span className="arr">→</span>
-            </a>
-          </div>
-
-          <div className="dl-col">
-            <h3>
-              <Icon name="harddrive" size={15} />
-              {t('download.macTitle')}
-            </h3>
-            <a className="dl-row" href={MACOS_ARM_URL} download>
-              <span className="nm">{t('download.macRow1')}</span>
-              <span className="ext">.dmg</span>
-              <span className="ver">{ver}</span>
-              <span className="arr">→</span>
-            </a>
-            <a className="dl-row" href={MACOS_INTEL_URL} download>
-              <span className="nm">{t('download.macRow2')}</span>
-              <span className="ext">.dmg</span>
-              <span className="ver">{ver}</span>
-              <span className="arr">→</span>
-            </a>
-          </div>
-
-          <div className="dl-col">
-            <h3>
-              <Icon name="terminal" size={15} />
-              {t('download.linuxTitle')}
-            </h3>
-            <a className="dl-row" href={LINUX_URL} download>
-              <span className="nm">{t('download.linuxRow1')}</span>
-              <span className="ext">.AppImage</span>
-              <span className="ver">{ver}</span>
-              <span className="arr">→</span>
-            </a>
-            <a className="dl-row" href={`${REPO}/releases`} target="_blank" rel="noreferrer">
-              <span className="nm">{t('download.winRow2')}</span>
-              <span className="arr">→</span>
-            </a>
-          </div>
-        </div>
-
-        <div className="dl-grid dl-grid-2">
-          <div className="dl-col">
-            <h3>
-              <Icon name="code" size={15} />
-              {t('download.srcTitle')}
-            </h3>
-            <a className="dl-row mono" href={REPO} target="_blank" rel="noreferrer">
-              <span className="nm">{t('download.srcRow1')}</span>
-              <span className="arr">→</span>
-            </a>
-            <a className="dl-row mono" href={`${REPO}#从源码构建`} target="_blank" rel="noreferrer">
-              <span className="nm">{t('download.srcRow2')}</span>
-              <span className="arr">→</span>
-            </a>
-          </div>
-
-          <div className="dl-col">
-            <h3>
-              <Icon name="globe" size={15} />
-              {t('download.webuiTitle')}
-              <span className="beta">BETA</span>
-            </h3>
-            <div className="dl-row desc">{t('download.webuiDesc')}</div>
-          </div>
-        </div>
+  const { t, lang } = useI18n()
+  const [attempt, setAttempt] = useState(0)
+  const [state, setState] = useState<ReleaseState>({ status: 'loading' })
+  useEffect(() => {
+    const controller = new AbortController()
+    let active = true
+    setState({ status: 'loading' })
+    const timeout = window.setTimeout(() => controller.abort(), 8000)
+    void fetchLatestRelease(controller.signal)
+      .then((release) => { if (active) setState({ status: 'ready', release }) })
+      .catch(() => { if (active) setState({ status: 'error' }) })
+      .finally(() => window.clearTimeout(timeout))
+    return () => { active = false; window.clearTimeout(timeout); controller.abort() }
+  }, [attempt])
+  const release = state.release
+  const assetLink = (platform: DownloadPlatform, label: string) => {
+    const asset = release?.assets.find((item) => item.platform === platform)
+    if (!asset) return null
+    return <a className="download-asset" data-platform={platform} href={asset.url} aria-label={`${label} · ${release?.tag} · ${t('download.official')}`}><span>{label}</span><span className="download-asset-meta">{formatAssetSize(asset.bytes)}<Icon name="download" size={17} /></span></a>
+  }
+  const fallback = <a className="download-asset download-fallback" href={release?.url ?? RELEASES_URL} target="_blank" rel="noreferrer"><span>{t('download.releaseFallback')}</span><Icon name="arrow-right" size={17} /></a>
+  const platforms: Array<{ key: 'windows' | 'mac' | 'linux'; detail: string; links: Array<[DownloadPlatform, string]> }> = [
+    { key: 'windows', detail: 'windowsDetail', links: [['windows', 'windowsDownload']] },
+    { key: 'mac', detail: 'macDetail', links: [['mac-arm', 'macArmDownload'], ['mac-intel', 'macIntelDownload']] },
+    { key: 'linux', detail: 'linuxDetail', links: [['linux', 'linuxDownload']] },
+  ]
+  return <section className="section download-section" id="download" aria-labelledby="download-title">
+    <div className="container">
+      <div className="download-heading"><div><span className="eyebrow">{t('download.eyebrow')}</span><h2 className="section-title" id="download-title">{t('download.title')}</h2><p className="section-intro">{t('download.intro')}</p></div><span className="download-product-version">ClerkBox <strong>4.0</strong></span></div>
+      <div className={`download-status download-status-${state.status}`} role="status" aria-live="polite" aria-atomic="true">
+        <div className="download-status-main"><span className="download-status-dot" aria-hidden="true" /><div>{state.status === 'ready' ? <><span>{t('download.current')}</span> <strong>{state.release.tag}</strong><p>{t('download.checked')}</p></> : <><strong>{t(state.status === 'loading' ? 'download.checking' : 'download.failed')}</strong><p>{t(state.status === 'loading' ? 'download.checkingNote' : 'download.failedNote')}</p></>}</div></div>
+        {state.status === 'error' ? <button type="button" className="button button-secondary" onClick={() => setAttempt((value) => value + 1)}>{t('download.retry')}<Icon name="arrow-right" size={16} /></button> : <a href={release?.url ?? RELEASES_URL} target="_blank" rel="noreferrer">{t('download.viewRelease')}<Icon name="arrow-right" size={15} /></a>}
       </div>
-    </section>
-  )
+      {(!release || release.version !== PRODUCT_VERSION) && <p className="download-version-note">{t('download.versionNote')}</p>}
+      <div className="download-platform-grid">
+        {platforms.map((platform) => {
+          const available = platform.links.filter(([key]) => release?.assets.some((asset) => asset.platform === key))
+          return <article className="download-platform" key={platform.key}>
+            <div className="download-platform-heading"><span className="download-platform-icon"><PlatformMark name={platform.key} /></span><div><h3>{t(`download.${platform.key}`)}</h3><p>{t(`download.${platform.detail}`)}</p></div></div>
+            <div className="download-platform-actions">
+              {available.length > 0 ? platform.links.map(([key, label]) => <div key={key}>
+                {assetLink(key, t(`download.${label}`)) ?? <a className="download-asset download-asset-unavailable" data-platform={key} href={release?.url ?? RELEASES_URL} target="_blank" rel="noreferrer" aria-label={`${t(`download.${label}`)} · ${t('download.archUnavailable')}`}>
+                  <span><span>{t(`download.${label}`)}</span><small>{t('download.archUnavailable')}</small></span><Icon name="arrow-right" size={16} />
+                </a>}
+              </div>) : <>{release && <span className="download-unavailable">{t('download.unavailable')}</span>}{fallback}</>}
+            </div>
+          </article>
+        })}
+      </div>
+      <p className="download-requirement">{t('download.requirement')} <a href={`${REPO_URL}/releases`} target="_blank" rel="noreferrer">{t('download.releaseHistory')} ↗</a></p>
+      <div className="download-more">
+        <article className="download-source"><div><span className="eyebrow">{t('download.sourceLabel')}</span><h3>{t('download.sourceTitle')}</h3><p>{t('download.sourceBody')}</p></div><div className="download-source-links"><a className="button button-secondary" href={REPO_URL} target="_blank" rel="noreferrer"><GithubIcon size={18} />{t('download.sourceLink')}</a><a className="download-text-link" href={`${REPO_URL}/blob/main/${lang === 'zh' ? 'README.md#从源码构建' : 'README.en.md#build-from-source'}`} target="_blank" rel="noreferrer">{t('download.sourceBuild')}<Icon name="arrow-right" size={16} /></a></div></article>
+        <article className="download-remote"><Icon name="globe" size={24} /><h3>{t('download.remoteLabel')}</h3><p>{t('download.remoteBody')}</p><a className="download-text-link" href={`${REPO_URL}/blob/main/${lang === 'zh' ? 'README.md#webui-远程访问' : 'README.en.md#webui-remote-access'}`} target="_blank" rel="noreferrer">{t('download.remoteLink')}<Icon name="arrow-right" size={16} /></a></article>
+      </div>
+    </div>
+  </section>
 }

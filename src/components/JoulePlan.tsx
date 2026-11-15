@@ -1,107 +1,12 @@
 import { useI18n } from '../i18n'
-import { JOULE } from './Header'
 import { Icon } from './Icons'
-
-interface PlanRow {
-  name: string
-  price: string
-  credit: string
-  popular?: boolean
-}
-
-/**
- * 档位与倍数照抄 joule.xmzf.space 公开订阅区（美元 / 月）。
- * 这是营销数字，改 Joule 价目时两处必须同步；不要在这里推导或换算。
- */
-const PLANS: PlanRow[] = [
-  { name: 'plan1', price: 'plan1p', credit: 'plan1c' },
-  { name: 'plan2', price: 'plan2p', credit: 'plan2c', popular: true },
-  { name: 'plan3', price: 'plan3p', credit: 'plan3c' },
-]
-
-const STEPS = [
-  { t: 's1t', d: 's1d' },
-  { t: 's2t', d: 's2d' },
-  { t: 's3t', d: 's3d' },
-]
-
-const CARDS = [
-  { key: 'c1', icon: 'lock' },
-  { key: 'c2', icon: 'calendar-clock' },
-  { key: 'c3', icon: 'sparkles' },
-]
-
+import { JOULE, REPO } from './Header'
 export default function JoulePlan() {
-  const { t } = useI18n()
-  return (
-    <section className="section" id="joule">
-      <div className="container">
-        <div className="sec-label">
-          <img src="/joule-mark.png" alt="" className="sec-mark" />
-          {t('joule.label')}
-          <span className="promo-badge">{t('joule.badge')}</span>
-        </div>
-        <h2 className="sec-title">{t('joule.title')}</h2>
-        <p className="sec-sub">{t('joule.sub')}</p>
-
-        <div className="joule-cards">
-          {CARDS.map((c) => (
-            <div className="jn-card" key={c.key}>
-              <div className="ic">
-                <Icon name={c.icon} size={18} />
-              </div>
-              <h3>{t(`joule.${c.key}t`)}</h3>
-              <p>{t(`joule.${c.key}d`)}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="plan-card">
-          <div className="price-head">
-            <span className="t">
-              <img src="/joule-mark.png" alt="" />
-              {t('joule.planTitle')}
-            </span>
-            <span className="u">{t('joule.planUnit')}</span>
-          </div>
-          <div className="plan-grid">
-            {PLANS.map((p) => (
-              <div className={`plan-item${p.popular ? ' popular' : ''}`} key={p.name}>
-                {p.popular && <span className="plan-tag">{t('joule.planTag')}</span>}
-                <span className="pn">{t(`joule.${p.name}`)}</span>
-                <span className="pp">
-                  {t(`joule.${p.price}`)}
-                  <em>{t('joule.planPer')}</em>
-                </span>
-                <span className="pc">{t(`joule.${p.credit}`)}</span>
-              </div>
-            ))}
-          </div>
-          <div className="price-foot">{t('joule.planNote')}</div>
-        </div>
-
-        <div className="steps-row">
-          {STEPS.map((s, i) => (
-            <div className="step-card" key={s.t}>
-              <span className="no">{`0${i + 1}`}</span>
-              <span>
-                <span className="t">{t(`joule.${s.t}`)}</span>
-                <br />
-                <span className="d">{t(`joule.${s.d}`)}</span>
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <div className="joule-cta">
-          <a className="btn" href={JOULE} target="_blank" rel="noreferrer">
-            <img src="/joule-mark.png" alt="" />
-            {t('joule.cta')}
-            <Icon name="arrow-right" size={16} />
-          </a>
-          <span className="note">{t('joule.ctaNote')}</span>
-        </div>
-      </div>
-    </section>
-  )
+  const { t, lang } = useI18n()
+  return <section className="section container getting-started" id="start" aria-labelledby="start-title">
+    <div className="section-heading"><div><p className="eyebrow">{t('joule.eyebrow')}</p><h2 className="section-title" id="start-title">{t('joule.title')}</h2></div><p className="section-intro">{t('joule.intro')}</p></div>
+    <ol className="setup-steps">{[1, 2, 3].map(n => <li key={n}><span className="step-number mono">0{n}</span><div><h3>{t(`joule.step${n}`)}</h3><p>{t(`joule.desc${n}`)}</p></div></li>)}</ol>
+    <div className="joule-panel" id="joule"><div className="joule-logo-block"><img src="/joule-mark.png" alt="" width="48" height="48" loading="lazy" /><span>Joule</span><span className="joule-plus" aria-hidden="true">×</span><img src="/clerkbox.png" alt="ClerkBox" width="44" height="44" loading="lazy" /></div><div><h3>{t('joule.account')}</h3><p>{t('joule.accountDesc')}</p><div className="joule-links"><a className="text-link" href={JOULE} target="_blank" rel="noreferrer">{t('joule.jouleLink')}<Icon name="arrow-right" size={16} /></a><a className="text-link muted-link" href={`${REPO}/blob/main/${lang === 'zh' ? 'README.md#快速开始' : 'README.en.md#quick-start'}`} target="_blank" rel="noreferrer">{t('joule.manual')}<Icon name="arrow-right" size={16} /></a></div><small>{t('joule.optional')}</small></div></div>
+    <div className="faq-layout"><h3>{t('joule.faqTitle')}</h3><div className="faq-list">{[1, 2, 3, 4].map(n => <details key={n}><summary>{t(`joule.q${n}`)}<span aria-hidden="true">+</span></summary><p>{t(`joule.a${n}`)}</p></details>)}</div></div>
+  </section>
 }
