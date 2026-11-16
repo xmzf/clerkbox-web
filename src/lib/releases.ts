@@ -8,6 +8,21 @@ export type DownloadPlatform = 'windows' | 'mac-arm' | 'mac-intel' | 'linux'
 export interface ReleaseAsset { platform: DownloadPlatform; name: string; url: string; bytes: number | null }
 export interface PublicRelease { version: string; tag: string; url: string; assets: ReleaseAsset[] }
 
+/** Published 4.0 installers, verified against the official release assets.
+ * Downloads must not depend on a visitor's GitHub API access or rate limit.
+ */
+export const PRODUCT_RELEASE: PublicRelease = {
+  version: PRODUCT_VERSION,
+  tag: RELEASE_TAG,
+  url: RELEASES_URL,
+  assets: [
+    { platform: 'windows', name: 'ClerkBox-Setup-4.0.0.exe', url: `${REPO_URL}/releases/download/v4.0.0/ClerkBox-Setup-4.0.0.exe`, bytes: 215952343 },
+    { platform: 'mac-arm', name: 'ClerkBox-4.0.0-arm64.dmg', url: `${REPO_URL}/releases/download/v4.0.0/ClerkBox-4.0.0-arm64.dmg`, bytes: 264954132 },
+    { platform: 'mac-intel', name: 'ClerkBox-4.0.0.dmg', url: `${REPO_URL}/releases/download/v4.0.0/ClerkBox-4.0.0.dmg`, bytes: 268572874 },
+    { platform: 'linux', name: 'ClerkBox-4.0.0.AppImage', url: `${REPO_URL}/releases/download/v4.0.0/ClerkBox-4.0.0.AppImage`, bytes: 277634216 },
+  ],
+}
+
 function record(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
 }
