@@ -154,7 +154,7 @@ export default function Features({ onRecall }: { onRecall: () => void }) {
         </div>
         <figure className="recall-capture">
           <img
-            src={`/product/recall-${lang}.webp`}
+            src={`/product/recall-${lang}.webp?model=sonnet-5-5`}
             width="1400"
             height="900"
             loading="lazy"

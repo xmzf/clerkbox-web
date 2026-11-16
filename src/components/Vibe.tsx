@@ -35,7 +35,7 @@ export default function Vibe({ onExplore }: { onExplore: () => void }) {
         </div>
         <figure className="vibe-capture">
           <img
-            src={`/product/vibe-${lang}.webp`}
+            src={`/product/vibe-${lang}.webp?model=sonnet-5-5`}
             alt={t('vibe.illustration')}
             width="1400"
             height="900"
