@@ -16,7 +16,7 @@ export const demoCopy = {
     response: '我会先核对现有页面与产品能力，再整理改版步骤。',
     researchResponse:
       '我会先阅读已有资料，把目标、约束和待确认事项整理在一起，再拆解为可以逐步执行的计划。',
-    model: 'Claude Sonnet 4.6',
+    model: 'Claude Sonnet 5.5',
     stepOne: '统一页面层级与视觉节奏',
     stepTwo: '同步真实产品界面与 4.0 功能',
     stepThree: '检查中英文、移动端与下载入口',
@@ -52,7 +52,7 @@ export const demoCopy = {
       'I will check the current pages and product capabilities, then organize the redesign steps.',
     researchResponse:
       'I will read the existing material, bring the goals and constraints together, then break the work into practical next steps.',
-    model: 'Claude Sonnet 4.6',
+    model: 'Claude Sonnet 5.5',
     stepOne: 'Unify page hierarchy and visual rhythm',
     stepTwo: 'Sync the real product UI and 4.0 features',
     stepThree: 'Check both languages, mobile layouts, and downloads',
