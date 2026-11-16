@@ -1,7 +1,8 @@
 export const PRODUCT_VERSION = '4.0.0'
 export const REPO_URL = 'https://github.com/XMZF-vAI/clerkbox'
-export const RELEASES_URL = `${REPO_URL}/releases/latest`
-export const RELEASE_API_URL = 'https://api.github.com/repos/XMZF-vAI/clerkbox/releases/latest'
+export const RELEASE_TAG = `v${PRODUCT_VERSION}`
+export const RELEASES_URL = `${REPO_URL}/releases/tag/${RELEASE_TAG}`
+export const RELEASE_API_URL = `https://api.github.com/repos/XMZF-vAI/clerkbox/releases/tags/${RELEASE_TAG}`
 
 export type DownloadPlatform = 'windows' | 'mac-arm' | 'mac-intel' | 'linux'
 export interface ReleaseAsset { platform: DownloadPlatform; name: string; url: string; bytes: number | null }
@@ -17,6 +18,7 @@ export function parsePublicRelease(value: unknown): PublicRelease {
   const match = /^v?(\d+\.\d+\.\d+)$/.exec(value.tag_name)
   if (!match || !Array.isArray(value.assets)) throw new Error('Invalid release version or assets')
   const version = match[1]
+  if (version !== PRODUCT_VERSION) throw new Error('Unexpected product release')
   const tag = value.tag_name
   const names: Record<string, DownloadPlatform> = {
     [`ClerkBox-Setup-${version}.exe`]: 'windows',
@@ -41,9 +43,10 @@ export function parsePublicRelease(value: unknown): PublicRelease {
   return { version, tag, url: `${REPO_URL}/releases/tag/${encodeURIComponent(tag)}`, assets }
 }
 
-/** A failed API request leaves callers with a normal releases-page fallback. */
-export async function fetchLatestRelease(signal: AbortSignal): Promise<PublicRelease> {
+/** Only request this product version; an unpublished release never falls back. */
+export async function fetchProductRelease(signal: AbortSignal): Promise<PublicRelease | null> {
   const response = await fetch(RELEASE_API_URL, { headers: { Accept: 'application/vnd.github+json' }, signal, credentials: 'omit' })
+  if (response.status === 404) return null
   if (!response.ok) throw new Error(`Release request failed (${response.status})`)
   return parsePublicRelease(await response.json())
 }

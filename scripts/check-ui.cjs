@@ -358,74 +358,105 @@ async function main() {
     'An idea became\na place to work.',
   )
   pass('English content, SEO language and timeline')
+  const releaseApi = 'https://api.github.com/repos/XMZF-vAI/clerkbox/releases/tags/v4.0.0'
+  const productReleaseUrl = 'https://github.com/XMZF-vAI/clerkbox/releases/tag/v4.0.0'
+  const buildGuideUrl = 'https://github.com/XMZF-vAI/clerkbox/blob/main/README.en.md#build-from-source'
+  async function onlyProductRelease(name) {
+    const download = await run(`({
+      text: document.querySelector('#download').innerText,
+      urls: [...document.querySelectorAll('#download a[href]')].map(el => el.href),
+      installers: [...document.querySelectorAll('#download .download-asset[data-platform]:not(.download-asset-unavailable)')].map(el => el.href),
+    })`)
+    assert.equal(/3\.5(?:\.1)?/.test(download.text), false, name + ': no old release copy')
+    assert.equal(download.urls.some(url => /3\.5(?:\.1)?|\/releases\/latest(?:$|[/?#])/.test(url)), false, name + ': no old or latest-release links')
+    assert.ok(download.installers.every(url => url.startsWith('https://github.com/XMZF-vAI/clerkbox/releases/download/v4.0.0/')), name + ': every installer belongs to 4.0.0')
+    return download
+  }
+  async function sourceBuildFallbacks(name) {
+    const state = await onlyProductRelease(name)
+    assert.deepEqual(state.installers, [], name + ': no installer shown without a verified 4.0 release')
+    const urls = await run(`[...document.querySelectorAll('.download-fallback')].map(el => el.href)`)
+    assert.equal(urls.length, 3, name + ': all platforms provide a source fallback')
+    assert.ok(urls.every(url => url === buildGuideUrl), name + ': fallbacks use the 4.0 source-build guide')
+  }
   await until(
-    `!!document.querySelector('.download-status-ready,.download-status-error')`,
-    'release',
+    `!!document.querySelector('.download-status-ready,.download-status-pending,.download-status-error')`,
+    '4.0 release state',
   )
   const live = await run(
-    `({ready:!!document.querySelector('.download-status-ready'),text:document.querySelector('.download-status').innerText,urls:[...document.querySelectorAll('.download-asset[data-platform]')].map(e=>e.href)})`,
+    `({ready:!!document.querySelector('.download-status-ready'),pending:!!document.querySelector('.download-status-pending'),text:document.querySelector('.download-status').innerText,urls:[...document.querySelectorAll('.download-asset[data-platform]')].map(e=>e.href)})`,
   )
+  await onlyProductRelease('live release')
   checks.push({ liveRelease: live })
   const ses = w.webContents.session
   ses.webRequest.onBeforeRequest(
-    {
-      urls: ['https://api.github.com/repos/XMZF-vAI/clerkbox/releases/latest'],
-    },
+    { urls: [releaseApi] },
     (_d, cb) => cb({ cancel: true }),
   )
   await w.reload()
-  await until(
-    `!!document.querySelector('.download-status-error')`,
-    'releasefallback',
-  )
-  assert.equal(
-    await run(`document.querySelectorAll('.download-fallback').length`),
-    3,
-  )
+  await until(`!!document.querySelector('.download-status-error')`, '4.0 network failure')
+  await sourceBuildFallbacks('network failure')
+  // Replace only the fixed product-version API inside this isolated page.
+  // 404 is an unpublished release; an old version payload must be rejected.
+  await run(`(() => {
+    const nativeFetch = window.fetch.bind(window)
+    window.__uiReleaseReply = { status: 404, payload: { message: 'Not Found' } }
+    window.fetch = (...args) => String(args[0]) === ${JSON.stringify(releaseApi)}
+      ? Promise.resolve(new Response(JSON.stringify(window.__uiReleaseReply.payload), { status: window.__uiReleaseReply.status }))
+      : nativeFetch(...args)
+    return true
+  })()`)
+  await click('.download-status-error button')
+  await until(`!!document.querySelector('.download-status-pending')`, '4.0 unpublished 404')
+  assert.match(await run(`document.querySelector('.download-status-pending').innerText`), /4\.0/)
+  assert.ok(await run(`!!document.querySelector('.download-status-pending button')`), 'unpublished release can be retried')
+  await sourceBuildFallbacks('unpublished 404')
+  const oldRelease = {
+    tag_name: 'v3.5.1',
+    draft: false,
+    prerelease: false,
+    assets: [{
+      name: 'ClerkBox-Setup-3.5.1.exe',
+      browser_download_url: 'https://github.com/XMZF-vAI/clerkbox/releases/download/v3.5.1/ClerkBox-Setup-3.5.1.exe',
+      size: 1048576,
+    }],
+  }
+  await run(`window.__uiReleaseReply = { status: 200, payload: ${JSON.stringify(oldRelease)} }; true`)
+  await click('.download-status-pending button')
+  await until(`!!document.querySelector('.download-status-error,.download-status-pending')`, 'reject old version payload')
+  await sourceBuildFallbacks('old version payload')
+  pass('Fixed 4.0 release API: network errors and 404 have retriable source-build fallbacks; old 3.5.1 payload exposes no copy or downloads')
   const stub = {
     tag_name: 'v4.0.0',
     draft: false,
     prerelease: false,
-    assets: [
-      {
-        name: 'ClerkBox-4.0.0-arm64.dmg',
-        browser_download_url:
-          'https://github.com/XMZF-vAI/clerkbox/releases/download/v4.0.0/ClerkBox-4.0.0-arm64.dmg',
-        size: 1048576,
-      },
-    ],
+    assets: [{
+      name: 'ClerkBox-4.0.0-arm64.dmg',
+      browser_download_url: 'https://github.com/XMZF-vAI/clerkbox/releases/download/v4.0.0/ClerkBox-4.0.0-arm64.dmg',
+      size: 1048576,
+    }],
   }
-  await run(
-    `window.__nativeFetch=fetch;window.fetch=(...args)=>String(args[0]).includes('api.github.com')?Promise.resolve(new Response(JSON.stringify(${JSON.stringify(stub)}),{status:200})):window.__nativeFetch(...args);true`,
-  )
-  await click('.download-status-error button')
-  await until(`!!document.querySelector('.download-status-ready')`, 'retry')
-  assert.equal(
-    await run(
-      `document.querySelector('.download-asset-unavailable[data-platform=mac-intel]').href`,
-    ),
-    'https://github.com/XMZF-vAI/clerkbox/releases/tag/v4.0.0',
-  )
-  assert.equal(
-    await run(`document.querySelectorAll('.download-fallback').length`),
-    2,
-  )
-  pass(
-    'Release network failure, retry, missing architecture and safe official links',
-  )
+  await run(`window.__uiReleaseReply = { status: 200, payload: ${JSON.stringify(stub)} }; true`)
+  await click('.download-status-error button,.download-status-pending button')
+  await until(`!!document.querySelector('.download-status-ready')`, 'retry verified 4.0 release')
+  const verified = await onlyProductRelease('verified 4.0 retry')
+  assert.deepEqual(verified.installers, [stub.assets[0].browser_download_url])
+  const unavailableUrl = await run(`document.querySelector('.download-asset-unavailable[data-platform=mac-intel]').href`)
+  assert.ok([productReleaseUrl, buildGuideUrl].includes(unavailableUrl), 'missing architecture points to the 4.0 release or source-build guide')
+  assert.equal(await run(`document.querySelectorAll('.download-fallback').length`), 2)
+  pass('4.0 retry exposes only its verified asset and safe missing-architecture links')
   await w.reload()
-  await until(
-    `!!document.querySelector('.download-status-error')`,
-    'erroragain',
-  )
+  await until(`!!document.querySelector('.download-status-error')`, '4.0 network error before timeout')
   await run(
-    `window.__nativeFetch=fetch;window.__aborted=false;window.fetch=(...args)=>String(args[0]).includes('api.github.com')?new Promise((res,rej)=>args[1].signal.addEventListener('abort',()=>{window.__aborted=true;rej(new DOMException('Aborted','AbortError'))},{once:true})):window.__nativeFetch(...args);true`,
+    `window.__nativeFetch=fetch;window.__aborted=false;window.fetch=(...args)=>String(args[0])===${JSON.stringify(releaseApi)}?new Promise((res,rej)=>args[1].signal.addEventListener('abort',()=>{window.__aborted=true;rej(new DOMException('Aborted','AbortError'))},{once:true})):window.__nativeFetch(...args);true`,
   )
   const start = Date.now()
   await click('.download-status-error button')
   await until(`window.__aborted===true`, '8sabort')
   assert.ok(Date.now() - start >= 7800)
-  pass('Actual 8-second request cancellation')
+  await until(`!!document.querySelector('.download-status-error')`, '4.0 timeout error feedback')
+  await sourceBuildFallbacks('4.0 timeout')
+  pass('Actual 8-second request cancellation preserves 4.0-only source fallbacks')
   ses.webRequest.onBeforeRequest(null)
   if (!w.webContents.debugger.isAttached()) w.webContents.debugger.attach('1.3')
   await w.webContents.debugger.sendCommand('Emulation.setEmulatedMedia', {

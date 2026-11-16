@@ -43,7 +43,7 @@ npm run preview -- --host 127.0.0.1
 
 官网拉丁字体 Manrope 以 SIL Open Font License 随站点自托管；授权见 `public/fonts/OFL.txt`。桌面产品展示使用应用原始字体栈，不套用营销页字体。
 
-下载区在浏览器请求 `XMZF-vAI/clerkbox` 的最新公开稳定 Release，只提供该版本中校验通过的官方 Windows、macOS 和 Linux 资产。产品介绍版本与公开下载版本分别展示；缺少安装包、API 不可用或请求超时均提供 Release 页面入口，失败后可重试。发布新版应用时不需要在页面中手写安装包链接。
+下载区固定请求 `XMZF-vAI/clerkbox` 的 `v4.0.0` Release，只提供版本、架构和地址均校验通过的 4.0 官方 Windows、macOS 和 Linux 资产，不读取 latest 或回退到旧版本。4.0 尚未公开时显示待发布状态，网络失败或超时显示错误状态，均可重试并查看 4.0 源码构建指南；已公开但缺少某平台安装包时提供 4.0 发布页入口。发布对应安装包后，页面自动更新可用下载；以后升级主版本时同步修改 `src/lib/releases.ts` 的 `PRODUCT_VERSION` 与页面文案。
 
 ## 部署
 

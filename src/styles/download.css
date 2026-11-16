@@ -27,6 +27,7 @@
 .download-asset-unavailable small { font-size: 10px; line-height: 1.5; font-weight: 400; }
 .download-requirement { margin: 18px 0 0; font-size: 12px; line-height: 1.8; color: var(--muted, #65616d); }
 .download-requirement a { color: var(--accent, #6b49d8); display: inline-block; margin-left: 5px; text-decoration: underline; text-underline-offset: 3px; }
+.download-requirement a svg { display: inline-block; vertical-align: middle; }
 .download-more { display: grid; grid-template-columns: 1.5fr 1fr; margin-top: 48px; border: 1px solid var(--line, #dedbd4); border-radius: 18px; overflow: hidden; }
 .download-source { display: flex; flex-direction: column; justify-content: space-between; padding: 32px; gap: 28px; background: #ede9e2; }
 .download-source h3 { font-size: clamp(24px, 3vw, 34px); line-height: 1.2; letter-spacing: -.05em; margin: 12px 0; }

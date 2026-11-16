@@ -9,6 +9,7 @@ import Download from './components/Download'
 import Footer from './components/Footer'
 import Story from './components/Story'
 import { useI18n } from './i18n'
+import { Icon } from './components/Icons'
 export default function App() {
   const { t } = useI18n()
   const [scenario, setScenario] = useState<'work' | 'vibe' | 'recall'>('work')
@@ -47,7 +48,7 @@ export default function App() {
           {[1, 2, 3].map((n) => (
             <div key={n}>
               <span className="fact-mark" aria-hidden="true">
-                {['↳', '✳', '⌘'][n - 1]}
+                <Icon name={['message', 'layers', 'terminal'][n - 1]} size={30} />
               </span>
               <div>
                 <h3>{t(`hero.fact${n}`)}</h3>

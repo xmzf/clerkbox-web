@@ -94,7 +94,7 @@ export default function Story() {
         </ol>
         <p className="story-closing">
           {t('story.closing')}
-          <span aria-hidden="true">↗</span>
+          <span aria-hidden="true"><Icon name="arrow-right" size={32} /></span>
         </p>
       </div>
     </section>
