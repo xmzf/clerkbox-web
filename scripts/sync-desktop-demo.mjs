@@ -1,0 +1,404 @@
+/** Regenerate the site's isolated UI assets from a local ClerkBox checkout.
+ * Usage: node scripts/sync-desktop-demo.mjs "D:/ClerkBox - 副本"
+ * Generated assets are committed; the website build needs no desktop checkout.
+ */
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import vm from 'node:vm'
+import { createRequire } from 'node:module'
+import { fileURLToPath } from 'node:url'
+
+const website = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const source = path.resolve(process.argv[2] || '../ClerkBox - 副本')
+// Preserve the upstream license alongside the adapted desktop presentation.
+await fs.mkdir(path.join(website, 'public/licenses'), { recursive: true })
+await fs.copyFile(
+  path.join(source, 'LICENSE'),
+  path.join(website, 'public/licenses/ClerkBox.txt'),
+)
+const requireSource = createRequire(path.join(source, 'package.json'))
+const ts = requireSource('typescript')
+const postcss = requireSource('postcss')
+const tailwind = requireSource('tailwindcss')
+const selectorParser = requireSource('postcss-selector-parser')
+const evaluateTs = async (file, globals = {}) => {
+  const text = await fs.readFile(path.join(source, file), 'utf8')
+  const js = ts.transpileModule(text, {
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES2022,
+    },
+  }).outputText
+  const module = { exports: {} }
+  vm.runInNewContext(js, {
+    exports: module.exports,
+    module,
+    require: requireSource,
+    ...globals,
+  })
+  return module.exports.default || module.exports
+}
+
+const groups = {
+  common: ['close', 'copy', 'cancel', 'confirm', 'change'],
+  shell: [
+    'workspace',
+    'search',
+    'welcomeEyebrow',
+    'welcomeDescription',
+    'browseSkills',
+    'browseSkillsDescription',
+    'viewHistory',
+    'viewHistoryDescription',
+    'modelConfigured',
+    'workDirectory',
+  ],
+  sidebar: [
+    'newChat',
+    'newChatAria',
+    'skills',
+    'taskList',
+    'settings',
+    'notLoggedIn',
+    'remoteAccess',
+    'collapseAll',
+    'expandAll',
+    'deleteSessionAria',
+  ],
+  titlebar: [
+    'toggleSidebar',
+    'toggleWorkbench',
+    'vibeCompact',
+    'vibeEnter',
+    'vibeToggleAria',
+    'windowMinimize',
+    'windowMaximize',
+    'windowClose',
+  ],
+  interfaceMode: ['coding', 'general', 'toggleAria'],
+  scheduledTasks: ['title'],
+  fileTree: ['change'],
+  commandPalette: [
+    'placeholder',
+    'noResults',
+    'recentSessions',
+    'sessions',
+    'navigate',
+    'execute',
+    'resultCount',
+  ],
+  commands: ['palette'],
+  vibe: [
+    'sessions',
+    'customize',
+    'customizeTitle',
+    'settingsDescription',
+    'tabBackground',
+    'tabAudio',
+    'backgroundSource',
+    'bgModeSingle',
+    'bgModeSlideshow',
+    'bgModeGlass',
+    'sourceCurrent',
+    'sourceUrl',
+    'sourceFile',
+    'sourceFolder',
+    'sourceOff',
+    'sourceNone',
+    'resetBackground',
+    'backgroundReady',
+    'readingOpacity',
+    'readingOpacityHint',
+    'music',
+    'moreActions',
+    'exit',
+    'fullscreen',
+    'welcomeTitle',
+    'welcomeDescription',
+    'audioOff',
+  ],
+  workbench: [
+    'panelAria',
+    'tabFiles',
+    'tabTerminal',
+    'tabGit',
+    'addMenu',
+    'menuSearch',
+    'previewEmpty',
+    'hideFileList',
+    'showFileList',
+  ],
+  chat: [
+    'placeholderVibe',
+    'placeholderWorkDir',
+    'placeholderDefault',
+    'messageInputAria',
+    'sendMessageAria',
+    'attachAria',
+    'commandMenuAria',
+    'selectFolderAria',
+    'approvalAria',
+    'approvalManualTitle',
+    'approvalAutoTitle',
+    'thinkingToggle',
+    'thinkingUnsupported',
+    'harnessDefault',
+    'harnessDefaultDesc',
+    'cmdPlanName',
+    'taskPlaceholder',
+    'disclaimer',
+    'contextUsageTitle',
+    'emptyWelcome',
+    'emptyWelcomeGeneral',
+    'attachRemove',
+    'taskChipRemove',
+  ],
+}
+const rewinds = [
+  'recall',
+  'edit',
+  'undoFiles',
+  'recallTitle',
+  'confirm',
+  'cancel',
+  'willRemove',
+  'selectedMessage',
+  'selectedTaskMode',
+  'restoreDraft',
+  'filesKept',
+  'affectedFiles',
+  'willRestore',
+  'withFiles',
+]
+const translations = {}
+for (const [language, file] of [
+  ['zh', 'src/i18n/locales/zh-CN.ts'],
+  ['en', 'src/i18n/locales/en.ts'],
+]) {
+  const dictionary = await evaluateTs(file)
+  const result = {}
+  for (const [group, keys] of Object.entries(groups)) {
+    result[group] = {}
+    for (const key of keys) {
+      if (typeof dictionary[group]?.[key] !== 'string')
+        throw new Error(
+          `Missing desktop translation ${language}.${group}.${key}`,
+        )
+      result[group][key] = dictionary[group][key]
+    }
+  }
+  result.chat.rewind = Object.fromEntries(
+    rewinds.map((key) => [key, dictionary.chat.rewind[key]]),
+  )
+  result.chat.rewind.draftConflict =
+    dictionary.chat.rewind.error['draft-conflict']
+  translations[language] = result
+}
+await fs.writeFile(
+  path.join(website, 'src/content/desktop.ts'),
+  `// Generated by sync-desktop-demo.mjs from ClerkBox's real i18n sources.\nexport const desktopCopy = ${JSON.stringify(translations, null, 2)} as const\n`,
+)
+
+const appCss = postcss.parse(
+  await fs.readFile(path.join(source, 'src/index.css'), 'utf8'),
+)
+const tokens = {}
+for (const selector of [':root', '.dark'])
+  appCss.walkRules(selector, (rule) =>
+    rule.walkDecls((declaration) => {
+      if (declaration.prop.startsWith('--'))
+        tokens[declaration.prop] = declaration.value
+    }),
+  )
+const themeBundle = await requireSource('esbuild').build({
+  entryPoints: [path.join(source, 'src/lib/theme-engine.ts')],
+  bundle: true,
+  write: false,
+  format: 'cjs',
+  platform: 'node',
+})
+const themeModule = { exports: {} }
+vm.runInNewContext(themeBundle.outputFiles[0].text, {
+  exports: themeModule.exports,
+  module: themeModule,
+  document: {
+    documentElement: {
+      style: {
+        setProperty: (key, value) => {
+          tokens[key] = value
+        },
+      },
+    },
+  },
+})
+const theme = themeModule.exports
+theme.applyColorScheme(theme.resolveSeed('classic', ''), true)
+await fs.writeFile(
+  path.join(website, 'src/styles/desktop-tokens.css'),
+  `/* Generated from ClerkBox index.css and theme-engine.ts, dark/classic at 100% scale. */\n.product-demo-window {\n${Object.entries(
+    tokens,
+  )
+    .map(([key, value]) => `  ${key}: ${value};`)
+    .join('\n')}\n}\n`,
+)
+
+// Lucide's own icon nodes, including its original path geometry and stable keys.
+const icons = [
+  'plus',
+  'panel-left',
+  'panel-right',
+  'minus',
+  'square',
+  'x',
+  'sparkles',
+  'folder-open',
+  'folder-closed',
+  'search',
+  'store',
+  'calendar-clock',
+  'message-square',
+  'trash-2',
+  'settings',
+  'globe',
+  'user',
+  'chevrons-down-up',
+  'chevron-down',
+  'chevron-right',
+  'square-terminal',
+  'briefcase',
+  'copy',
+  'pencil',
+  'rotate-ccw',
+  'undo-2',
+  'git-branch',
+  'file-text',
+  'send',
+  'paperclip',
+  'slash',
+  'shield-check',
+  'brain',
+  'layers',
+  'lock',
+  'music-2',
+  'settings-2',
+  'ellipsis',
+  'log-out',
+  'maximize',
+  'image',
+  'file',
+  'check',
+  'terminal',
+  'panel-left-close',
+  'arrow-up-right',
+  'arrow-up',
+  'arrow-down',
+  'corner-down-left',
+]
+const iconNodes = {}
+for (const icon of icons) {
+  const text = await fs.readFile(
+    path.join(source, `node_modules/lucide-react/dist/esm/icons/${icon}.mjs`),
+    'utf8',
+  )
+  const match = text.match(/const __iconNode = ([\s\S]*?);\s*const /)
+  if (!match) throw new Error(`Cannot read lucide icon ${icon}`)
+  iconNodes[icon] = vm.runInNewContext(`(${match[1]})`)
+}
+const iconLicense = await fs.readFile(
+  path.join(source, 'node_modules/lucide-react/LICENSE'),
+  'utf8',
+)
+await fs.writeFile(
+  path.join(website, 'src/components/DesktopIcon.tsx'),
+  `/*!\n${iconLicense.replaceAll('*/', '* /')}\n*/\n// Generated from the same lucide-react icon nodes used by the desktop app.\nimport { createElement } from 'react'\nconst nodes: Record<string, Array<[string, Record<string, string | number>]>> = ${JSON.stringify(iconNodes)}\nexport function DesktopIcon({ name, size = 16, className = '' }: { name: keyof typeof nodes; size?: number; className?: string }) {\n return <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={className} style={{ flexShrink: 0 }}>{nodes[name].map(([tag, attributes]) => createElement(tag, attributes))}</svg>\n}\n`,
+)
+
+const config = await evaluateTs('tailwind.config.ts')
+const replicaFiles = [
+  'src/components/AppMockup.tsx',
+  'src/components/DesktopThemeWaves.tsx',
+]
+const existingReplicaFiles = []
+for (const file of replicaFiles) {
+  try {
+    await fs.access(path.join(website, file))
+    existingReplicaFiles.push(path.join(website, file))
+  } catch {
+    /* The waves port is optional until it is added. */
+  }
+}
+const replicaSource = (
+  await Promise.all(
+    existingReplicaFiles.map((file) => fs.readFile(file, 'utf8')),
+  )
+).join('\n')
+config.content = existingReplicaFiles
+config.corePlugins = { preflight: false }
+const compiled = await postcss([tailwind(config)]).process(
+  await fs.readFile(path.join(source, 'src/index.css'), 'utf8'),
+  { from: undefined },
+)
+const root = postcss.parse(compiled.css)
+root.walkRules((rule) => {
+  if (rule.parent?.type === 'atrule' && rule.parent.name.endsWith('keyframes'))
+    return
+  if (
+    [
+      ':root',
+      '.dark',
+      'html',
+      'body',
+      '.webui-mode body',
+      ':root:fullscreen .app-window',
+    ].includes(rule.selector)
+  ) {
+    rule.remove()
+    return
+  }
+  // Keep the original declarations of selectors used by this fixture. The
+  // desktop stylesheet also includes tools, tables and settings not shown here.
+  const selectors = rule.selectors.filter((selector) => {
+    let used = true
+    selectorParser((selectors) =>
+      selectors.walkClasses((node) => {
+        if (!replicaSource.includes(node.value)) used = false
+      }),
+    ).processSync(selector)
+    if (selector.includes('.markdown-body')) {
+      selectorParser((selectors) =>
+        selectors.walkTags((node) => {
+          if (!['p', 'ol', 'li'].includes(node.value)) used = false
+        }),
+      ).processSync(selector)
+    }
+    return used
+  })
+  if (!selectors.length) {
+    rule.remove()
+    return
+  }
+  rule.selectors = selectors
+  rule.selector = `.product-demo-window ${rule.selector.replaceAll(',', ', .product-demo-window ')}`
+})
+// Empty responsive groups need no bytes. Animation keyframes are preserved so
+// reduced-motion and source UI transitions retain their exact behavior.
+root.walkAtRules((rule) => {
+  if (rule.nodes && !rule.nodes.length) rule.remove()
+})
+// A website preview has its own viewport; source responsive breakpoints track that viewport.
+root.walkAtRules('media', (rule) => {
+  if (
+    /^\((?:min|max)-width:/.test(rule.params) ||
+    /^not all and \(min-width:/.test(rule.params)
+  ) {
+    rule.name = 'container'
+    rule.params = `desktop-preview ${rule.params.replace('not all and (min-width:', '(max-width:').replace(/(\d+)px\)$/, (_, n) => `${Number(n) - (rule.params.startsWith('not all') ? 0.02 : 0)}px)`)}`
+  }
+})
+await fs.writeFile(
+  path.join(website, 'src/styles/desktop-utilities.css'),
+  `/* Generated from ClerkBox tailwind.config.ts + copied desktop JSX classes. Scoped to the product preview. */\n${root.toString().replace(/[\t ]+$/gm, '').trimEnd()}\n`,
+)
+console.log(
+  'Synced desktop translations, Lucide geometry and scoped Tailwind utilities.',
+)

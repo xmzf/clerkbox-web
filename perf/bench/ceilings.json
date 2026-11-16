@@ -1,0 +1,29 @@
+{
+  "ready": {
+    "value": 1098.5,
+    "tolerance": 0.05
+  },
+  "bytes_total": {
+    "value": 381602,
+    "tolerance": 0
+  },
+  "requests": {
+    "value": 4,
+    "tolerance": 0
+  },
+  "switch_vibe": {
+    "value": 34.7,
+    "tolerance": 0,
+    "noise_ms": 16.7
+  },
+  "switch_work": {
+    "value": 83.1,
+    "tolerance": 0,
+    "noise_ms": 16.7
+  },
+  "switch_recall": {
+    "value": 34.6,
+    "tolerance": 0,
+    "noise_ms": 16.7
+  }
+}

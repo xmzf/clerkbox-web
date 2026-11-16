@@ -9,6 +9,7 @@
     "build": "tsc --noEmit && npm run check:i18n && npm run check:releases && vite build",
     "check:i18n": "node scripts/check-i18n.mjs",
     "check:releases": "node scripts/check-releases.mjs",
+    "check:ui": "node scripts/check-ui.cjs",
     "preview": "vite preview"
   },
   "dependencies": {

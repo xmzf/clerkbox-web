@@ -1,0 +1,1346 @@
+{
+  "started": "2026-11-16T12:01:38.403Z",
+  "finished": "2026-11-16T12:02:22.943Z",
+  "paired": true,
+  "config": {
+    "runs": 10,
+    "profile": "Fast4G:20ms/4Mbps/3Mbps",
+    "cpu": 1,
+    "viewport": "1440x900@1",
+    "cache": "new in-memory Electron session + disabled cache",
+    "ready": "(() => { const el = document.querySelector('#workspace textarea'), demo = document.querySelector('.product-demo[data-scenario]'); return !!el && el.getBoundingClientRect().width > 0 && !el.disabled && !el.readOnly && !!demo && demo.dataset.ready !== 'false' && [...demo.querySelectorAll('img')].filter(img => img.getBoundingClientRect().width > 0).every(img => img.complete && img.naturalWidth > 0); })()",
+    "type_check": "trusted Chromium char event Z persists in textarea",
+    "excluded": "noncritical GitHub releases API blocked for deterministic lab data"
+  },
+  "results": {
+    "A": {
+      "url": "http://127.0.0.1:5182/",
+      "summary": {
+        "n": 10,
+        "n_ok": 10,
+        "ready": {
+          "valid_n": 10,
+          "p50": 1146,
+          "p75": 1186.9,
+          "p95": 1349.7
+        },
+        "dom_ready": {
+          "valid_n": 10,
+          "p50": 1033.4,
+          "p75": 1066.6,
+          "p95": 1218.2
+        },
+        "lcp": {
+          "valid_n": 1,
+          "p50": 1124,
+          "p75": 1124,
+          "p95": 1124
+        },
+        "fcp": {
+          "valid_n": 10,
+          "p50": 1110,
+          "p75": 1142,
+          "p95": 1326.2
+        },
+        "longtask": {
+          "valid_n": 10,
+          "p50": 344.5,
+          "p75": 370,
+          "p95": 468
+        },
+        "requests": {
+          "valid_n": 10,
+          "p50": 4,
+          "p75": 4,
+          "p95": 4
+        },
+        "bytes_total": {
+          "valid_n": 10,
+          "p50": 381602,
+          "p75": 381602,
+          "p95": 381602
+        },
+        "switch_vibe": {
+          "valid_n": 10,
+          "p50": 36.2,
+          "p75": 38,
+          "p95": 53.5
+        },
+        "switch_work": {
+          "valid_n": 10,
+          "p50": 100.8,
+          "p75": 105.5,
+          "p95": 128.1
+        },
+        "switch_recall": {
+          "valid_n": 10,
+          "p50": 39.1,
+          "p75": 42.5,
+          "p95": 56.7
+        }
+      },
+      "runs": [
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 60.79999999701977,
+            "work": 136,
+            "recall": 15.300000004470348
+          },
+          "draft_persists": true,
+          "ready": 1482.5999999940395,
+          "dom_ready": 1340.1999999955297,
+          "lcp": null,
+          "longtask": 545,
+          "fcp": 1472,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 939
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 748
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 329
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 31.399999998509884,
+            "work": 89.89999999850988,
+            "recall": 36.100000001490116
+          },
+          "draft_persists": true,
+          "ready": 1187.2000000029802,
+          "dom_ready": 1067.2999999970198,
+          "lcp": null,
+          "longtask": 367,
+          "fcp": 1148,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 845
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 659
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 244
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 35.79999999701977,
+            "work": 106.39999999850988,
+            "recall": 39.600000001490116
+          },
+          "draft_persists": true,
+          "ready": 1132.3999999985099,
+          "dom_ready": 1025.7000000029802,
+          "lcp": null,
+          "longtask": 336,
+          "fcp": 1096,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 834
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 657
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 242
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 38,
+            "work": 68.29999999701977,
+            "recall": 32
+          },
+          "draft_persists": true,
+          "ready": 1187.2999999970198,
+          "dom_ready": 1069.0999999940395,
+          "lcp": 1124,
+          "longtask": 371,
+          "fcp": 1124,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 834
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 659
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 245
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 34.899999998509884,
+            "work": 102.80000000447035,
+            "recall": 41.100000001490116
+          },
+          "draft_persists": true,
+          "ready": 1113.5,
+          "dom_ready": 1010.5,
+          "lcp": null,
+          "longtask": 317,
+          "fcp": 1076,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 837
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 660
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 245
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 44.5,
+            "work": 118.5,
+            "recall": 35.5
+          },
+          "draft_persists": true,
+          "ready": 1159.6000000014901,
+          "dom_ready": 1041.1000000014901,
+          "lcp": null,
+          "longtask": 353,
+          "fcp": 1124,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 831
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 654
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 239
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 31.100000001490116,
+            "work": 101.30000000447035,
+            "recall": 38.600000001490116
+          },
+          "draft_persists": true,
+          "ready": 1124.3999999985099,
+          "dom_ready": 1017.8000000044703,
+          "lcp": null,
+          "longtask": 330,
+          "fcp": 1084,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 831
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 655
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 239
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 37.899999998509884,
+            "work": 100.19999999552965,
+            "recall": 42.900000005960464
+          },
+          "draft_persists": true,
+          "ready": 1126.7000000029802,
+          "dom_ready": 1022.3000000044703,
+          "lcp": null,
+          "longtask": 330,
+          "fcp": 1092,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 838
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 660
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 245
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 29.600000001490116,
+            "work": 86.39999999850988,
+            "recall": 65.60000000149012
+          },
+          "draft_persists": true,
+          "ready": 1186,
+          "dom_ready": 1064.5,
+          "lcp": null,
+          "longtask": 374,
+          "fcp": 1148,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 835
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 654
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 239
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 36.600000001490116,
+            "work": 95.20000000298023,
+            "recall": 45.900000005960464
+          },
+          "draft_persists": true,
+          "ready": 1100.8000000044703,
+          "dom_ready": 994.3999999985099,
+          "lcp": null,
+          "longtask": 307,
+          "fcp": 1064,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 831
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 656
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 242
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        }
+      ]
+    },
+    "B": {
+      "url": "http://127.0.0.1:5183/",
+      "summary": {
+        "n": 10,
+        "n_ok": 10,
+        "ready": {
+          "valid_n": 10,
+          "p50": 1290.4,
+          "p75": 1320.2,
+          "p95": 1448.7
+        },
+        "dom_ready": {
+          "valid_n": 10,
+          "p50": 1161.2,
+          "p75": 1185.4,
+          "p95": 1301.8
+        },
+        "lcp": {
+          "valid_n": 8,
+          "p50": 1210,
+          "p75": 1233,
+          "p95": 1255.8
+        },
+        "fcp": {
+          "valid_n": 10,
+          "p50": 1220,
+          "p75": 1245,
+          "p95": 1381
+        },
+        "longtask": {
+          "valid_n": 10,
+          "p50": 341,
+          "p75": 359,
+          "p95": 496.4
+        },
+        "requests": {
+          "valid_n": 10,
+          "p50": 7,
+          "p75": 7,
+          "p95": 7
+        },
+        "bytes_total": {
+          "valid_n": 10,
+          "p50": 756143,
+          "p75": 756143,
+          "p95": 756143
+        },
+        "switch_vibe": {
+          "valid_n": 10,
+          "p50": 699.7,
+          "p75": 706.3,
+          "p95": 710.4
+        },
+        "switch_work": {
+          "valid_n": 10,
+          "p50": 104.4,
+          "p75": 118.2,
+          "p95": 143.2
+        },
+        "switch_recall": {
+          "valid_n": 10,
+          "p50": 34.3,
+          "p75": 39.3,
+          "p95": 40.8
+        }
+      },
+      "runs": [
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 708.1000000014901,
+            "work": 135.79999999701977,
+            "recall": 29.19999999552965
+          },
+          "draft_persists": true,
+          "ready": 1543.3999999985099,
+          "dom_ready": 1386.3999999985099,
+          "lcp": null,
+          "longtask": 599,
+          "fcp": 1480,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 2290
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 2233
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 928
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 872
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 785
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 331
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 698.5,
+            "work": 100.80000000447035,
+            "recall": 37.30000000447035
+          },
+          "draft_persists": true,
+          "ready": 1285.2000000029802,
+          "dom_ready": 1168.4000000059605,
+          "lcp": 1228,
+          "longtask": 347,
+          "fcp": 1228,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 2012
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 1966
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 900
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 846
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 779
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 325
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 705.1000000014901,
+            "work": 149.20000000298023,
+            "recall": 28.700000002980232
+          },
+          "draft_persists": true,
+          "ready": 1333,
+          "dom_ready": 1188.1000000014901,
+          "lcp": 1248,
+          "longtask": 371,
+          "fcp": 1248,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 2069
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 2017
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 898
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 841
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 781
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 326
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 698.3999999985099,
+            "work": 119.10000000149012,
+            "recall": 28.600000001490116
+          },
+          "draft_persists": true,
+          "ready": 1261.1000000014901,
+          "dom_ready": 1128.5,
+          "lcp": 1184,
+          "longtask": 315,
+          "fcp": 1184,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 1988
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 1941
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 891
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 837
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 780
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 325
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 699.2999999970198,
+            "work": 115.5,
+            "recall": 41.20000000298023
+          },
+          "draft_persists": true,
+          "ready": 1300,
+          "dom_ready": 1177.2999999970198,
+          "lcp": null,
+          "longtask": 350,
+          "fcp": 1236,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 2027
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 1979
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 908
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 851
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 783
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 328
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 712.1999999955297,
+            "work": 99.10000000149012,
+            "recall": 35.599999994039536
+          },
+          "draft_persists": true,
+          "ready": 1326.8999999985099,
+          "dom_ready": 1198.5,
+          "lcp": 1260,
+          "longtask": 362,
+          "fcp": 1260,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 2067
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 2007
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 917
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 861
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 782
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 328
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 700.1999999955297,
+            "work": 101.20000000298023,
+            "recall": 40.399999998509884
+          },
+          "draft_persists": true,
+          "ready": 1250,
+          "dom_ready": 1146.1000000014901,
+          "lcp": 1200,
+          "longtask": 322,
+          "fcp": 1200,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 1979
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 1930
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 900
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 848
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 789
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 333
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 698.3999999985099,
+            "work": 99.29999999701977,
+            "recall": 33
+          },
+          "draft_persists": true,
+          "ready": 1268.6000000014901,
+          "dom_ready": 1153.9000000059605,
+          "lcp": 1212,
+          "longtask": 335,
+          "fcp": 1212,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 1996
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 1951
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 897
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 843
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 783
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 328
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 699.1999999955297,
+            "work": 94.20000000298023,
+            "recall": 39.899999998509884
+          },
+          "draft_persists": true,
+          "ready": 1249,
+          "dom_ready": 1140,
+          "lcp": 1192,
+          "longtask": 322,
+          "fcp": 1192,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 1976
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 1930
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 894
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 842
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 783
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 328
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5183/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 706.7000000029802,
+            "work": 107.69999999552965,
+            "recall": 25.200000002980232
+          },
+          "draft_persists": true,
+          "ready": 1295.6000000014901,
+          "dom_ready": 1148.3000000044703,
+          "lcp": 1208,
+          "longtask": 326,
+          "fcp": 1208,
+          "viewport": [
+            1440,
+            900
+          ],
+          "requests": 7,
+          "bytes_total": 756143,
+          "bytes_by_type": {
+            "js": 309893,
+            "css": 71797,
+            "image": 347706,
+            "font": 24532,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 2033
+            },
+            {
+              "name": "/product/vibe-background.jpg",
+              "type": "img",
+              "bytes": 342290,
+              "responseEnd": 1976
+            },
+            {
+              "name": "/fonts/manrope-latin.woff2",
+              "type": "css",
+              "bytes": 24532,
+              "responseEnd": 901
+            },
+            {
+              "name": "/clerkbox-mark.webp",
+              "type": "img",
+              "bytes": 2708,
+              "responseEnd": 849
+            },
+            {
+              "name": "/assets/index-BiwQ90tE.js",
+              "type": "script",
+              "bytes": 309893,
+              "responseEnd": 783
+            },
+            {
+              "name": "/assets/index-Bb-av5pw.css",
+              "type": "link",
+              "bytes": 71797,
+              "responseEnd": 328
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        }
+      ]
+    }
+  },
+  "ready_p75_reduction": -0.11230937736961821
+}

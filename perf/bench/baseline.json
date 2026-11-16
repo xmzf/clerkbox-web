@@ -1,0 +1,526 @@
+{
+  "started": "2026-11-16T05:14:56.200Z",
+  "finished": "2026-11-16T05:15:12.812Z",
+  "paired": false,
+  "config": {
+    "runs": 10,
+    "profile": "Fast4G:20ms/4Mbps/3Mbps",
+    "cpu": 1,
+    "viewport": "1440x900@1",
+    "cache": "new in-memory Electron session + disabled cache",
+    "ready": "(() => { const el = document.querySelector('#workspace textarea'); return !!el && el.getBoundingClientRect().width > 0 && !el.disabled && !el.readOnly && !!document.querySelector('.product-demo[data-scenario]'); })()",
+    "type_check": "trusted Chromium char event Z persists in textarea",
+    "excluded": "noncritical GitHub releases API blocked for deterministic lab data"
+  },
+  "results": {
+    "A": {
+      "url": "http://127.0.0.1:5182/",
+      "summary": {
+        "n": 10,
+        "n_ok": 10,
+        "ready": {
+          "p50": 1095,
+          "p75": 1098.5,
+          "p95": 1115
+        },
+        "dom_ready": {
+          "p50": 992,
+          "p75": 993.4,
+          "p95": 1007
+        },
+        "lcp": {
+          "p50": null,
+          "p75": null,
+          "p95": null
+        },
+        "fcp": {
+          "p50": 1060,
+          "p75": 1063,
+          "p95": 1076.4
+        },
+        "longtask": {
+          "p50": 304,
+          "p75": 307.8,
+          "p95": 319.1
+        },
+        "requests": {
+          "p50": 4,
+          "p75": 4,
+          "p95": 4
+        },
+        "bytes_total": {
+          "p50": 381602,
+          "p75": 381602,
+          "p95": 381602
+        },
+        "switch_vibe": {
+          "p50": 31.8,
+          "p75": 34.7,
+          "p95": 40.4
+        },
+        "switch_work": {
+          "p50": 76.5,
+          "p75": 83.1,
+          "p95": 104.9
+        },
+        "switch_recall": {
+          "p50": 33.1,
+          "p75": 34.6,
+          "p95": 42.2
+        }
+      },
+      "runs": [
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 30.299999997019768,
+            "work": 67.60000000149012,
+            "recall": 33.20000000298023
+          },
+          "ready": 1096.8000000044703,
+          "dom_ready": 993.7000000029802,
+          "lcp": null,
+          "longtask": 309,
+          "fcp": 1060,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 829
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 654
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 239
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 34.899999998509884,
+            "work": 66.5,
+            "recall": 32.5
+          },
+          "ready": 1092,
+          "dom_ready": 992.3000000044703,
+          "lcp": null,
+          "longtask": 301,
+          "fcp": 1056,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 836
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 662
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 246
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 35.80000000447035,
+            "work": 82.70000000298023,
+            "recall": 32.899999998509884
+          },
+          "ready": 1094.6999999955297,
+          "dom_ready": 987.1000000014901,
+          "lcp": null,
+          "longtask": 303,
+          "fcp": 1056,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 829
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 654
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 239
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 27.899999998509884,
+            "work": 83.20000000298023,
+            "recall": 33.79999999701977
+          },
+          "ready": 1099,
+          "dom_ready": 990.8999999985099,
+          "lcp": null,
+          "longtask": 304,
+          "fcp": 1064,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 832
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 657
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 242
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 28.100000001490116,
+            "work": 68.10000000149012,
+            "recall": 34.899999998509884
+          },
+          "ready": 1106.8999999985099,
+          "dom_ready": 1003.1000000014901,
+          "lcp": null,
+          "longtask": 318,
+          "fcp": 1072,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 829
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 654
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 239
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 29,
+            "work": 117.5,
+            "recall": 43.5
+          },
+          "ready": 1121.7000000029802,
+          "dom_ready": 1010.2000000029802,
+          "lcp": null,
+          "longtask": 320,
+          "fcp": 1080,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 834
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 657
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 242
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 34.100000001490116,
+            "work": 69.39999999850988,
+            "recall": 32.20000000298023
+          },
+          "ready": 1093.2000000029802,
+          "dom_ready": 991.7999999970198,
+          "lcp": null,
+          "longtask": 304,
+          "fcp": 1060,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 832
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 657
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 243
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 44.20000000298023,
+            "work": 71.10000000149012,
+            "recall": 32.80000000447035
+          },
+          "ready": 1090.7999999970198,
+          "dom_ready": 987.2999999970198,
+          "lcp": null,
+          "longtask": 304,
+          "fcp": 1056,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 829
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 654
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 240
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 33.30000000447035,
+            "work": 89.39999999850988,
+            "recall": 40.5
+          },
+          "ready": 1086.2000000029802,
+          "dom_ready": 985.6000000014901,
+          "lcp": null,
+          "longtask": 301,
+          "fcp": 1052,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 829
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 655
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 239
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        },
+        {
+          "url": "http://127.0.0.1:5182/",
+          "ok": true,
+          "type_check": true,
+          "switches": {
+            "vibe": 14.299999997019768,
+            "work": 81.89999999850988,
+            "recall": 32
+          },
+          "ready": 1095.3000000044703,
+          "dom_ready": 992.2000000029802,
+          "lcp": null,
+          "longtask": 300,
+          "fcp": 1060,
+          "requests": 4,
+          "bytes_total": 381602,
+          "bytes_by_type": {
+            "js": 266573,
+            "css": 48355,
+            "image": 64438,
+            "other": 0
+          },
+          "resources": [
+            {
+              "name": "/clerkbox.png",
+              "type": "img",
+              "bytes": 64438,
+              "responseEnd": 837
+            },
+            {
+              "name": "/assets/index-DVb79ulU.js",
+              "type": "script",
+              "bytes": 266573,
+              "responseEnd": 662
+            },
+            {
+              "name": "/assets/index-u2aVLUuk.css",
+              "type": "link",
+              "bytes": 48355,
+              "responseEnd": 248
+            }
+          ],
+          "overflow": false,
+          "rawKeys": false
+        }
+      ]
+    }
+  }
+}

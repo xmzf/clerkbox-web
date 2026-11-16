@@ -1,0 +1,159 @@
+// Adapted from ClerkBox ThemeWaves, Copyright 2026 XMZF Studio, Apache-2.0.
+// Website changes pause offscreen drawing; license: public/licenses/ClerkBox.txt.
+import { useEffect, useRef } from 'react'
+
+// 三层波浪参数：不同波长 / 振幅 / 速度 / 透明度，营造纵深
+const LAYERS = [
+  {
+    varName: '--md-primary-rgb',
+    alpha: 0.06,
+    amplitude: 12,
+    wavelength: 1.1,
+    speed: 0.00028,
+    phase: 0,
+  },
+  {
+    varName: '--md-tertiary-rgb',
+    alpha: 0.04,
+    amplitude: 16,
+    wavelength: 0.8,
+    speed: -0.00021,
+    phase: 2.1,
+  },
+  {
+    varName: '--md-secondary-rgb',
+    alpha: 0.03,
+    amplitude: 20,
+    wavelength: 0.6,
+    speed: 0.00015,
+    phase: 4.4,
+  },
+]
+
+function readColors(element: Element): string[] {
+  const style = getComputedStyle(element)
+  return LAYERS.map(
+    (l) => style.getPropertyValue(l.varName).trim() || '128 128 128',
+  )
+}
+
+/**
+ * 新对话空状态底部的主题色流动波浪。
+ * 颜色运行时读取 CSS 变量，换色系 / 亮暗模式自动跟随。
+ */
+export default function DesktopThemeWaves() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    let rafId = 0
+    let inView = true
+    let colors = readColors(canvas)
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    const draw = (time: number) => {
+      const w = canvas.clientWidth
+      const h = canvas.clientHeight
+      if (!w || !h) return
+      ctx.clearRect(0, 0, w, h)
+
+      LAYERS.forEach((layer, i) => {
+        const baseY = h * (0.45 + i * 0.12)
+        const k = (Math.PI * 2) / (w * layer.wavelength)
+        const drift = reducedMotion.matches ? 0 : time * layer.speed
+
+        ctx.beginPath()
+        ctx.moveTo(0, h)
+        for (let x = 0; x <= w; x += 4) {
+          const y =
+            baseY +
+            Math.sin(x * k + drift + layer.phase) * layer.amplitude +
+            Math.sin(x * k * 0.5 + drift * 1.3 + layer.phase) *
+              layer.amplitude *
+              0.4
+          ctx.lineTo(x, y)
+        }
+        ctx.lineTo(w, h)
+        ctx.closePath()
+        ctx.fillStyle = `rgba(${colors[i].replace(/\s+/g, ',')},${layer.alpha})`
+        ctx.fill()
+      })
+    }
+
+    const loop = (time: number) => {
+      draw(time)
+      if (!reducedMotion.matches && !document.hidden && inView)
+        rafId = requestAnimationFrame(loop)
+    }
+
+    const updateMotion = () => {
+      cancelAnimationFrame(rafId)
+      draw(0)
+      if (!reducedMotion.matches && !document.hidden && inView)
+        rafId = requestAnimationFrame(loop)
+    }
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width = canvas.clientWidth * dpr
+      canvas.height = canvas.clientHeight * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      // canvas 改尺寸会清空像素，静态/减少动态模式也需要重画。
+      draw(0)
+    }
+    resize()
+    updateMotion()
+    reducedMotion.addEventListener('change', updateMotion)
+    document.addEventListener('visibilitychange', updateMotion)
+
+    // 下一帧重读一次，规避主题尚未写入 CSS 变量的挂载时序。
+    const colorFrame = requestAnimationFrame(() => {
+      colors = readColors(canvas)
+      if (reducedMotion.matches || document.hidden) draw(0)
+    })
+    // 色系 / 亮暗切换时重读颜色（theme-engine 会改写 documentElement 内联样式）
+    const observer = new MutationObserver(() => {
+      colors = readColors(canvas)
+      if (reducedMotion.matches) draw(0)
+    })
+    observer.observe(canvas.closest('.product-demo-window') || canvas, {
+      attributes: true,
+      attributeFilter: ['style', 'class'],
+    })
+
+    const resizeObserver = new ResizeObserver(resize)
+    resizeObserver.observe(canvas)
+    // The desktop empty state fills its window. On the marketing page it can
+    // scroll offscreen, so pause work without changing the visible animation.
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting
+        updateMotion()
+      },
+      { rootMargin: '80px' },
+    )
+    visibilityObserver.observe(canvas)
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      cancelAnimationFrame(colorFrame)
+      reducedMotion.removeEventListener('change', updateMotion)
+      document.removeEventListener('visibilitychange', updateMotion)
+      observer.disconnect()
+      resizeObserver.disconnect()
+      visibilityObserver.disconnect()
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      className="absolute inset-x-0 bottom-0 h-36 w-full pointer-events-none [mask-image:linear-gradient(to_top,black_55%,transparent)]"
+    />
+  )
+}

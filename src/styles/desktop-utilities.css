@@ -1,0 +1,1467 @@
+/* Generated from ClerkBox tailwind.config.ts + copied desktop JSX classes. Scoped to the product preview. */
+.product-demo-window *, .product-demo-window  ::before, .product-demo-window  ::after {
+    --tw-border-spacing-x: 0;
+    --tw-border-spacing-y: 0;
+    --tw-translate-x: 0;
+    --tw-translate-y: 0;
+    --tw-rotate: 0;
+    --tw-skew-x: 0;
+    --tw-skew-y: 0;
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+    --tw-pan-x:  ;
+    --tw-pan-y:  ;
+    --tw-pinch-zoom:  ;
+    --tw-scroll-snap-strictness: proximity;
+    --tw-gradient-from-position:  ;
+    --tw-gradient-via-position:  ;
+    --tw-gradient-to-position:  ;
+    --tw-ordinal:  ;
+    --tw-slashed-zero:  ;
+    --tw-numeric-figure:  ;
+    --tw-numeric-spacing:  ;
+    --tw-numeric-fraction:  ;
+    --tw-ring-inset:  ;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgb(59 130 246 / 0.5);
+    --tw-ring-offset-shadow: 0 0 #0000;
+    --tw-ring-shadow: 0 0 #0000;
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    --tw-blur:  ;
+    --tw-brightness:  ;
+    --tw-contrast:  ;
+    --tw-grayscale:  ;
+    --tw-hue-rotate:  ;
+    --tw-invert:  ;
+    --tw-saturate:  ;
+    --tw-sepia:  ;
+    --tw-drop-shadow:  ;
+    --tw-backdrop-blur:  ;
+    --tw-backdrop-brightness:  ;
+    --tw-backdrop-contrast:  ;
+    --tw-backdrop-grayscale:  ;
+    --tw-backdrop-hue-rotate:  ;
+    --tw-backdrop-invert:  ;
+    --tw-backdrop-opacity:  ;
+    --tw-backdrop-saturate:  ;
+    --tw-backdrop-sepia:  ;
+    --tw-contain-size:  ;
+    --tw-contain-layout:  ;
+    --tw-contain-paint:  ;
+    --tw-contain-style:  ;
+}
+.product-demo-window ::backdrop {
+    --tw-border-spacing-x: 0;
+    --tw-border-spacing-y: 0;
+    --tw-translate-x: 0;
+    --tw-translate-y: 0;
+    --tw-rotate: 0;
+    --tw-skew-x: 0;
+    --tw-skew-y: 0;
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+    --tw-pan-x:  ;
+    --tw-pan-y:  ;
+    --tw-pinch-zoom:  ;
+    --tw-scroll-snap-strictness: proximity;
+    --tw-gradient-from-position:  ;
+    --tw-gradient-via-position:  ;
+    --tw-gradient-to-position:  ;
+    --tw-ordinal:  ;
+    --tw-slashed-zero:  ;
+    --tw-numeric-figure:  ;
+    --tw-numeric-spacing:  ;
+    --tw-numeric-fraction:  ;
+    --tw-ring-inset:  ;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgb(59 130 246 / 0.5);
+    --tw-ring-offset-shadow: 0 0 #0000;
+    --tw-ring-shadow: 0 0 #0000;
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    --tw-blur:  ;
+    --tw-brightness:  ;
+    --tw-contrast:  ;
+    --tw-grayscale:  ;
+    --tw-hue-rotate:  ;
+    --tw-invert:  ;
+    --tw-saturate:  ;
+    --tw-sepia:  ;
+    --tw-drop-shadow:  ;
+    --tw-backdrop-blur:  ;
+    --tw-backdrop-brightness:  ;
+    --tw-backdrop-contrast:  ;
+    --tw-backdrop-grayscale:  ;
+    --tw-backdrop-hue-rotate:  ;
+    --tw-backdrop-invert:  ;
+    --tw-backdrop-opacity:  ;
+    --tw-backdrop-saturate:  ;
+    --tw-backdrop-sepia:  ;
+    --tw-contain-size:  ;
+    --tw-contain-layout:  ;
+    --tw-contain-paint:  ;
+    --tw-contain-style:  ;
+}
+
+  /* WebUI 模式（浏览器标签页）：不需要透明背景，直接用主题 surface 色 */
+
+  /* DOM 全屏（VIBE 全屏模式）时取消窗口圆角 */
+
+  .product-demo-window ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .product-demo-window ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .product-demo-window ::-webkit-scrollbar-thumb {
+    background: rgb(var(--md-outline-rgb) / 0.3);
+    border-radius: 3px;
+  }
+
+  .product-demo-window ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--md-outline-rgb) / 0.5);
+  }
+
+  .product-demo-window ::selection {
+    background: rgb(var(--md-primary-rgb) / 0.3);
+    color: inherit;
+  }
+
+  /* 键盘焦点兜底：未显式设置焦点态的可交互元素，在键盘导航（focus-visible）时
+     也显示 MD3 焦点环；组件层 .md-focus 与 Tailwind outline-none 优先级更高 */
+  .product-demo-window :where(button, .product-demo-window  [role='button'], .product-demo-window  a[href], .product-demo-window  input, .product-demo-window  select, .product-demo-window  textarea, .product-demo-window  [tabindex]):focus-visible {
+    outline: 2px solid rgb(var(--md-primary-rgb) / 0.55);
+    outline-offset: 1px;
+  }
+  /* MD3 焦点环：仅键盘导航（focus-visible）显示，鼠标点击不出现 */
+  .product-demo-window .md-focus:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+    --tw-ring-color: rgb(var(--md-primary-rgb) / 0.6);
+}
+
+  /* Chat input stays compact when the workbench takes horizontal space. */
+  .product-demo-window .chat-input-box {
+    container: chat-input / inline-size;
+  }
+
+  .product-demo-window .chat-input-toolbar[data-composer-density='1'] .chat-toolbar-label, .product-demo-window
+  .chat-input-toolbar[data-composer-density='2'] .chat-toolbar-label, .product-demo-window
+  .chat-input-toolbar[data-composer-density='3'] .chat-toolbar-label {
+    display: none;
+  }
+
+  .product-demo-window .chat-input-toolbar[data-composer-density='2'] .chat-toolbar-model-label {
+    max-width: 8rem;
+  }
+
+  .product-demo-window .chat-input-toolbar[data-composer-density='3'] {
+    flex-wrap: wrap;
+  }
+
+  .product-demo-window .chat-input-toolbar[data-composer-density='3'] .chat-toolbar-model-label {
+    max-width: 6rem;
+  }
+
+  .product-demo-window .chat-input-toolbar > button, .product-demo-window
+  .chat-input-toolbar > div > button {
+    min-height: 2.25rem;
+  }
+
+  @container desktop-preview (max-width: 767.98px) {
+    .product-demo-window .chat-input-toolbar > button, .product-demo-window
+    .chat-input-toolbar > div > button {
+      min-height: 2.75rem;
+      min-width: 2.75rem;
+    }
+  }
+
+  .product-demo-window .chat-input-toolbar, .product-demo-window
+  .chat-input-chip-row {
+    scrollbar-width: none;
+  }
+
+  .product-demo-window .chat-input-toolbar::-webkit-scrollbar, .product-demo-window
+  .chat-input-chip-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  @container chat-input (max-width: 560px) {
+    .product-demo-window .chat-input-toolbar:not([data-composer-density]) .chat-toolbar-label {
+      display: none;
+    }
+
+    .product-demo-window .chat-input-toolbar:not([data-composer-density]) {
+      flex-wrap: wrap;
+    }
+  }
+
+  @container chat-input (max-width: 380px) {
+
+    .product-demo-window .chat-input-toolbar:not([data-composer-density]) .chat-toolbar-model-label {
+      display: none;
+    }
+
+  }
+
+  /* Open File Viewer integration: keep the preview visually native to ClerkBox
+     and reserve the sidebar for the actual document rather than controls. */
+
+  /* 文件名和类型/行数/大小属于预览上下文，不占用正文的首屏空间。 */
+
+  /* ── VIBE 液态玻璃（Apple Liquid Glass 规范）──
+     四要素：backdrop blur + 饱和度提升、半透明渐变填充、
+     顶部高光描边（镜面反射）、柔和深投影。
+     叠加深色底保证动态背景上的文字可读性。 */
+  .product-demo-window .liquid-glass {
+    background: linear-gradient(
+      135deg,
+      rgb(20 22 28 / 0.52) 0%,
+      rgb(20 22 28 / 0.38) 100%
+    );
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 0.22);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.32),
+      inset 0 -1px 0 rgb(255 255 255 / 0.08),
+      0 8px 32px rgb(0 0 0 / 0.32);
+  }
+
+  /* 更厚重的玻璃：用于面板、菜单等需要更高可读性的场景 */
+  .product-demo-window .liquid-glass-strong {
+    background: linear-gradient(
+      135deg,
+      rgb(18 20 26 / 0.72) 0%,
+      rgb(18 20 26 / 0.58) 100%
+    );
+    backdrop-filter: blur(48px) saturate(200%);
+    -webkit-backdrop-filter: blur(48px) saturate(200%);
+    border: 1px solid rgb(255 255 255 / 0.28);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.38),
+      inset 0 -1px 0 rgb(255 255 255 / 0.10),
+      0 16px 48px rgb(0 0 0 / 0.42);
+  }
+
+  /* 轻量玻璃：用于消息气泡等大面积重复元素 */
+
+  /* 可交互玻璃按钮：悬浮增亮、按压下沉 */
+.product-demo-window .pointer-events-none {
+    pointer-events: none;
+}
+.product-demo-window .visible {
+    visibility: visible;
+}
+.product-demo-window .absolute {
+    position: absolute;
+}
+.product-demo-window .relative {
+    position: relative;
+}
+.product-demo-window .inset-x-0 {
+    left: 0px;
+    right: 0px;
+}
+.product-demo-window .bottom-0 {
+    bottom: 0px;
+}
+.product-demo-window .z-10 {
+    z-index: 10;
+}
+.product-demo-window .z-30 {
+    z-index: 30;
+}
+.product-demo-window .mx-1 {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
+.product-demo-window .mx-3 {
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+}
+.product-demo-window .mx-5 {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+}
+.product-demo-window .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+.product-demo-window .-mr-1 {
+    margin-right: -0.25rem;
+}
+.product-demo-window .mb-1 {
+    margin-bottom: 0.25rem;
+}
+.product-demo-window .mb-2 {
+    margin-bottom: 0.5rem;
+}
+.product-demo-window .mb-3 {
+    margin-bottom: 0.75rem;
+}
+.product-demo-window .mb-4 {
+    margin-bottom: 1rem;
+}
+.product-demo-window .mb-7 {
+    margin-bottom: 1.75rem;
+}
+.product-demo-window .ml-1 {
+    margin-left: 0.25rem;
+}
+.product-demo-window .ml-auto {
+    margin-left: auto;
+}
+.product-demo-window .mr-1 {
+    margin-right: 0.25rem;
+}
+.product-demo-window .mr-2 {
+    margin-right: 0.5rem;
+}
+.product-demo-window .mt-0\.5 {
+    margin-top: 0.125rem;
+}
+.product-demo-window .mt-1 {
+    margin-top: 0.25rem;
+}
+.product-demo-window .mt-1\.5 {
+    margin-top: 0.375rem;
+}
+.product-demo-window .mt-2 {
+    margin-top: 0.5rem;
+}
+.product-demo-window .mt-3 {
+    margin-top: 0.75rem;
+}
+.product-demo-window .mt-4 {
+    margin-top: 1rem;
+}
+.product-demo-window .mt-5 {
+    margin-top: 1.25rem;
+}
+.product-demo-window .block {
+    display: block;
+}
+.product-demo-window .flex {
+    display: flex;
+}
+.product-demo-window .inline-flex {
+    display: inline-flex;
+}
+.product-demo-window .grid {
+    display: grid;
+}
+.product-demo-window .hidden {
+    display: none;
+}
+.product-demo-window .h-10 {
+    height: 2.5rem;
+}
+.product-demo-window .h-11 {
+    height: 2.75rem;
+}
+.product-demo-window .h-14 {
+    height: 3.5rem;
+}
+.product-demo-window .h-36 {
+    height: 9rem;
+}
+.product-demo-window .h-5 {
+    height: 1.25rem;
+}
+.product-demo-window .h-6 {
+    height: 1.5rem;
+}
+.product-demo-window .h-7 {
+    height: 1.75rem;
+}
+.product-demo-window .h-8 {
+    height: 2rem;
+}
+.product-demo-window .h-9 {
+    height: 2.25rem;
+}
+.product-demo-window .h-full {
+    height: 100%;
+}
+.product-demo-window .max-h-\[200px\] {
+    max-height: 200px;
+}
+.product-demo-window .max-h-\[78dvh\] {
+    max-height: 78dvh;
+}
+.product-demo-window .min-h-0 {
+    min-height: 0px;
+}
+.product-demo-window .min-h-10 {
+    min-height: 2.5rem;
+}
+.product-demo-window .min-h-11 {
+    min-height: 2.75rem;
+}
+.product-demo-window .min-h-12 {
+    min-height: 3rem;
+}
+.product-demo-window .min-h-8 {
+    min-height: 2rem;
+}
+.product-demo-window .min-h-9 {
+    min-height: 2.25rem;
+}
+.product-demo-window .min-h-full {
+    min-height: 100%;
+}
+.product-demo-window .w-10 {
+    width: 2.5rem;
+}
+.product-demo-window .w-11 {
+    width: 2.75rem;
+}
+.product-demo-window .w-14 {
+    width: 3.5rem;
+}
+.product-demo-window .w-6 {
+    width: 1.5rem;
+}
+.product-demo-window .w-64 {
+    width: 16rem;
+}
+.product-demo-window .w-7 {
+    width: 1.75rem;
+}
+.product-demo-window .w-8 {
+    width: 2rem;
+}
+.product-demo-window .w-9 {
+    width: 2.25rem;
+}
+.product-demo-window .w-\[36\%\] {
+    width: 36%;
+}
+.product-demo-window .w-full {
+    width: 100%;
+}
+.product-demo-window .min-w-0 {
+    min-width: 0px;
+}
+.product-demo-window .min-w-\[128px\] {
+    min-width: 128px;
+}
+.product-demo-window .min-w-\[96px\] {
+    min-width: 96px;
+}
+.product-demo-window .max-w-3xl {
+    max-width: 48rem;
+}
+.product-demo-window .max-w-40 {
+    max-width: 10rem;
+}
+.product-demo-window .max-w-52 {
+    max-width: 13rem;
+}
+.product-demo-window .max-w-5xl {
+    max-width: 64rem;
+}
+.product-demo-window .max-w-64 {
+    max-width: 16rem;
+}
+.product-demo-window .max-w-\[200px\] {
+    max-width: 200px;
+}
+.product-demo-window .max-w-\[400px\] {
+    max-width: 400px;
+}
+.product-demo-window .max-w-\[85\%\] {
+    max-width: 85%;
+}
+.product-demo-window .max-w-full {
+    max-width: 100%;
+}
+.product-demo-window .max-w-md {
+    max-width: 28rem;
+}
+.product-demo-window .max-w-xl {
+    max-width: 36rem;
+}
+.product-demo-window .flex-1 {
+    flex: 1 1 0%;
+}
+.product-demo-window .flex-shrink-0 {
+    flex-shrink: 0;
+}
+.product-demo-window .shrink-0 {
+    flex-shrink: 0;
+}
+.product-demo-window .basis-64 {
+    flex-basis: 16rem;
+}
+.product-demo-window .-rotate-90 {
+    --tw-rotate: -90deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.product-demo-window .cursor-pointer {
+    cursor: pointer;
+}
+.product-demo-window .select-none {
+    user-select: none;
+}
+.product-demo-window .resize-none {
+    resize: none;
+}
+.product-demo-window .resize {
+    resize: both;
+}
+.product-demo-window .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.product-demo-window .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.product-demo-window .flex-col {
+    flex-direction: column;
+}
+.product-demo-window .flex-wrap {
+    flex-wrap: wrap;
+}
+.product-demo-window .flex-nowrap {
+    flex-wrap: nowrap;
+}
+.product-demo-window .items-start {
+    align-items: flex-start;
+}
+.product-demo-window .items-end {
+    align-items: flex-end;
+}
+.product-demo-window .items-center {
+    align-items: center;
+}
+.product-demo-window .justify-end {
+    justify-content: flex-end;
+}
+.product-demo-window .justify-center {
+    justify-content: center;
+}
+.product-demo-window .justify-between {
+    justify-content: space-between;
+}
+.product-demo-window .gap-1 {
+    gap: 0.25rem;
+}
+.product-demo-window .gap-1\.5 {
+    gap: 0.375rem;
+}
+.product-demo-window .gap-2 {
+    gap: 0.5rem;
+}
+.product-demo-window .gap-2\.5 {
+    gap: 0.625rem;
+}
+.product-demo-window .gap-3 {
+    gap: 0.75rem;
+}
+.product-demo-window .gap-4 {
+    gap: 1rem;
+}
+.product-demo-window .gap-x-4 {
+    column-gap: 1rem;
+}
+.product-demo-window .gap-y-2 {
+    row-gap: 0.5rem;
+}
+.product-demo-window .space-y-2 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+.product-demo-window .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+.product-demo-window .space-y-5 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
+.product-demo-window .overflow-hidden {
+    overflow: hidden;
+}
+.product-demo-window .overflow-clip {
+    overflow: clip;
+}
+.product-demo-window .overflow-visible {
+    overflow: visible;
+}
+.product-demo-window .overflow-x-auto {
+    overflow-x: auto;
+}
+.product-demo-window .overflow-y-auto {
+    overflow-y: auto;
+}
+.product-demo-window .overflow-x-hidden {
+    overflow-x: hidden;
+}
+.product-demo-window .overscroll-contain {
+    overscroll-behavior: contain;
+}
+.product-demo-window .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.product-demo-window .whitespace-nowrap {
+    white-space: nowrap;
+}
+.product-demo-window .whitespace-pre-wrap {
+    white-space: pre-wrap;
+}
+.product-demo-window .break-words {
+    overflow-wrap: break-word;
+}
+.product-demo-window .rounded-md3-lg {
+    border-radius: 16px;
+}
+.product-demo-window .rounded-md3-md {
+    border-radius: 12px;
+}
+.product-demo-window .rounded-md3-sm {
+    border-radius: 8px;
+}
+.product-demo-window .rounded-md3-xs {
+    border-radius: 4px;
+}
+.product-demo-window .rounded-xl {
+    border-radius: 0.75rem;
+}
+.product-demo-window .border {
+    border-width: 1px;
+}
+.product-demo-window .border-b {
+    border-bottom-width: 1px;
+}
+.product-demo-window .border-l {
+    border-left-width: 1px;
+}
+.product-demo-window .border-r {
+    border-right-width: 1px;
+}
+.product-demo-window .border-t {
+    border-top-width: 1px;
+}
+.product-demo-window .border-dark-onSurfaceVariant\/10 {
+    border-color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.1);
+}
+.product-demo-window .border-dark-onSurfaceVariant\/15 {
+    border-color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.15);
+}
+.product-demo-window .border-dark-onSurfaceVariant\/20 {
+    border-color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.2);
+}
+.product-demo-window .border-transparent {
+    border-color: transparent;
+}
+.product-demo-window .border-white\/10 {
+    border-color: rgb(255 255 255 / 0.1);
+}
+.product-demo-window .border-white\/15 {
+    border-color: rgb(255 255 255 / 0.15);
+}
+.product-demo-window .border-white\/20 {
+    border-color: rgb(255 255 255 / 0.2);
+}
+.product-demo-window .border-white\/40 {
+    border-color: rgb(255 255 255 / 0.4);
+}
+.product-demo-window .bg-black\/10 {
+    background-color: rgb(0 0 0 / 0.1);
+}
+.product-demo-window .bg-black\/20 {
+    background-color: rgb(0 0 0 / 0.2);
+}
+.product-demo-window .bg-dark-surface {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--dark-surface-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .bg-dark-surface\/60 {
+    background-color: rgb(var(--dark-surface-rgb) / 0.6);
+}
+.product-demo-window .bg-dark-surface\/90 {
+    background-color: rgb(var(--dark-surface-rgb) / 0.9);
+}
+.product-demo-window .bg-dark-surfaceBright {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--dark-surfaceBright-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .bg-dark-surfaceContainer\/40 {
+    background-color: rgb(var(--dark-surfaceContainer-rgb) / 0.4);
+}
+.product-demo-window .bg-dark-surfaceContainer\/50 {
+    background-color: rgb(var(--dark-surfaceContainer-rgb) / 0.5);
+}
+.product-demo-window .bg-dark-surfaceContainer\/60 {
+    background-color: rgb(var(--dark-surfaceContainer-rgb) / 0.6);
+}
+.product-demo-window .bg-dark-surfaceContainerHigh {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--dark-surfaceContainerHigh-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .bg-dark-surfaceContainerHighest {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--dark-surfaceContainerHighest-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .bg-dark-surfaceContainerHighest\/70 {
+    background-color: rgb(var(--dark-surfaceContainerHighest-rgb) / 0.7);
+}
+.product-demo-window .bg-dark-surfaceDim {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--dark-surfaceDim-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .bg-md-error {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--md-error-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .bg-md-primary {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--md-primary-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .bg-md-primary\/10 {
+    background-color: rgb(var(--md-primary-rgb) / 0.1);
+}
+.product-demo-window .bg-md-primary\/15 {
+    background-color: rgb(var(--md-primary-rgb) / 0.15);
+}
+.product-demo-window .bg-md-primaryContainer {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--md-primaryContainer-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .bg-transparent {
+    background-color: transparent;
+}
+.product-demo-window .bg-white\/10 {
+    background-color: rgb(255 255 255 / 0.1);
+}
+.product-demo-window .bg-white\/15 {
+    background-color: rgb(255 255 255 / 0.15);
+}
+.product-demo-window .bg-white\/25 {
+    background-color: rgb(255 255 255 / 0.25);
+}
+.product-demo-window .stroke-dark-onSurfaceVariant\/25 {
+    stroke: rgb(var(--dark-onSurfaceVariant-rgb) / 0.25);
+}
+.product-demo-window .object-contain {
+    object-fit: contain;
+}
+.product-demo-window .object-cover {
+    object-fit: cover;
+}
+.product-demo-window .p-1 {
+    padding: 0.25rem;
+}
+.product-demo-window .p-2 {
+    padding: 0.5rem;
+}
+.product-demo-window .p-3 {
+    padding: 0.75rem;
+}
+.product-demo-window .p-4 {
+    padding: 1rem;
+}
+.product-demo-window .p-5 {
+    padding: 1.25rem;
+}
+.product-demo-window .px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.product-demo-window .px-1 {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+.product-demo-window .px-1\.5 {
+    padding-left: 0.375rem;
+    padding-right: 0.375rem;
+}
+.product-demo-window .px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.product-demo-window .px-2\.5 {
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+}
+.product-demo-window .px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+.product-demo-window .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.product-demo-window .px-5 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+.product-demo-window .py-0\.5 {
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+}
+.product-demo-window .py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+.product-demo-window .py-1\.5 {
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+}
+.product-demo-window .py-10 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+.product-demo-window .py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.product-demo-window .py-2\.5 {
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+}
+.product-demo-window .py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+.product-demo-window .py-4 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.product-demo-window .py-6 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+.product-demo-window .py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.product-demo-window .pb-2 {
+    padding-bottom: 0.5rem;
+}
+.product-demo-window .pb-3 {
+    padding-bottom: 0.75rem;
+}
+.product-demo-window .pb-4 {
+    padding-bottom: 1rem;
+}
+.product-demo-window .pb-6 {
+    padding-bottom: 1.5rem;
+}
+.product-demo-window .pl-0\.5 {
+    padding-left: 0.125rem;
+}
+.product-demo-window .pl-1 {
+    padding-left: 0.25rem;
+}
+.product-demo-window .pl-2 {
+    padding-left: 0.5rem;
+}
+.product-demo-window .pl-2\.5 {
+    padding-left: 0.625rem;
+}
+.product-demo-window .pl-3 {
+    padding-left: 0.75rem;
+}
+.product-demo-window .pl-7 {
+    padding-left: 1.75rem;
+}
+.product-demo-window .pt-1 {
+    padding-top: 0.25rem;
+}
+.product-demo-window .pt-2 {
+    padding-top: 0.5rem;
+}
+.product-demo-window .pt-3 {
+    padding-top: 0.75rem;
+}
+.product-demo-window .pt-4 {
+    padding-top: 1rem;
+}
+.product-demo-window .pt-5 {
+    padding-top: 1.25rem;
+}
+.product-demo-window .pt-6 {
+    padding-top: 1.5rem;
+}
+.product-demo-window .text-left {
+    text-align: left;
+}
+.product-demo-window .text-center {
+    text-align: center;
+}
+.product-demo-window .font-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.product-demo-window .font-sans {
+    font-family: var(--app-font-family);
+}
+.product-demo-window .text-\[11px\] {
+    font-size: 11px;
+}
+.product-demo-window .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+.product-demo-window .text-ui-2xl {
+    font-size: calc(var(--ui-font-size) * 1.5);
+    line-height: 2rem;
+}
+.product-demo-window .text-ui-base {
+    font-size: var(--ui-font-size);
+    line-height: 1.5rem;
+}
+.product-demo-window .text-ui-lg {
+    font-size: calc(var(--ui-font-size) * 1.125);
+    line-height: 1.75rem;
+}
+.product-demo-window .text-ui-sm {
+    font-size: calc(var(--ui-font-size) * 0.875);
+    line-height: 1.25rem;
+}
+.product-demo-window .text-ui-xs {
+    font-size: calc(var(--ui-font-size) * 0.75);
+    line-height: 1rem;
+}
+.product-demo-window .text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+.product-demo-window .font-medium {
+    font-weight: 500;
+}
+.product-demo-window .font-normal {
+    font-weight: 400;
+}
+.product-demo-window .font-semibold {
+    font-weight: 600;
+}
+.product-demo-window .tabular-nums {
+    --tw-numeric-spacing: tabular-nums;
+    font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
+}
+.product-demo-window .leading-relaxed {
+    line-height: 1.625;
+}
+.product-demo-window .tracking-tight {
+    letter-spacing: -0.025em;
+}
+.product-demo-window .tracking-widest {
+    letter-spacing: 0.1em;
+}
+.product-demo-window .text-dark-onSurface {
+    --tw-text-opacity: 1;
+    color: rgb(var(--dark-onSurface-rgb) / var(--tw-text-opacity, 1));
+}
+.product-demo-window .text-dark-onSurfaceVariant {
+    --tw-text-opacity: 1;
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / var(--tw-text-opacity, 1));
+}
+.product-demo-window .text-dark-onSurfaceVariant\/40 {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.4);
+}
+.product-demo-window .text-dark-onSurfaceVariant\/50 {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.5);
+}
+.product-demo-window .text-dark-onSurfaceVariant\/55 {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.55);
+}
+.product-demo-window .text-dark-onSurfaceVariant\/60 {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.6);
+}
+.product-demo-window .text-dark-onSurfaceVariant\/70 {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.7);
+}
+.product-demo-window .text-dark-onSurfaceVariant\/75 {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.75);
+}
+.product-demo-window .text-dark-onSurfaceVariant\/80 {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.8);
+}
+.product-demo-window .text-dark-onSurfaceVariant\/85 {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.85);
+}
+.product-demo-window .text-md-error {
+    --tw-text-opacity: 1;
+    color: rgb(var(--md-error-rgb) / var(--tw-text-opacity, 1));
+}
+.product-demo-window .text-md-onPrimary {
+    --tw-text-opacity: 1;
+    color: rgb(var(--md-onPrimary-rgb) / var(--tw-text-opacity, 1));
+}
+.product-demo-window .text-md-onPrimaryContainer {
+    --tw-text-opacity: 1;
+    color: rgb(var(--md-onPrimaryContainer-rgb) / var(--tw-text-opacity, 1));
+}
+.product-demo-window .text-md-primary {
+    --tw-text-opacity: 1;
+    color: rgb(var(--md-primary-rgb) / var(--tw-text-opacity, 1));
+}
+.product-demo-window .text-white {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+.product-demo-window .text-white\/50 {
+    color: rgb(255 255 255 / 0.5);
+}
+.product-demo-window .text-white\/55 {
+    color: rgb(255 255 255 / 0.55);
+}
+.product-demo-window .text-white\/60 {
+    color: rgb(255 255 255 / 0.6);
+}
+.product-demo-window .text-white\/65 {
+    color: rgb(255 255 255 / 0.65);
+}
+.product-demo-window .text-white\/70 {
+    color: rgb(255 255 255 / 0.7);
+}
+.product-demo-window .text-white\/75 {
+    color: rgb(255 255 255 / 0.75);
+}
+.product-demo-window .text-white\/80 {
+    color: rgb(255 255 255 / 0.8);
+}
+.product-demo-window .text-white\/90 {
+    color: rgb(255 255 255 / 0.9);
+}
+.product-demo-window .placeholder-dark-onSurfaceVariant\/60::placeholder {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.6);
+}
+.product-demo-window .placeholder-white\/50::placeholder {
+    color: rgb(255 255 255 / 0.5);
+}
+.product-demo-window .accent-white {
+    accent-color: #fff;
+}
+.product-demo-window .opacity-50 {
+    opacity: 0.5;
+}
+.product-demo-window .opacity-60 {
+    opacity: 0.6;
+}
+.product-demo-window .opacity-70 {
+    opacity: 0.7;
+}
+.product-demo-window .shadow-elevation-1 {
+    --tw-shadow: var(--md-shadow-1);
+    --tw-shadow-colored: var(--md-shadow-1);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.product-demo-window .shadow-elevation-3 {
+    --tw-shadow: var(--md-shadow-3);
+    --tw-shadow-colored: var(--md-shadow-3);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.product-demo-window .outline-none {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+.product-demo-window .filter {
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.product-demo-window .transition-\[border-color\2c box-shadow\] {
+    transition-property: border-color,box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+.product-demo-window .transition-colors {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+.product-demo-window .transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+.product-demo-window .duration-200 {
+    transition-duration: 200ms;
+}
+@keyframes enter {
+    from {
+        opacity: var(--tw-enter-opacity, 1);
+        transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0));
+    }
+}
+@keyframes exit {
+    to {
+        opacity: var(--tw-exit-opacity, 1);
+        transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0));
+    }
+}
+.product-demo-window .duration-200 {
+    animation-duration: 200ms;
+}
+.product-demo-window .\[mask-image\:linear-gradient\(to_top\2c black_55\%\2c transparent\)\] {
+    mask-image: linear-gradient(to top,black 55%,transparent);
+}
+
+/* Light theme (default) — RGB component variables for Tailwind opacity support */
+
+/* Dark theme */
+
+/* Markdown rendered content styles */
+.product-demo-window .markdown-body {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    line-height: 1.625;
+}
+.product-demo-window .markdown-body p {
+    margin-bottom: 0.5rem;
+}
+.product-demo-window .markdown-body p:last-child {
+    margin-bottom: 0px;
+}
+.product-demo-window .markdown-body ol {
+    margin-bottom: 0.5rem;
+    list-style-type: decimal;
+}
+.product-demo-window .markdown-body ol > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0.125rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0.125rem * var(--tw-space-y-reverse));
+}
+.product-demo-window .markdown-body ol {
+    padding-left: 1.25rem;
+}
+.product-demo-window .markdown-body li {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+/*
+ * 代码块语法高亮：shiki 输出双主题 CSS 变量（--shiki-light / --shiki-dark），
+ * 这里按当前主题取对应的那一套 —— 亮色取 --shiki-light，暗色取 --shiki-dark。
+ * 不用 prefers-color-scheme：ClerkBox 的暗色是 class 驱动（root.dark），
+ * 用户可以强制亮色而不改系统设置。
+ */
+
+/* VIBE 模式下的 markdown 覆盖：玻璃气泡内用半透明深色块，避免突兀的不透明补丁 */
+/*
+ * vibe 模式的高亮代码块：vibe 的代码块底色是半透明黑（深色容器），
+ * 所以取 shiki 的暗色变量那套；若沿用亮色变量，深底浅字会看不清。
+ */
+
+/*
+ * 紧凑档（md-compact）：工具卡与子代理面板的正文上下文是 12px（text-ui-xs），
+ * 默认档 h1 是 20px / 正文 14px，塞进卡片会把行高撑破、挤压时间线。
+ * 这里整体降到 ui-xs 档，标题同比缩小，间距收紧——只改尺寸不改配色，
+ * 所以能与 md-vibe 叠加使用。
+ */
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Agent 工作状态指示器（像素网格 + shimmer 标签）── */
+@keyframes pixel-on {
+  0%, 100% { opacity: 0.15; }
+  18%, 72% { opacity: 1; }
+}
+
+/* ── Agent 浏览器操作指示：标签与工具条上的指针图标呼吸 ──
+   900ms 周期，同时改透明度与缩放。14px 的图标只改透明度时视觉上几乎像静止，
+   必须带上 scale 才读得出「在动」；900ms 足够快到有生命感，又不至于晃眼。 */
+@keyframes agent-browser-breathe {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+/* ── Agent 动作工具卡：运行态文案扫光（替代旋转 loading 图标）──
+   toolcall 在流式期间数量多且持续更新，旋转图标会让动画长期占用渲染资源；
+   用一次性、事件驱动的扫光表达「在跑」，成本远低于常驻动画。 */
+@keyframes agent-action-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+/* Collapsible timeline rows remain discoverable on touch screens without hover. */
+
+/* Action visibility uses native scoped selectors, independent of group variants. */
+.product-demo-window .sidebar-session-delete, .product-demo-window
+.message-action-bar {
+  opacity: 0;
+}
+@media (hover: none), (max-width: 767.98px) {
+  .product-demo-window .sidebar-session-delete {
+    opacity: 0.6;
+  }
+  .product-demo-window .message-action-bar {
+    opacity: 1;
+  }
+}
+.product-demo-window .sidebar-session-row:hover > .sidebar-session-delete, .product-demo-window
+.sidebar-session-row:focus-within > .sidebar-session-delete, .product-demo-window
+.message-action-scope:hover .message-action-bar, .product-demo-window
+.message-action-scope:focus-within .message-action-bar {
+  opacity: 1;
+}
+
+/* ── Agent 动作工具卡：目标胶囊 ── */
+
+/* ── 版本号标签更新光晕：主题色缓慢呼吸（伪元素 opacity 动画，避免 box-shadow 重绘）── */
+@keyframes update-badge-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.95; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* 尊重系统减弱动态效果：入场/位移类动画瞬时完成，保留状态可见性 */
+}
+
+/* VIBE 模式叠在 3D 场景上，统一用白色系保证可读 */
+
+/* ── 移动端（WebUI 窄屏）全局适配 ──
+   桌面 Electron 最小窗宽 800px 不受影响；仅浏览器窄屏生效。 */
+@container desktop-preview (max-width: 768px) {
+  /* 去掉移动端点击高亮闪烁 */
+  .product-demo-window * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* 阻止下拉刷新 / 橡皮筋滚动带乱应用布局 */
+  .product-demo-window html, .product-demo-window
+  body {
+    overscroll-behavior: none;
+  }
+  /* Markdown 表格窄屏变为块级横向滚动，避免撑破消息气泡 */
+  /* 代码块小屏字号微升，改善可读性 */
+}
+
+/* VIBE: atmosphere surrounds a stable, readable working surface. */
+.product-demo-window .vibe-shell {
+  --vibe-surface-rgb: 12 18 20;
+  background: transparent;
+}
+.product-demo-window .vibe-shell .workspace-shell { padding: 0 1rem 1rem; gap: 0.75rem; }
+.product-demo-window .vibe-toolbar {
+  position: relative; z-index: 30; flex-shrink: 0; display: flex;
+  align-items: center; gap: 1rem; min-height: 4rem; padding: 0.5rem 0.75rem;
+  margin: 0 -1rem; border-radius: 0; border-width: 0 0 1px;
+  background: rgb(var(--vibe-surface-rgb) / 0.64);
+  box-shadow: none; backdrop-filter: blur(20px);
+}
+.product-demo-window .vibe-toolbar-main { display: flex; flex: 1; min-width: 0; align-items: center; gap: 0.25rem; }
+.product-demo-window .vibe-toolbar-actions { display: flex; flex-shrink: 0; align-items: center; gap: 0.125rem; }
+.product-demo-window .vibe-icon-button {
+  -webkit-app-region: no-drag;
+  display: inline-flex; width: 2.25rem; height: 2.25rem; flex-shrink: 0;
+  align-items: center; justify-content: center; border-radius: 0.5rem;
+  color: rgb(255 255 255 / 0.7); transition: background-color 150ms, color 150ms;
+}
+.product-demo-window .vibe-icon-button:hover, .product-demo-window  .vibe-icon-button[aria-pressed="true"], .product-demo-window  .vibe-icon-button[aria-expanded="true"] {
+  color: white; background: rgb(255 255 255 / 0.12);
+}
+.product-demo-window .vibe-icon-button:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+.product-demo-window .vibe-workspace { gap: 0.75rem; }
+.product-demo-window .vibe-reading-surface {
+  border: 1px solid rgb(255 255 255 / 0.12); border-radius: 1rem;
+  background: rgb(var(--vibe-surface-rgb) / calc(0.34 + var(--vibe-reading-opacity, 0.6) * 0.6));
+  backdrop-filter: blur(16px); box-shadow: 0 12px 40px rgb(0 0 0 / 0.12);
+}
+.product-demo-window .vibe-reading-surface .chat-input-box {
+  background: rgb(var(--vibe-surface-rgb) / 0.64); border-color: rgb(255 255 255 / 0.18);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.1); backdrop-filter: blur(12px);
+}
+.product-demo-window .vibe-reading-surface .chat-input-box:focus-within { border-color: rgb(255 255 255 / 0.4); }
+.product-demo-window .vibe-empty-layout { height: 100%; overflow: clip; }
+.product-demo-window .vibe-reading-surface .vibe-empty-inner { height: 100%; padding: 0; }
+.product-demo-window .vibe-empty-content { display: flex; flex: 1; min-height: 0; flex-direction: column; height: 100%; }
+.product-demo-window .vibe-empty-intro { display: flex; flex: 1; min-height: 0; flex-direction: column; overflow-y: auto; padding: 0 1rem; }
+.product-demo-window .vibe-welcome { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 2.5rem 2rem; }
+.product-demo-window .vibe-welcome > * { flex-shrink: 0; }
+.product-demo-window .vibe-empty-content .vibe-composer { margin-top: auto; }
+.product-demo-window .vibe-popover {
+  position: absolute; top: 4.5rem; right: 1rem; width: 22rem;
+  max-width: calc(100vw - 1rem); max-height: calc(100dvh - 5.5rem);
+  overflow-y: auto; overscroll-behavior: contain; border-radius: 1rem; padding: 1rem;
+  background: rgb(12 18 20 / 0.94); color: white; outline: none;
+}
+.product-demo-window .vibe-more { width: 15rem; padding: 0.5rem; }
+.product-demo-window .vibe-more > button { display: flex; align-items: center; gap: 0.75rem; width: 100%; min-height: 2.75rem; border-radius: 0.5rem; padding: 0.5rem 0.75rem; font-size: calc(var(--ui-font-size) * 0.875); color: rgb(255 255 255 / 0.8); }
+.product-demo-window .vibe-more > button:hover { background: rgb(255 255 255 / 0.1); color: white; }
+.product-demo-window .vibe-workbench-panel:not([aria-hidden="true"]) { width: min(var(--wb-width), 48vw); min-width: 300px; border-radius: 1rem; border: 1px solid rgb(255 255 255 / 0.15); }
+@container desktop-preview (max-width: 1100px) {
+  .product-demo-window .vibe-workbench-panel:not([aria-hidden="true"]) {
+    position: fixed; inset: 4.5rem 0.75rem 0.75rem auto; z-index: 40;
+    height: auto; max-height: none; width: min(var(--wb-width), calc(100vw - 1.5rem));
+    min-width: 0; box-shadow: 0 16px 48px rgb(0 0 0 / 0.4);
+  }
+}
+@container desktop-preview (max-width: 600px) {
+  .product-demo-window .vibe-shell .workspace-shell { padding: 0 0.5rem 0.5rem; gap: 0.5rem; }
+  .product-demo-window .vibe-toolbar { flex-wrap: wrap; gap: 0.25rem; padding: 0.5rem; margin-inline: -0.5rem; }
+  .product-demo-window .vibe-toolbar-main { flex-basis: calc(100% - 0.5rem); }
+  .product-demo-window .vibe-toolbar-actions { width: 100%; justify-content: flex-end; }
+  .product-demo-window .vibe-icon-button { width: 2.5rem; height: 2.5rem; }
+  .product-demo-window .vibe-reading-surface { border-radius: 0.75rem; }
+  .product-demo-window .vibe-welcome { padding: 1.5rem; }
+  .product-demo-window .vibe-popover { top: 7.5rem; right: 0.5rem; max-height: calc(100dvh - 8rem); }
+  .product-demo-window .vibe-workbench-panel:not([aria-hidden="true"]) { top: 7.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-demo-window .vibe-icon-button { transition: none; }
+}
+.product-demo-window .placeholder\:text-dark-onSurfaceVariant\/60::placeholder {
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.6);
+}
+.product-demo-window .placeholder\:text-white\/50::placeholder {
+    color: rgb(255 255 255 / 0.5);
+}
+.product-demo-window .focus-within\:border-md-primary\/40:focus-within {
+    border-color: rgb(var(--md-primary-rgb) / 0.4);
+}
+.product-demo-window .focus-within\:border-white\/40:focus-within {
+    border-color: rgb(255 255 255 / 0.4);
+}
+.product-demo-window .hover\:border-dark-onSurfaceVariant\/20:hover {
+    border-color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.2);
+}
+.product-demo-window .hover\:border-dark-onSurfaceVariant\/30:hover {
+    border-color: rgb(var(--dark-onSurfaceVariant-rgb) / 0.3);
+}
+.product-demo-window .hover\:bg-dark-surfaceContainer:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--dark-surfaceContainer-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .hover\:bg-dark-surfaceContainer\/60:hover {
+    background-color: rgb(var(--dark-surfaceContainer-rgb) / 0.6);
+}
+.product-demo-window .hover\:bg-dark-surfaceContainerHigh:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--dark-surfaceContainerHigh-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .hover\:bg-dark-surfaceContainerHighest:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--dark-surfaceContainerHighest-rgb) / var(--tw-bg-opacity, 1));
+}
+.product-demo-window .hover\:bg-md-error\/15:hover {
+    background-color: rgb(var(--md-error-rgb) / 0.15);
+}
+.product-demo-window .hover\:bg-md-error\/90:hover {
+    background-color: rgb(var(--md-error-rgb) / 0.9);
+}
+.product-demo-window .hover\:bg-md-primary\/90:hover {
+    background-color: rgb(var(--md-primary-rgb) / 0.9);
+}
+.product-demo-window .hover\:bg-white\/10:hover {
+    background-color: rgb(255 255 255 / 0.1);
+}
+.product-demo-window .hover\:bg-white\/15:hover {
+    background-color: rgb(255 255 255 / 0.15);
+}
+.product-demo-window .hover\:bg-white\/35:hover {
+    background-color: rgb(255 255 255 / 0.35);
+}
+.product-demo-window .hover\:text-dark-onSurface:hover {
+    --tw-text-opacity: 1;
+    color: rgb(var(--dark-onSurface-rgb) / var(--tw-text-opacity, 1));
+}
+.product-demo-window .hover\:text-dark-onSurfaceVariant:hover {
+    --tw-text-opacity: 1;
+    color: rgb(var(--dark-onSurfaceVariant-rgb) / var(--tw-text-opacity, 1));
+}
+.product-demo-window .hover\:text-md-error:hover {
+    --tw-text-opacity: 1;
+    color: rgb(var(--md-error-rgb) / var(--tw-text-opacity, 1));
+}
+.product-demo-window .hover\:text-white\/85:hover {
+    color: rgb(255 255 255 / 0.85);
+}
+.product-demo-window .disabled\:cursor-not-allowed:disabled {
+    cursor: not-allowed;
+}
+.product-demo-window .disabled\:opacity-30:disabled {
+    opacity: 0.3;
+}
+.product-demo-window .disabled\:opacity-40:disabled {
+    opacity: 0.4;
+}
+@container desktop-preview (max-width: 767.98px) {
+    .product-demo-window .max-md\:flex {
+        display: flex;
+    }
+    .product-demo-window .max-md\:hidden {
+        display: none;
+    }
+    .product-demo-window .max-md\:h-10 {
+        height: 2.5rem;
+    }
+    .product-demo-window .max-md\:h-11 {
+        height: 2.75rem;
+    }
+    .product-demo-window .max-md\:h-14 {
+        height: 3.5rem;
+    }
+    .product-demo-window .max-md\:min-h-11 {
+        min-height: 2.75rem;
+    }
+    .product-demo-window .max-md\:w-10 {
+        width: 2.5rem;
+    }
+    .product-demo-window .max-md\:w-11 {
+        width: 2.75rem;
+    }
+    .product-demo-window .max-md\:max-w-\[92\%\] {
+        max-width: 92%;
+    }
+    .product-demo-window .max-md\:gap-1 {
+        gap: 0.25rem;
+    }
+    .product-demo-window .max-md\:px-2 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .product-demo-window .max-md\:px-3 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    .product-demo-window .max-md\:pt-4 {
+        padding-top: 1rem;
+    }
+    .product-demo-window .max-md\:text-ui-base {
+        font-size: var(--ui-font-size);
+        line-height: 1.5rem;
+    }
+}
+@container desktop-preview (min-width: 640px) {
+    .product-demo-window .sm\:mb-8 {
+        margin-bottom: 2rem;
+    }
+    .product-demo-window .sm\:px-8 {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    .product-demo-window .sm\:py-12 {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+}
+@container desktop-preview (min-width: 768px) {
+    .product-demo-window .md\:block {
+        display: block;
+    }
+}
+@container desktop-preview (min-width: 1024px) {
+    .product-demo-window .lg\:inline {
+        display: inline;
+    }
+}
+@container desktop-preview (min-width: 1280px) {
+    .product-demo-window .xl\:flex {
+        display: flex;
+    }
+}

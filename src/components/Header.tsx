@@ -20,11 +20,11 @@ export default function Header() {
     document.addEventListener('pointerdown', outside)
     return () => { media.removeEventListener('change', resize); document.removeEventListener('keydown', escape); document.removeEventListener('pointerdown', outside) }
   }, [open])
-  const links = [['#workspace', 'product'], ['#features', 'features'], ['#vibe', 'vibe'], ['#start', 'start']]
+  const links = [['#workspace', 'product'], ['#features', 'features'], ['#vibe', 'vibe'], ['#story', 'story'], ['#start', 'start']]
   return <>
     <a className="skip-link" href="#main">{t('header.skip')}</a>
     <header className="site-header" ref={headerRef}><div className="container header-inner">
-      <a className="brand" href="#top" aria-label="ClerkBox" onClick={() => setOpen(false)}><img src="/clerkbox.png" width="34" height="34" alt="" /><span>ClerkBox<span className="brand-period">.</span></span><span className="version-tag">4.0</span></a>
+      <a className="brand" href="#top" aria-label="ClerkBox" onClick={() => setOpen(false)}><img src="/clerkbox-mark.webp" width="34" height="34" alt="" /><span>ClerkBox<span className="brand-period">.</span></span><span className="version-tag">4.0</span></a>
       <nav className="desktop-nav" aria-label={t('header.nav')}>{links.map(([href, key]) => <a href={href} key={key}>{t(`header.${key}`)}</a>)}</nav>
       <div className="header-actions"><div className="language-switch" role="group" aria-label={t('header.language')}><button type="button" aria-pressed={lang === 'zh'} onClick={() => setLang('zh')} lang="zh-CN">中</button><button type="button" aria-pressed={lang === 'en'} onClick={() => setLang('en')} lang="en">EN</button></div>
         <a className="icon-button github-button" href={REPO} target="_blank" rel="noreferrer" aria-label={t('header.github')}><GithubIcon size={20} /></a>

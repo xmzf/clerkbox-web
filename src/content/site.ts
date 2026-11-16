@@ -4,7 +4,7 @@ export const siteCopy = {
       title: 'ClerkBox 4.0 — 让想法，在你的桌面发生',
       description: 'ClerkBox 是开源、本地优先的 AI 桌面工作台。把对话、文件、终端、浏览器与 Git 放在一起，用 VIBE 找到状态，用消息撤回从容重来。支持 Windows、macOS 与 Linux。',
     },
-    header: { skip: '跳到主要内容', product: '工作空间', features: '能力', vibe: 'VIBE', start: '开始使用', download: '下载 ClerkBox', github: '查看 GitHub 源码', language: '选择语言', open: '打开导航', close: '关闭导航', nav: '主导航' },
+    header: { skip: '跳到主要内容', product: '工作空间', features: '能力', vibe: 'VIBE', story: '成长故事', start: '开始使用', download: '下载 ClerkBox', github: '查看 GitHub 源码', language: '选择语言', open: '打开导航', close: '关闭导航', nav: '主导航' },
     hero: {
       badge: '认识全新的 ClerkBox 4.0', eyebrow: '想法，由此开始', line1: '你的想法。', line2: '都能落地。',
       intro: '一个对话入口，一整个工作现场。让 AI 陪你写作、研究、编码，把脑海里的「如果」变成桌面上的「完成」。',
@@ -14,7 +14,7 @@ export const siteCopy = {
     },
     features: {
       eyebrow: '01 / 从想法到完成', title: '思路连得上，\n工具跟得上。', intro: '把需要来回切换的工作，放回同一个现场。看清 AI 在做什么，也随时接过控制权。',
-      workspace: '一个窗口，装下整个过程。', workspaceDesc: '对话在左，工作台在右。读文件、跑命令、看网页、审查改动，过程和结果都能找到。',
+      workspace: '一个窗口，装下整个过程。', workspaceDesc: '对话在左，工作台在右。读文件、跑命令、看网页、审查改动，过程和结果都能找到。', workflowExample: '工作流示例', recallImage: 'ClerkBox 4.0 桌面端真实消息撤回确认界面',
       coding: '开发一个功能', research: '研究一个问题', automate: '安排一项任务', tabsLabel: '选择工作场景',
       codingPrompt: '做一个可用的页面，从方案开始。', coding1: '拆解目标与实施步骤', coding2: '编辑文件，在终端验证', coding3: '查看差异，再决定提交',
       researchPrompt: '把零散资料，整理成有依据的结论。', research1: '搜索网页，阅读相关材料', research2: '调用浏览器与扩展工具', research3: '整理来源，输出本地文档',
@@ -29,11 +29,11 @@ export const siteCopy = {
     },
     vibe: {
       eyebrow: '02 / 找到你的状态', title: '认真工作。\n也可以很 VIBE。', desc: '给工作空间换一种心情。背景、阅读透明度与音量独立调整，原来的对话、草稿和工作台，都还在。',
-      item1: '模式切换，思路不断', item2: '会话抽屉，随时回来', item3: '音乐主动播放，面板关闭后继续', cta: '切入 VIBE 试一试', illustration: 'VIBE 氛围示意',
-      panelLabel: '保持专注', panelTitle: '让空间，合乎心意。', panelSub: '背景 · 阅读面板 · 音乐', note: '官网演示展示布局与透明度；背景和音频可在桌面应用中自定义。',
+      item1: '模式切换，思路不断', item2: '会话抽屉，随时回来', item3: '音乐主动播放，面板关闭后继续', cta: '切入 VIBE 试一试', illustration: 'ClerkBox 4.0 桌面端真实 VIBE 模式界面',
+      panelLabel: '保持专注', panelTitle: '让空间，合乎心意。', panelSub: '背景 · 阅读面板 · 音乐', note: '桌面端真实界面 · 预设样例内容',
     },
     joule: {
-      eyebrow: '03 / 很快，进入状态', title: '从第一句话开始，\n不用先研究配置。', intro: '未配置模型时，ClerkBox 会优先引导你登录 Joule。你也始终可以手动连接自己的模型服务。',
+      eyebrow: '04 / 很快，进入状态', title: '从第一句话开始，\n不用先研究配置。', intro: '未配置模型时，ClerkBox 会优先引导你登录 Joule。你也始终可以手动连接自己的模型服务。',
       step1: '安装并打开', desc1: '下载适合你系统的版本，完成欢迎引导。', step2: '连接一个模型', desc2: '登录 Joule 并选择可用模型，或填写其他提供商的 API 配置。', step3: '说出你的想法', desc3: '选一个工作目录，添加需要的资料，把目标交给 ClerkBox。',
       account: 'Joule，已经在工作台里。', accountDesc: '浏览器授权登录，回到桌面使用可用模型，并查看账号与额度状态。具体模型、订阅价格与额度以 Joule 当前服务为准。',
       jouleLink: '了解 Joule', manual: '查看模型配置指南', optional: 'Joule 可选；模型服务可能需要单独付费。ClerkBox 本身开源。',
@@ -50,7 +50,7 @@ export const siteCopy = {
       title: 'ClerkBox 4.0 — Good ideas belong on your desktop',
       description: 'An open-source, local-first AI desktop workspace. Bring conversations, files, terminal, browser and Git together. Find your focus with VIBE, and take a new direction with message recall. For Windows, macOS and Linux.',
     },
-    header: { skip: 'Skip to content', product: 'Workspace', features: 'Capabilities', vibe: 'VIBE', start: 'Get started', download: 'Get ClerkBox', github: 'View source on GitHub', language: 'Choose language', open: 'Open navigation', close: 'Close navigation', nav: 'Main navigation' },
+    header: { skip: 'Skip to content', product: 'Workspace', features: 'Capabilities', vibe: 'VIBE', story: 'Our story', start: 'Get started', download: 'Get ClerkBox', github: 'View source on GitHub', language: 'Choose language', open: 'Open navigation', close: 'Close navigation', nav: 'Main navigation' },
     hero: {
       badge: 'Meet the new ClerkBox 4.0', eyebrow: 'A PLACE FOR YOUR IDEAS', line1: 'Big ideas.', line2: 'Meet real work.',
       intro: 'One conversation. A whole workspace. Write, research and build with an AI partner that helps turn your “what if” into something done.',
@@ -60,7 +60,7 @@ export const siteCopy = {
     },
     features: {
       eyebrow: '01 / FROM IDEA TO DONE', title: 'Keep your flow.\nBring your tools.', intro: 'Bring the work you keep switching between into one place. See what the AI is doing, and take the controls whenever you need.',
-      workspace: 'The whole process. One window.', workspaceDesc: 'Conversation alongside a workbench. Read files, run commands, browse and review changes, with the process and results in view.',
+      workspace: 'The whole process. One window.', workspaceDesc: 'Conversation alongside a workbench. Read files, run commands, browse and review changes, with the process and results in view.', workflowExample: 'Example workflow', recallImage: 'Actual ClerkBox 4.0 desktop message recall confirmation dialog',
       coding: 'Build a feature', research: 'Explore a question', automate: 'Set a task in motion', tabsLabel: 'Choose a workflow',
       codingPrompt: 'Build a useful page. Start with a plan.', coding1: 'Turn a goal into clear steps', coding2: 'Edit files and verify in the terminal', coding3: 'Review the diff before committing',
       researchPrompt: 'Turn scattered sources into a useful conclusion.', research1: 'Search the web and read the material', research2: 'Use the browser and connected tools', research3: 'Organize sources into a local document',
@@ -75,11 +75,11 @@ export const siteCopy = {
     },
     vibe: {
       eyebrow: '02 / FIND YOUR FLOW', title: 'Good work.\nYour kind of VIBE.', desc: 'Give your workspace a different feel. Adjust backgrounds, reading opacity and volume separately. Your conversation, draft and workbench stay with you.',
-      item1: 'Switch the mode. Keep the context.', item2: 'A conversation drawer to find your way back', item3: 'Music starts when you choose and keeps playing when the panel closes', cta: 'Step into VIBE', illustration: 'Illustration of a VIBE workspace',
-      panelLabel: 'MAKE ROOM FOR FOCUS', panelTitle: 'A space that feels like you.', panelSub: 'Background · Reading panel · Music', note: 'The web demo explores layout and opacity. Customize backgrounds and audio in the desktop app.',
+      item1: 'Switch the mode. Keep the context.', item2: 'A conversation drawer to find your way back', item3: 'Music starts when you choose and keeps playing when the panel closes', cta: 'Step into VIBE', illustration: 'Actual ClerkBox 4.0 desktop interface in VIBE mode',
+      panelLabel: 'MAKE ROOM FOR FOCUS', panelTitle: 'A space that feels like you.', panelSub: 'Background · Reading panel · Music', note: 'Actual desktop interface · Preset sample content',
     },
     joule: {
-      eyebrow: '03 / MAKE YOURSELF AT HOME', title: 'Start a conversation.\nSkip the configuration tour.', intro: 'When no model is set up, ClerkBox guides you to Joule first. Connecting your own model service is always an option.',
+      eyebrow: '04 / MAKE YOURSELF AT HOME', title: 'Start a conversation.\nSkip the configuration tour.', intro: 'When no model is set up, ClerkBox guides you to Joule first. Connecting your own model service is always an option.',
       step1: 'Download and open', desc1: 'Choose your system’s installer and complete the welcome steps.', step2: 'Connect a model', desc2: 'Sign in to Joule and choose an available model, or configure another provider’s API.', step3: 'Bring your idea', desc3: 'Choose a working folder, add your material and tell ClerkBox what you want to do.',
       account: 'Joule is already at home here.', accountDesc: 'Authorize in your browser, return to the desktop and use available models with account and quota status in view. Models, subscription prices and limits are set by the current Joule service.',
       jouleLink: 'Explore Joule', manual: 'Read the model setup guide', optional: 'Joule is optional. Model services may charge separately. ClerkBox itself is open source.',
