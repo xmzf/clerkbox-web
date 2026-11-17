@@ -1,4 +1,4 @@
-export const PRODUCT_VERSION = '4.0.0'
+export const PRODUCT_VERSION = '4.1.1'
 export const REPO_URL = 'https://github.com/XMZF-vAI/clerkbox'
 export const RELEASE_TAG = `v${PRODUCT_VERSION}`
 export const RELEASES_URL = `${REPO_URL}/releases/tag/${RELEASE_TAG}`
@@ -8,18 +8,19 @@ export type DownloadPlatform = 'windows' | 'mac-arm' | 'mac-intel' | 'linux'
 export interface ReleaseAsset { platform: DownloadPlatform; name: string; url: string; bytes: number | null }
 export interface PublicRelease { version: string; tag: string; url: string; assets: ReleaseAsset[] }
 
-/** Published 4.0 installers, verified against the official release assets.
- * Downloads must not depend on a visitor's GitHub API access or rate limit.
+/** Only list verified, publicly released assets here, with their real byte counts.
+ * An empty list keeps the planned release visible without claiming downloads exist.
+ * Downloads never depend on a visitor's GitHub API access or rate limit.
  */
 export const PRODUCT_RELEASE: PublicRelease = {
   version: PRODUCT_VERSION,
   tag: RELEASE_TAG,
   url: RELEASES_URL,
   assets: [
-    { platform: 'windows', name: 'ClerkBox-Setup-4.0.0.exe', url: `${REPO_URL}/releases/download/v4.0.0/ClerkBox-Setup-4.0.0.exe`, bytes: 215952343 },
-    { platform: 'mac-arm', name: 'ClerkBox-4.0.0-arm64.dmg', url: `${REPO_URL}/releases/download/v4.0.0/ClerkBox-4.0.0-arm64.dmg`, bytes: 264954132 },
-    { platform: 'mac-intel', name: 'ClerkBox-4.0.0.dmg', url: `${REPO_URL}/releases/download/v4.0.0/ClerkBox-4.0.0.dmg`, bytes: 268572874 },
-    { platform: 'linux', name: 'ClerkBox-4.0.0.AppImage', url: `${REPO_URL}/releases/download/v4.0.0/ClerkBox-4.0.0.AppImage`, bytes: 277634216 },
+    { platform: 'windows', name: 'ClerkBox-Setup-4.1.1.exe', url: `${REPO_URL}/releases/download/${RELEASE_TAG}/ClerkBox-Setup-4.1.1.exe`, bytes: 216009410 },
+    { platform: 'mac-arm', name: 'ClerkBox-4.1.1-arm64.dmg', url: `${REPO_URL}/releases/download/${RELEASE_TAG}/ClerkBox-4.1.1-arm64.dmg`, bytes: 265045703 },
+    { platform: 'mac-intel', name: 'ClerkBox-4.1.1.dmg', url: `${REPO_URL}/releases/download/${RELEASE_TAG}/ClerkBox-4.1.1.dmg`, bytes: 268641292 },
+    { platform: 'linux', name: 'ClerkBox-4.1.1.AppImage', url: `${REPO_URL}/releases/download/${RELEASE_TAG}/ClerkBox-4.1.1.AppImage`, bytes: 277695487 },
   ],
 }
 

@@ -154,7 +154,7 @@ export default function Features({ onRecall }: { onRecall: () => void }) {
         </div>
         <figure className="recall-capture">
           <img
-            src={`/product/recall-${lang}.webp?model=sonnet-5-5`}
+            src={`/product/recall-${lang}.webp?model=deepseek-v4-1-flash`}
             width="1400"
             height="900"
             loading="lazy"
@@ -162,7 +162,7 @@ export default function Features({ onRecall }: { onRecall: () => void }) {
             alt={t('features.recallImage')}
           />
           <figcaption className="mono">
-            CLERKBOX 4.0 / MESSAGE RECALL
+            CLERKBOX 4.1.1 / MESSAGE RECALL
           </figcaption>
         </figure>
       </div>

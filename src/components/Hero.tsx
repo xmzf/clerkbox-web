@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section className="hero container" id="top" aria-labelledby="hero-title">
       <div className="hero-topline">
-        <a className="release-label" href="#features">
+        <a className="release-label" href="#remote">
           <span className="release-dot" />
           {t('hero.badge')}
           <Icon name="arrow-right" size={14} />

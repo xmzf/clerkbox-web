@@ -57,7 +57,7 @@ function usePreviewDialog(
 }
 
 /**
- * A service-free fixture of ClerkBox 4.0's real UI. The JSX class lists below
+ * A service-free fixture of ClerkBox 4.1.1's real UI. The JSX class lists below
  * come from App, Sidebar, TitleBar, ChatInput, MessageItem, MessageList,
  * AssistantTurnStream, VibeControls and RewindDialog in the desktop checkout.
  * sync-desktop-demo.mjs generates their actual Tailwind rules, i18n and icons.
@@ -824,7 +824,7 @@ export default function AppMockup({
     <div
       className="product-demo"
       data-scenario={mode}
-      data-source="ClerkBox 4.0.0"
+      data-source="ClerkBox 4.1.1"
       data-ready={!isVibe || backgroundLoaded || backgroundFailed}
       onCompositionStart={() => {
         composing.current = true
@@ -976,7 +976,7 @@ export default function AppMockup({
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
                   <span className="mr-1 hidden md:block rounded-md3-xs bg-dark-surfaceContainerHigh px-1.5 py-0.5 text-xs text-dark-onSurfaceVariant">
-                    v4.0.0
+                    v4.1.1
                   </span>
                   <button
                     type="button"

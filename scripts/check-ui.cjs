@@ -8,8 +8,10 @@ if (!process.versions.electron) {
     process.env.CLERKBOX_DESKTOP_PACKAGE ||
     path.resolve(__dirname, '../../ClerkBox - 副本/package.json')
   const electron = createRequire(desktopPackage)('electron')
+  const env = { ...process.env }
+  delete env.ELECTRON_RUN_AS_NODE
   const result = spawnSync(electron, [__filename], {
-    env: process.env,
+    env,
     windowsHide: true,
     encoding: 'utf8',
     timeout: 90000,
@@ -358,34 +360,69 @@ async function main() {
     'An idea became\na place to work.',
   )
   pass('English content, SEO language and timeline')
-  const releaseApi = 'https://api.github.com/repos/XMZF-vAI/clerkbox/releases/tags/v4.0.0'
-  const productReleaseUrl = 'https://github.com/XMZF-vAI/clerkbox/releases/tag/v4.0.0'
-  const expectedInstallers = [
-    ['windows', 'ClerkBox-Setup-4.0.0.exe'],
-    ['mac-arm', 'ClerkBox-4.0.0-arm64.dmg'],
-    ['mac-intel', 'ClerkBox-4.0.0.dmg'],
-    ['linux', 'ClerkBox-4.0.0.AppImage'],
-  ].map(([platform, name]) => ({
-    platform,
-    url: `https://github.com/XMZF-vAI/clerkbox/releases/download/v4.0.0/${name}`,
-  }))
+  for (const language of ['zh', 'en']) {
+    await click(`.language-switch button[lang=${language === 'zh' ? 'zh-CN' : 'en'}]`)
+    const remote = await run(`({
+      title: document.title,
+      links: [...document.querySelectorAll('#remote a[href]')].map(link => link.href),
+      steps: document.querySelectorAll('#remote .remote-steps li').length,
+      boundaries: document.querySelectorAll('#remote .remote-boundaries article').length,
+      release: document.querySelector('.story-release')?.href,
+      copy: document.querySelector('#remote').innerText,
+    })`)
+    assert.ok(remote.title.includes('4.1.1'))
+    assert.ok(remote.links.includes('https://webui.clerkbox.xmzf.space/'))
+    assert.equal(remote.steps, 3)
+    assert.equal(remote.boundaries, 3)
+    assert.equal(remote.release, 'https://github.com/XMZF-vAI/clerkbox/releases/tag/v4.1.1')
+    assert.equal(/remote\.[a-zA-Z]+/.test(remote.copy), false, 'No missing remote translations')
+    for (const width of [390, 1280]) {
+      w.setContentSize(width, 900)
+      await delay(100)
+      assert.equal(await run(`document.documentElement.scrollWidth <= innerWidth + 1`), true, `Remote ${language}/${width}: no page overflow`)
+      assert.equal(await run(`(() => { const box=document.querySelector('.remote-address').getBoundingClientRect(); return box.left>=0 && box.right<=innerWidth+1; })()`), true, `Remote ${language}/${width}: gateway address stays visible`)
+    }
+  }
+  pass('4.1.1 public remote access, pairing steps, device boundaries and release timeline in both languages and widths')
+  const releaseApi = 'https://api.github.com/repos/XMZF-vAI/clerkbox/releases/tags/v4.1.1'
+  const productReleaseUrl = 'https://github.com/XMZF-vAI/clerkbox/releases/tag/v4.1.1'
+  const ts = require('typescript')
+  const manifestModule = { exports: {} }
+  const manifestCode = ts.transpileModule(
+    fs.readFileSync(path.resolve(__dirname, '../src/lib/releases.ts'), 'utf8'),
+    { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } },
+  ).outputText
+  require('node:vm').runInNewContext(manifestCode, {
+    module: manifestModule, exports: manifestModule.exports,
+    URL, fetch, AbortController, setTimeout, clearTimeout,
+  })
+  const assets = manifestModule.exports.PRODUCT_RELEASE.assets
+  const expectedInstallers = ['windows', 'mac-arm', 'mac-intel', 'linux'].flatMap(platform => {
+    const asset = assets.find(item => item.platform === platform)
+    return asset ? [{ platform, url: asset.url }] : []
+  })
+  const published = expectedInstallers.length > 0
+  const downloadStateSelector = published ? '.download-status-ready' : '.download-status-pending'
   async function onlyProductRelease(name) {
     const download = await run(`({
       text: document.querySelector('#download').innerText,
       urls: [...document.querySelectorAll('#download a[href]')].map(el => el.href),
       installers: [...document.querySelectorAll('#download .download-asset[data-platform]')].map(el => ({platform:el.dataset.platform,url:el.href})),
       unavailable: !!document.querySelector('#download .download-asset-unavailable,#download .download-fallback'),
-      blockedState: !!document.querySelector('#download .download-status-loading,#download .download-status-error,#download .download-status-pending'),
+      blockedState: !!document.querySelector('#download .download-status-loading,#download .download-status-error'),
+      pending: !!document.querySelector('#download .download-status-pending'),
       ready: !!document.querySelector('#download .download-status-ready'),
     })`)
     assert.equal(/3\.5(?:\.1)?/.test(download.text), false, name + ': no old release copy')
     assert.equal(download.urls.some(url => /3\.5(?:\.1)?|\/releases\/latest(?:$|[/?#])/.test(url)), false, name + ': no old or latest-release links')
-    assert.deepEqual(download.installers, expectedInstallers, name + ': all four fixed 4.0 official installers remain available')
-    assert.equal(download.unavailable, false, name + ': no source-only or unavailable replacement')
-    assert.equal(download.blockedState, false, name + ': no API loading, pending or error gate')
-    assert.equal(download.ready, true, name + ': published 4.0 release is ready immediately')
+    assert.deepEqual(download.installers, expectedInstallers, name + ': official installers exactly match the verified 4.1.1 manifest')
+    assert.equal(download.unavailable, expectedInstallers.length < 4, name + ': missing platforms link to the release page')
+    assert.equal(download.blockedState, false, name + ': no API loading or error gate')
+    assert.equal(download.pending, !published, name + ': unpublished installers are labelled honestly')
+    assert.equal(download.ready, published, name + ': published 4.1.1 assets are immediately available')
     assert.ok(download.urls.includes(productReleaseUrl), name + ': release notes remain available')
-    assert.equal(/尚未公开|安装包公开后|正在核对|暂时无法核对|not public yet|when 4\.0 installers are published|Checking ClerkBox|Unable to check/i.test(download.text), false, name + ': no stale release-status copy')
+    assert.equal(/正在核对|暂时无法核对|Checking ClerkBox|Unable to check/i.test(download.text), false, name + ': no obsolete API status copy')
+    assert.equal(/尚未公开|not public yet/i.test(download.text), !published, name + ': public release copy matches the verified manifest')
     return download
   }
   checks.push({ liveRelease: await onlyProductRelease('live release') })
@@ -396,14 +433,14 @@ async function main() {
     (_d, cb) => { deniedApiRequests += 1; cb({ cancel: true }) },
   )
   await w.loadURL(process.env.SITE_TEST_URL || 'http://127.0.0.1:5180/')
-  await until(`!!document.querySelector('#download .download-status-ready')`, 'fixed 4.0 download links')
+  await until(`!!document.querySelector(${JSON.stringify('#download ' + downloadStateSelector)})`, 'verified 4.1.1 download state')
   await onlyProductRelease('GitHub API blocked')
   assert.equal(deniedApiRequests, 0, 'static downloads never request the GitHub API')
-  pass('All four fixed 4.0 downloads are ready with GitHub API requests blocked')
+  pass('Verified 4.1.1 download state is available with GitHub API requests blocked')
   if (!w.webContents.debugger.isAttached()) w.webContents.debugger.attach('1.3')
   await w.webContents.debugger.sendCommand('Page.enable')
   // Install each hostile API response before React starts. A static release
-  // must neither request it nor replace its four already-published installers.
+  // must neither request it nor replace the verified publication state.
   const oldRelease = {
     tag_name: 'v3.5.1',
     draft: false,
@@ -435,14 +472,14 @@ async function main() {
     })
     try {
       await w.loadURL(process.env.SITE_TEST_URL || 'http://127.0.0.1:5180/')
-      await until(`!!document.querySelector('#download .download-status-ready')`, scenario.name)
+      await until(`!!document.querySelector(${JSON.stringify('#download ' + downloadStateSelector)})`, scenario.name)
       await onlyProductRelease(scenario.name)
       assert.equal(await run('window.__uiReleaseRequests'), 0, scenario.name + ': download UI does not fetch release metadata')
     } finally {
       await w.webContents.debugger.sendCommand('Page.removeScriptToEvaluateOnNewDocument', { identifier: injection.identifier })
     }
   }
-  pass('API 404, rate limits and obsolete release payloads cannot remove fixed 4.0 downloads')
+  pass('API 404, rate limits and obsolete payloads cannot alter verified 4.1.1 download state')
   await w.webContents.debugger.sendCommand('Network.enable')
   await w.webContents.debugger.sendCommand('Network.emulateNetworkConditions', {
     offline: true,
@@ -470,7 +507,7 @@ async function main() {
     })
   }
   assert.equal(deniedApiRequests, 0, 'language changes and mobile layouts never request release metadata')
-  pass('Offline rendering preserves four exact download anchors in both languages and mobile/desktop layouts')
+  pass('Offline rendering preserves verified download state in both languages and mobile/desktop layouts')
   ses.webRequest.onBeforeRequest(null)
   if (!w.webContents.debugger.isAttached()) w.webContents.debugger.attach('1.3')
   await w.webContents.debugger.sendCommand('Emulation.setEmulatedMedia', {

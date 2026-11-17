@@ -35,7 +35,7 @@ export default function Vibe({ onExplore }: { onExplore: () => void }) {
         </div>
         <figure className="vibe-capture">
           <img
-            src={`/product/vibe-${lang}.webp?model=sonnet-5-5`}
+            src={`/product/vibe-${lang}.webp?model=deepseek-v4-1-flash`}
             alt={t('vibe.illustration')}
             width="1400"
             height="900"
@@ -43,7 +43,7 @@ export default function Vibe({ onExplore }: { onExplore: () => void }) {
             decoding="async"
           />
           <figcaption>
-            <span className="mono">CLERKBOX 4.0 / VIBE</span>
+            <span className="mono">CLERKBOX 4.1.1 / VIBE</span>
             <span>{t('vibe.note')}</span>
           </figcaption>
         </figure>

@@ -3,11 +3,12 @@ import { siteCopy } from './content/site'
 import { demoCopy } from './content/demo'
 import { downloadCopy } from './content/download'
 import { storyCopy } from './content/story'
+import { remoteCopy } from './content/remote'
 
 export type Lang = 'zh' | 'en'
 const dictionaries = {
-  zh: { ...siteCopy.zh, demo: demoCopy.zh, download: downloadCopy.zh, story: storyCopy.zh },
-  en: { ...siteCopy.en, demo: demoCopy.en, download: downloadCopy.en, story: storyCopy.en },
+  zh: { ...siteCopy.zh, demo: demoCopy.zh, download: downloadCopy.zh, story: storyCopy.zh, remote: remoteCopy.zh },
+  en: { ...siteCopy.en, demo: demoCopy.en, download: downloadCopy.en, story: storyCopy.en, remote: remoteCopy.en },
 }
 function resolve(source: unknown, key: string): string {
   let value = source

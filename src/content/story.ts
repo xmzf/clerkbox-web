@@ -1,9 +1,9 @@
 export const storyCopy = {
   zh: {
-    eyebrow: '03 / 一点一点，长成现在',
+    eyebrow: '04 / 一点一点，长成现在',
     title: '从一个念头，\n到一个工作现场。',
     intro:
-      '2026 年 5 月立项。想法先有了，代码慢慢跟上。这条时间轴从最早的源码快照讲到 4.0，每一次变化，都有来处。',
+      '2026 年 5 月立项。想法先有了，代码慢慢跟上。从最早的源码快照，到 4.1.1 的公网连接，工作现场一点点延伸，每一次变化，都有来处。',
     origin: '立项时间由项目发起者补充；其余节点据公开 Git 记录整理。',
     source: '查看提交记录',
     expand: '展开这个阶段的记录',
@@ -30,14 +30,18 @@ export const storyCopy = {
     novemberBody:
       'VIBE 的布局与切换重新打磨，消息撤回补齐草稿恢复和执行保护，未配置模型时优先引导 Joule。一路加上来的能力，开始成为更顺手的日常。',
     novemberEvidence: 'VIBE 与撤回可靠性 → 4.0.0 版本准备',
+    remoteTitle: '4.1.1，工作不止在桌面。',
+    remoteBody: '早期的局域网 WebUI，走到了固定的公网入口。浏览器先配对、桌面再批准，接入完整工作台，切换全部会话、目录与设置。4.1.1 继续修复大量历史记录下的启动和断线恢复，让远程连接更稳。',
+    remoteEvidence: '完整工作台 → 持久设备配对与共享设置 → 批量历史恢复',
+    release: '阅读 4.1.1 发布记录',
     closing: '还在继续。下一次改进，也会留下记录。',
     log: '浏览完整 Git 历史',
   },
   en: {
-    eyebrow: '03 / BUILT, ONE STEP AT A TIME',
+    eyebrow: '04 / BUILT, ONE STEP AT A TIME',
     title: 'An idea became\na place to work.',
     intro:
-      'Started in May 2026. The idea came first; the code followed. From the earliest source snapshot to 4.0, this is a history with a traceable record.',
+      'Started in May 2026. The idea came first; the code followed. From the earliest source snapshot to public remote access in 4.1.1, the workspace grew one traceable change at a time.',
     origin:
       'The founder supplied the May start date. Other milestones come from public Git history.',
     source: 'View commit',
@@ -67,6 +71,10 @@ export const storyCopy = {
     novemberBody:
       'VIBE gained a refined layout and safer switching. Message recall gained draft restoration and execution guards. Joule became the first setup suggestion. Growing capabilities became a more comfortable daily workspace.',
     novemberEvidence: 'Reliable VIBE and recall → preparation for 4.0.0',
+    remoteTitle: '4.1.1. Your work goes further.',
+    remoteBody: 'The early LAN WebUI grew into a fixed public address. Pair in the browser, approve on the desktop, then use the full workbench with all conversations, folders and settings. Version 4.1.1 improves startup and reconnection with large conversation histories.',
+    remoteEvidence: 'Full workbench → persistent device pairing and shared settings → batched history recovery',
+    release: 'Read the 4.1.1 release notes',
     closing:
       'Still being built. The next improvement will leave a record, too.',
     log: 'Browse the full Git history',

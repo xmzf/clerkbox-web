@@ -1,0 +1,26 @@
+.remote-section { background: #131417; color: #eeeef1; padding: 112px 0 76px; scroll-margin-top: 84px; }
+.remote-layout { display: grid; grid-template-columns: 1fr 1fr; column-gap: 88px; row-gap: 64px; }
+.remote-heading .eyebrow { color: #c4b0f4; }
+.remote-heading .section-title { margin: 22px 0 28px; }
+.remote-heading .section-intro { color: #b7b6be; max-width: 44ch; }
+.remote-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 30px; }
+.remote-actions .text-link { color: #d6c9f3; }
+.remote-route { min-width: 0; align-self: start; padding: 30px; border: 1px solid #39363f; border-radius: 18px; background: #1d1c23; }
+.remote-route > span { color: #b8b4c1; font-size: 12px; }
+.remote-address { display: flex; align-items: center; gap: 12px; padding: 19px 0 24px; border-bottom: 1px solid #3c3943; font-size: clamp(12px, 1.15vw, 17px); color: #ddd0ff; }
+.remote-address span { min-width: 0; overflow-wrap: anywhere; }
+.remote-address svg { flex-shrink: 0; }
+.remote-address svg:last-child { margin-left: auto; }
+.remote-steps { list-style: none; padding: 0; display: grid; gap: 26px; margin-top: 28px; }
+.remote-steps li { display: flex; align-items: baseline; gap: 18px; }
+.remote-steps li > span { color: #a895d1; font-size: 11px; }
+.remote-steps h3 { font-size: 15px; font-weight: 600; margin-bottom: 7px; }
+.remote-steps p { color: #b8b4c1; font-size: 13px; line-height: 1.8; }
+.remote-boundaries { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; padding-top: 32px; border-top: 1px solid #38363e; }
+.remote-boundaries article > span { font-size: 11px; color: #a895d1; }
+.remote-boundaries h3 { font-size: 17px; margin: 12px 0 10px; }
+.remote-boundaries p { font-size: 13px; color: #b8b4c1; line-height: 1.9; }
+.remote-note { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 10px; color: #aaa4b5; font-size: 12px; margin-top: -26px; }
+.remote-note svg { flex-shrink: 0; margin-top: 1px; }
+@media (max-width: 1050px) { .remote-layout { column-gap: 40px; } .remote-route { padding: 24px; } }
+@media (max-width: 700px) { .remote-section { padding: 76px 0 54px; } .remote-layout { grid-template-columns: 1fr; row-gap: 38px; } .remote-heading .section-title { margin: 18px 0 22px; } .remote-route { padding: 24px; } .remote-address { font-size: 13px; } .remote-boundaries { grid-template-columns: 1fr; gap: 26px; } .remote-boundaries article { display: grid; grid-template-columns: 24px 1fr; column-gap: 12px; } .remote-boundaries article > span { padding-top: 3px; } .remote-boundaries h3 { margin: 0 0 8px; } .remote-boundaries p { grid-column: 2; } .remote-note { margin-top: 0; } }

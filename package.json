@@ -1,9 +1,9 @@
 {
   "name": "clerkbox-website",
   "private": true,
-  "version": "4.0.0",
+  "version": "4.1.1",
   "type": "module",
-  "description": "ClerkBox 4.0 官网 — 本地优先的 AI 桌面工作台 / 中英双语",
+  "description": "ClerkBox 4.1.1 官网 — 本地优先的 AI 桌面工作台 / 中英双语",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && npm run check:i18n && npm run check:releases && vite build",

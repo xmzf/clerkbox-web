@@ -16,9 +16,9 @@ export const demoCopy = {
     response: '我会先核对现有页面与产品能力，再整理改版步骤。',
     researchResponse:
       '我会先阅读已有资料，把目标、约束和待确认事项整理在一起，再拆解为可以逐步执行的计划。',
-    model: 'Claude Sonnet 5.5',
+    model: 'DeepSeek V4.1 Flash',
     stepOne: '统一页面层级与视觉节奏',
-    stepTwo: '同步真实产品界面与 4.0 功能',
+    stepTwo: '同步真实产品界面与 4.1.1 功能',
     stepThree: '检查中英文、移动端与下载入口',
     desktopOnly: '此入口需要桌面应用；网页仅演示会话、草稿和 VIBE 切换。',
     copyUnavailable: '浏览器未授予剪贴板权限。可以直接选中消息复制。',
@@ -52,9 +52,9 @@ export const demoCopy = {
       'I will check the current pages and product capabilities, then organize the redesign steps.',
     researchResponse:
       'I will read the existing material, bring the goals and constraints together, then break the work into practical next steps.',
-    model: 'Claude Sonnet 5.5',
+    model: 'DeepSeek V4.1 Flash',
     stepOne: 'Unify page hierarchy and visual rhythm',
-    stepTwo: 'Sync the real product UI and 4.0 features',
+    stepTwo: 'Sync the real product UI and 4.1.1 features',
     stepThree: 'Check both languages, mobile layouts, and downloads',
     desktopOnly:
       'Open the desktop app to use this feature. This webpage demonstrates chats, drafts, and VIBE switching.',

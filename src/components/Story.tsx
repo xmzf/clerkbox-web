@@ -30,6 +30,7 @@ const CHAPTERS = [
     label: '2026.11',
     commits: ['7c16ae8', 'd2546e4'],
   },
+  { key: 'remote', date: '2026-11-17', label: '4.1.1 / 2026.11', commits: [], release: 'v4.1.1' },
 ] as const
 
 export default function Story() {
@@ -63,7 +64,7 @@ export default function Story() {
               </time>
               <h3>{t(`story.${chapter.key}Title`)}</h3>
               <p>{t(`story.${chapter.key}Body`)}</p>
-              {chapter.commits.length ? (
+              {'release' in chapter ? <details><summary>{t('story.expand')}<Icon name="plus" size={14} /></summary><p>{t('story.remoteEvidence')}</p><a className="text-link story-release" href={`${REPO}/releases/tag/${chapter.release}`} target="_blank" rel="noreferrer">{t('story.release')}<Icon name="arrow-right" size={14} /></a></details> : chapter.commits.length ? (
                 <details>
                   <summary>
                     {t('story.expand')}

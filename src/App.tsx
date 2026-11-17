@@ -8,6 +8,7 @@ import JoulePlan from './components/JoulePlan'
 import Download from './components/Download'
 import Footer from './components/Footer'
 import Story from './components/Story'
+import Remote from './components/Remote'
 import { useI18n } from './i18n'
 import { Icon } from './components/Icons'
 export default function App() {
@@ -59,6 +60,7 @@ export default function App() {
         </div>
         <Features onRecall={() => explore('recall')} />
         <Vibe onExplore={() => explore('vibe')} />
+        <Remote />
         <Story />
         <JoulePlan />
         <Download />
